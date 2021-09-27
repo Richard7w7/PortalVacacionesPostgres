@@ -1,0 +1,68 @@
+﻿
+@model IEnumerable<ControlPostgres.Contexto.Entities.TbSolicitude>
+
+<table class="table" id="Dame">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SolicitudFecha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DetallesSolicitud)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CantidadDias)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comentario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Depto.DeptoNombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Empleado.EmpleadoCodigo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estados.EstadosNombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vacaciones.VacacionesEstado)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SolicitudFecha)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DetallesSolicitud)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CantidadDias)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Comentario)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Depto.DeptoNombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Empleado.EmpleadoCodigo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Estados.EstadosNombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vacaciones.VacacionesTiempo)
+                </td>
+                <td>
+                    <a asp-action="DetallesDepa" asp-route-id="@item.SolicitudId" class="btn btn-primary glyphicon glyphicon-pencil">Detalles</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,75 @@
+﻿@model ControlPostgres.Contexto.Entities.TbSolicitude
+
+@{
+    ViewData["Title"] = "Detalles";
+}
+<div>
+    <h4>Detalles de la Solicitud del colaborador @Model.Empleado.EmpleadoNombre1 @Model.Empleado.EmpleadoApellido1 Jefe</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SolicitudFecha)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SolicitudFecha)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DetallesSolicitud)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DetallesSolicitud)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FechasSeleccionadas)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FechasSeleccionadas)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CantidadDias)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CantidadDias)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Comentario)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Comentario)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Cargo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Cargo.CargoDescripcion)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Depto)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Depto.DeptoDescripcion)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Empleado)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Empleado.EmpleadoApellido1)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Estados)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Estados.EstadosNombre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Vacaciones)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Vacaciones.VacacionesEstado)
+        </dd>
+    </dl>
+</div>
+<div>
+    <!-- <a asp-action="Edit" asp-route-id="@Model.SolicitudId">Edit</a> |-->
+    <a asp-action="PerfilJefe">Regresar</a>
+</div>
