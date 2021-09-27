@@ -230,6 +230,7 @@ namespace ControlPostgres.Controllers
                 {
                     return NotFound();
                 }
+                //EN ESTE VIEWDATA IMPORTABA LA TABLA DE ESTADOSSOLICITUDES SIN CONDICIONES
                 //ViewData["EstadoS"] = new SelectList(bd.TbEstadosolicitudes, "EstadosId", "EstadosNombre");
                 var listadoestado = new SelectList(bd.TbEstadosolicitudes.Where(x => x.EstadosId != 1)
                 .Where(x => x.EstadosId != 3).Where(x => x.EstadosId != 4), "EstadosId", "EstadosNombre");
