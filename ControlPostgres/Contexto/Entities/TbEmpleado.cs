@@ -14,19 +14,19 @@ namespace ControlPostgres.Contexto.Entities
         }
 
         public int EmpleadoId { get; set; }
-        [Required(ErrorMessage = "Seleccione un cargo")]
+        [Required(ErrorMessage ="Seleccione un cargo")]
         public int CargoId { get; set; }
         [Required(ErrorMessage = "Seleccione un departamento")]
         public int DeptoId { get; set; }
-        [Required(ErrorMessage = "Seleccione tiempo laborando")]
+        [Required(ErrorMessage = "Seleccione su tiempo laborando")]
         public int VacacionesId { get; set; }
         [Required(ErrorMessage = "Seleccione un rol")]
         public int RolId { get; set; }
-        [Display(Name = "Codigo del Empleado")]
+        [Display(Name ="Codigo de Empleado")]
         [Required(ErrorMessage = "Ingrese su codigo de Empleado")]
         public string EmpleadoCodigo { get; set; }
         [DataType(DataType.Password)]
-        [Required(ErrorMessage = "Ingrese su Contraseña")]
+        [Required(ErrorMessage ="Ingrese su Contraseña")]
         public string EmpleadoContraseña { get; set; }
         [Required(ErrorMessage = "Campo bligatorio")]
         public string EmpleadoNombre1 { get; set; }
@@ -41,6 +41,7 @@ namespace ControlPostgres.Contexto.Entities
         public DateTime FechaNacimiento { get; set; }
         [Required(ErrorMessage = "Ingrese su numero de telefono")]
         [MinLength(8, ErrorMessage = "El numero de Telefono debe contener 8 digitos")]
+        [DataType(DataType.PhoneNumber)]
         public string EmpleadoTelefono { get; set; }
         [Required(ErrorMessage = "campo obligatorio")]
         public string EmpleadoDireccion { get; set; }
@@ -52,6 +53,8 @@ namespace ControlPostgres.Contexto.Entities
         public int? EmpleadoPermiso { get; set; }
         public DateTime? EmpladoUltimavacafin { get; set; }
         public DateTime? EmpleadoUltimavacainicio { get; set; }
+        [Display(Name = "Cantidad de dias restantes")]
+        public int EmpDiasvacaciones { get; set; }
 
         public virtual TbCargo Cargo { get; set; }
         public virtual TbDepartamento Depto { get; set; }

@@ -122,6 +122,8 @@ namespace ControlPostgres.Contexto.Entities
 
                 entity.Property(e => e.DeptoId).HasColumnName("depto_id");
 
+                entity.Property(e => e.EmpDiasvacaciones).HasColumnName("emp_diasvacaciones");
+
                 entity.Property(e => e.EmpladoUltimavacafin)
                     .HasColumnType("date")
                     .HasColumnName("emplado_ultimavacafin");
