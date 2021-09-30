@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +39,17 @@ namespace ControlPostgres.RepositorioClases
                 obj.CargoId = model.CargoId;
                 obj.DeptoId = model.DeptoId;
                 obj.VacacionesId = model.VacacionesId;
+                if(model.VacacionesId == 1)
+                {
+                    obj.EmpDiasvacaciones = 20;
+                }else if(model.VacacionesId == 2)
+                {
+                    obj.EmpDiasvacaciones = 25;
+                }
+                else if (model.VacacionesId == 3)
+                {
+                    obj.EmpDiasvacaciones = 30;
+                }
                 obj.RolId = model.RolId;
                 obj.EmpleadoEstado = 1;
 
@@ -167,6 +179,7 @@ namespace ControlPostgres.RepositorioClases
 
             return logico;
         }
+
 
     }
 }

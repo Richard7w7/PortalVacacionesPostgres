@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ControlPostgres.Contexto.Entities.TbSolicitude>
+﻿
+@model IEnumerable<ControlPostgres.Contexto.Entities.TbSolicitude>
 
 <table class="table" id="Dame">
     <thead>
@@ -59,7 +60,7 @@
                     @Html.DisplayFor(modelItem => item.Empleado.EmpDiasvacaciones)
                 </td>
                 <td>
-                    <a asp-action="Detalles" asp-route-id="@item.SolicitudId" class="btn btn-primary glyphicon glyphicon-pencil">Detalles</a>
+                    <a asp-action="DetallesDepaEncargado" asp-route-id="@item.SolicitudId" class="btn btn-primary glyphicon glyphicon-pencil">Detalles</a>
                 </td>
             </tr>
         }

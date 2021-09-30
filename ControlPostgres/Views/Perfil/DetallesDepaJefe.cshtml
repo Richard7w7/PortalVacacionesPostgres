@@ -1,8 +1,47 @@
 ﻿@model ControlPostgres.Contexto.Entities.TbSolicitude
+@section Scripts {
+    <script>
+        $(function () {
 
-@{
-    ViewData["Title"] = "Detalles";
+            document.getElementById('notifica').style.visibility = 'hidden';
+            document.getElementById('notifica').style.display = "none";
+            if (@ViewBag.Estado == 1) {
+                document.getElementById('Estado').style.visibility = 'hidden';
+                document.getElementById('Estado').style.display = 'none';
+                document.getElementById('notifica').style.visibility = 'visible';
+                document.getElementById('notifica').style.display = 'initial';
+                document.getElementById('Boton_Modifica').style.visibility = 'hidden';
+                document.getElementById('Boton_Modifica').style.display = 'none';
+                document.getElementById('txtComentario').style.visibility = 'hidden';
+                document.getElementById('txtComentario').style.display = 'none';
+            } else if (@ViewBag.Estado == 3) {
+                document.getElementById('Estado').style.visibility = 'hidden';
+                document.getElementById('Estado').style.display = 'none';
+                document.getElementById('notifica').style.visibility = 'visible';
+                document.getElementById('notifica').style.display = 'initial';
+                document.getElementById('notifica').innerHTML = "<b>La opcion no aparece disponible debido a que ya tiene la revision correspondiente a tu cargo</b>";
+                document.getElementById('Boton_Modifica').style.visibility = 'hidden';
+                document.getElementById('Boton_Modifica').style.display = 'none';
+                document.getElementById('txtComentario').style.visibility = 'hidden';
+                document.getElementById('txtComentario').style.display = 'none';
+            }else if (@ViewBag.Estado == 4) {
+                document.getElementById('Estado').style.visibility = 'hidden';
+                document.getElementById('Estado').style.display = 'none';
+                document.getElementById('notifica').style.visibility = 'visible';
+                document.getElementById('notifica').style.display = 'initial';
+                document.getElementById('notifica').innerHTML = "La opcion no aparece disponible debido a que solo directores pueden asignar el estado <b>aprobada</b> las vacaciones";
+                document.getElementById('Boton_Modifica').style.visibility = 'hidden';
+                document.getElementById('Boton_Modifica').style.display = 'none';
+                document.getElementById('txtComentario').style.visibility = 'hidden';
+                document.getElementById('txtComentario').style.display = 'none';
+            }
+
+        });
+    </script>
+
 }
+@{ ViewData["Title"] = "Detalles"; }
+
 
 <div>
     <form asp-action="ModificarDetallesDepaJefe">
@@ -43,7 +82,7 @@
                 <label>Agregar Comentario</label>
             </dt>
             <dd class="col-sm-10">
-                @Html.TextAreaFor(model => model.Comentario)
+                @Html.TextAreaFor(model => model.Comentario, new { @class = "form-control", id= "txtComentario" })
             </dd>
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Cargo.CargoNombre)
@@ -72,23 +111,27 @@
             <dt class="col-sm-2">
                 <label>Modificar Estado</label>
             </dt>
-            <dd class="col-sm-10">
-                @Html.DropDownListFor(m => m.EstadosId, new SelectList(ViewData["EstadoS"] as IEnumerable<SelectListItem>, "Value", "Text"), new { @class = "form-control", @id="DropEstado"})
+
+            <dd class="col-sm-10" id="vamos">
+                <label id="notifica">
+                    Lo sentimos la opcion <b>Modificar Estado</b> no aparece disponible debido
+                    a que no se ha realizado la primera revision.
+                </label>
+                @Html.DropDownListFor(m => m.EstadosId, new SelectList(ViewData["EstadoS"] as IEnumerable<SelectListItem>, "Value", "Text"), new { @class = "form-control", id = "Estado" })
             </dd>
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Vacaciones.VacacionesEstado)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Vacaciones.VacacionesTiempo)
+                @Html.DisplayFor(model => model.Empleado.EmpDiasvacaciones)
             </dd>
         </dl>
-        <input type="submit" name="Modificar" asp-action="ModificarDetallesDepaJefe" asp-route-id="@Model.SolicitudId" value="ModificarDetallesDepaJefe" class="btn btn-primary" />
+        <input id="Boton_Modifica" type="submit" name="Modificar" asp-action="ModificarDetallesDepaJefe" asp-route-id="@Model.SolicitudId" value="Modificar Solicitud" class="btn btn-primary" />
     </form>
     <br />
-<a asp-action="PerfilJefe" type="submit" class="btn btn-primary">Regresar</a>
+    <a asp-action="PerfilJefe" type="submit" class="btn btn-primary">Regresar</a>
 
 </div>
 
-    
-        
-        
+
+

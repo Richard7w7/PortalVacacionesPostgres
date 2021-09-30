@@ -48,12 +48,17 @@ namespace ControlPostgres.Controllers
 
             return View(usuario);
         }
+        public IActionResult PerfilDirector()
+        {
+            usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
+
+            return View(usuario);
+        }
         public IActionResult PerfilEncargado()
         {
             usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
             return View(usuario);
         }
-
         [HttpPost]
         public IActionResult RegistrarSolicitud(TbSolicitude registro)
         {
@@ -101,7 +106,6 @@ namespace ControlPostgres.Controllers
                 throw;
             }
         }
-
         public IActionResult ListarSolicitudEmpleado()
         {
             usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
@@ -109,15 +113,27 @@ namespace ControlPostgres.Controllers
 
             return View(solicitudes.ToList());
         }
-
-        public IActionResult SolicitudesDepartamento()
+        public IActionResult SolicitudesDepartamentoJefe()
         {
             usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));                                                         //.Where(x => x.Depto_ID == rama.Depto_ID)
             var solicitudes = bd.TbSolicitudes.Include(t => t.Cargo).Include(t => t.Depto).Include(t => t.Empleado).Include(t => t.Estados).Include(t => t.Vacaciones).Where(x => x.DeptoId == usuario.Empleado.DeptoId).ToArray();
 
             return View(solicitudes.ToList());
         }
+        public IActionResult SolicitudesDepartamentoDirector()
+        {
+            usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));                                                         //.Where(x => x.Depto_ID == rama.Depto_ID)
+            var solicitudes = bd.TbSolicitudes.Include(t => t.Cargo).Include(t => t.Depto).Include(t => t.Empleado).Include(t => t.Estados).Include(t => t.Vacaciones).Where(x => x.DeptoId == usuario.Empleado.DeptoId).ToArray();
 
+            return View(solicitudes.ToList());
+        }
+        public IActionResult SolicitudesDepartamentoEncargado()
+        {
+            usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
+            var solicitudes = bd.TbSolicitudes.Include(t => t.Cargo).Include(t => t.Depto).Include(t => t.Empleado).Include(t => t.Estados).Include(t => t.Vacaciones).Where(x => x.DeptoId == usuario.Empleado.DeptoId).ToArray();
+
+            return View(solicitudes.ToList());
+        }
         public async Task<IActionResult> Detalles(int? id)
         {
             if (usuario.Empleado.DeptoId == 1 && usuario.Empleado.CargoId == 5)
@@ -186,7 +202,6 @@ namespace ControlPostgres.Controllers
 
             return NotFound();
         }
-
         public async Task<IActionResult> DetallesDepa(int? id)
         {
             if (usuario.Empleado.DeptoId == 1 && usuario.Empleado.CargoId == 2)
@@ -207,6 +222,8 @@ namespace ControlPostgres.Controllers
                 {
                     return NotFound();
                 }
+                int dato = tbSolicitude.EstadosId;
+                ViewData["Revision"] = dato;
                 var listadoestado = new SelectList(bd.TbEstadosolicitudes.Where(x => x.EstadosId != 2)
                 .Where(x => x.EstadosId != 1), "EstadosId", "EstadosNombre");
                 ViewData["EstadoS"] = listadoestado;
@@ -230,16 +247,14 @@ namespace ControlPostgres.Controllers
                 {
                     return NotFound();
                 }
-                //EN ESTE VIEWDATA IMPORTABA LA TABLA DE ESTADOSSOLICITUDES SIN CONDICIONES
-                //ViewData["EstadoS"] = new SelectList(bd.TbEstadosolicitudes, "EstadosId", "EstadosNombre");
+                ViewData["Revision"] = tbSolicitude.EstadosId;
                 var listadoestado = new SelectList(bd.TbEstadosolicitudes.Where(x => x.EstadosId != 1)
                 .Where(x => x.EstadosId != 3).Where(x => x.EstadosId != 4), "EstadosId", "EstadosNombre");
                 ViewData["EstadoS"] = listadoestado;
-                return View("DetallesDepaEncargado", tbSolicitude);
+                return RedirectToAction("DetallesDepaEncargado", tbSolicitude);
             }
             return NotFound();
         }
-
         public async Task <IActionResult> DetallesDepaEncargado(int? id)
         {
             if (id == null)
@@ -258,7 +273,9 @@ namespace ControlPostgres.Controllers
             {
                 return NotFound();
             }
-            ViewData["EstadoS"] = new SelectList(bd.TbEstadosolicitudes, "EstadosId", "EstadosNombre");
+            ViewBag.Estado = tbSolicitude.EstadosId;
+            ViewData["EstadoS"] = new SelectList(bd.TbEstadosolicitudes.Where(x => x.EstadosId != 1)
+                .Where(x => x.EstadosId != 3).Where(x => x.EstadosId != 4), "EstadosId", "EstadosNombre");
             return View("DetallesDepaEncargado", tbSolicitude);
 
         }
@@ -280,57 +297,39 @@ namespace ControlPostgres.Controllers
             {
                 return NotFound();
             }
-            ViewData["EstadoS"] = new SelectList(bd.TbEstadosolicitudes, "EstadosId", "EstadosNombre");
+
+            ViewBag.Estado = Convert.ToInt32(tbSolicitude.EstadosId);
+            ViewData["EstadoS"] = new SelectList(bd.TbEstadosolicitudes.Where(x => x.EstadosId != 1)
+                .Where(x => x.EstadosId != 2).Where(x => x.EstadosId != 4), "EstadosId", "EstadosNombre");
             return View("DetallesDepaJefe", tbSolicitude);
         }
-        public async Task<IActionResult> ModificarDetallesDepaEncargado(int? id, TbSolicitude tbSolicitudes)
+        public async Task<IActionResult> DetallesDepaDirector(int? id)
         {
-
             if (id == null)
             {
                 return NotFound();
             }
-            ViewData["EstadoS"] = new SelectList(bd.TbEstadosolicitudes, "EstadosId", "EstadosNombre");
-            var tbSolicitude = await bd.TbSolicitudes
-               .Include(t => t.Cargo)
-               .Include(t => t.Depto)
-               .Include(t => t.Empleado)
-               .Include(t => t.Estados)
-               .Include(t => t.Vacaciones)
-               .FirstOrDefaultAsync(m => m.SolicitudId == id);
 
-            tbSolicitude.Comentario = tbSolicitudes.Comentario;
-            tbSolicitude.EstadosId = tbSolicitudes.EstadosId;
-            if (id != tbSolicitude.SolicitudId)
+            var tbSolicitude = await bd.TbSolicitudes
+                .Include(t => t.Cargo)
+                .Include(t => t.Depto)
+                .Include(t => t.Empleado)
+                .Include(t => t.Estados)
+                .Include(t => t.Vacaciones)
+                .FirstOrDefaultAsync(m => m.SolicitudId == id);
+            if (tbSolicitude == null)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    bd.Update(tbSolicitude);
-                    await bd.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TbSolicitudeExists(tbSolicitude.SolicitudId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                //return RedirectToAction(nameof(Index));
-                return View("DetallesDepaEncargado", tbSolicitude);
-            }
-            return View("DetallesDepaEncargado", tbSolicitude);
+            ViewBag.Estado = Convert.ToInt32(tbSolicitude.EstadosId);
+            ViewData["EstadoS"] = new SelectList(bd.TbEstadosolicitudes.Where(x => x.EstadosId != 1)
+                .Where(x => x.EstadosId != 2).Where(x => x.EstadosId != 3), "EstadosId", "EstadosNombre");
+            return View("DetallesDepaDirector", tbSolicitude);
         }
-        public async Task<IActionResult> ModificarDetallesDepaJefe(int? id,TbSolicitude tbSolicitudes)
+        public async Task<IActionResult> ModificarDetallesDepaEncargado(int? id, TbSolicitude tbSolicitudes)
         {
+            usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
             
             if (id == null)
             {
@@ -352,10 +351,57 @@ namespace ControlPostgres.Controllers
                 return NotFound();
             }
 
-            if(tbSolicitudes.EstadosId == 4)
+            if (ModelState.IsValid)
             {
-                int diasresta = tbSolicitude.CantidadDias;
-                
+                try
+                {
+                    bd.Update(tbSolicitude);
+                    await bd.SaveChangesAsync();
+
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!TbSolicitudeExists(tbSolicitude.SolicitudId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                //return RedirectToAction(nameof(Index));
+                var solicitudes = bd.TbSolicitudes.Include(t => t.Cargo).Include(t => t.Depto).Include(t => t.Empleado).Include(t => t.Estados).Include(t => t.Vacaciones).Where(x => x.DeptoId == usuario.Empleado.DeptoId).ToArray();
+                return View("SolicitudesDepartamentoEncargado", solicitudes.ToList());
+            }
+            return NotFound();
+        }
+        public async Task<IActionResult> ModificarDetallesDepaJefe(int? id,TbSolicitude tbSolicitudes)
+        {
+            usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
+            
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+            ViewData["EstadoS"] = new SelectList(bd.TbEstadosolicitudes, "EstadosId", "EstadosNombre");
+            var tbSolicitude = await bd.TbSolicitudes
+               .Include(t => t.Cargo)
+               .Include(t => t.Depto)
+               .Include(t => t.Empleado)
+               .Include(t => t.Estados)
+               .Include(t => t.Vacaciones)
+               .FirstOrDefaultAsync(m => m.SolicitudId == id);
+
+            tbSolicitude.Comentario = tbSolicitudes.Comentario;
+            tbSolicitude.EstadosId = tbSolicitudes.EstadosId;
+            if (id != tbSolicitude.SolicitudId)
+            {
+                return NotFound();
+            }
+
+           
                 if (ModelState.IsValid)
                 {
                     try
@@ -375,9 +421,119 @@ namespace ControlPostgres.Controllers
                         }
                     }
                     //return RedirectToAction(nameof(Index));
-                    return View("DetallesDepaJefe", tbSolicitude);
+                    var solicitudes = bd.TbSolicitudes.Include(t => t.Cargo).Include(t => t.Depto).Include(t => t.Empleado).Include(t => t.Estados).Include(t => t.Vacaciones).Where(x => x.DeptoId == usuario.Empleado.DeptoId).ToArray();
+                    return View("SolicitudesDepartamentoJefe", solicitudes.ToList());
                 }
+                return NotFound();
+            
 
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    bd.Update(tbSolicitude);
+                    await bd.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!TbSolicitudeExists(tbSolicitude.SolicitudId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return View("DetallesDepaJefe", tbSolicitude);
+            }
+            return View("DetallesDepaJefe", tbSolicitude);
+        }
+        public async Task<IActionResult> ModificarDetallesDepaDirector(int? id, TbSolicitude tbSolicitudes)
+        {
+            usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
+
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+            ViewData["EstadoS"] = new SelectList(bd.TbEstadosolicitudes, "EstadosId", "EstadosNombre");
+            var tbSolicitude = await bd.TbSolicitudes
+               .Include(t => t.Cargo)
+               .Include(t => t.Depto)
+               .Include(t => t.Empleado)
+               .Include(t => t.Estados)
+               .Include(t => t.Vacaciones)
+               .FirstOrDefaultAsync(m => m.SolicitudId == id);
+            string comentario = tbSolicitude.Comentario;
+            int estadoid = tbSolicitude.EstadosId;
+            tbSolicitude.Comentario = tbSolicitudes.Comentario;
+            tbSolicitude.EstadosId = tbSolicitudes.EstadosId;
+            if (id != tbSolicitude.SolicitudId)
+            {
+                return NotFound();
+            }
+
+            if (tbSolicitudes.EstadosId == 4)
+            {
+                int diasantiguos = (int)tbSolicitude.Empleado.EmpDiasvacaciones;
+                int diasresta = tbSolicitude.CantidadDias;
+                int diasrestantes = (int)(tbSolicitude.Empleado.EmpDiasvacaciones - diasresta);
+                tbSolicitude.Empleado.EmpDiasvacaciones = diasrestantes;
+                if (tbSolicitude.Empleado.EmpDiasvacaciones < 0)
+                {
+                    tbSolicitude.Empleado.EmpDiasvacaciones = diasantiguos;
+                    tbSolicitude.Comentario = "Lo sentimos la solicitud fue denegada automaticamente debido a que los dias seleccionados" +
+                        " son mayor a la cantidad de dias restantes para vacaciones del empleado";
+                    tbSolicitude.EstadosId = 5;
+                    if (ModelState.IsValid)
+                    {
+                        try
+                        {
+                            bd.Update(tbSolicitude);
+                            await bd.SaveChangesAsync();
+
+                        }
+                        catch (DbUpdateConcurrencyException)
+                        {
+                            if (!TbSolicitudeExists(tbSolicitude.SolicitudId))
+                            {
+                                return NotFound();
+                            }
+                            else
+                            {
+                                throw;
+                            }
+                        }
+                        var solicitudes = bd.TbSolicitudes.Include(t => t.Cargo).Include(t => t.Depto).Include(t => t.Empleado).Include(t => t.Estados).Include(t => t.Vacaciones).Where(x => x.DeptoId == usuario.Empleado.DeptoId).ToArray();
+                        return View("SolicitudesDepartamentoDirector", solicitudes.ToList());
+                    }
+                    return NotFound();
+
+                }
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        bd.Update(tbSolicitude);
+                        await bd.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!TbSolicitudeExists(tbSolicitude.SolicitudId))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                    var solicitudes = bd.TbSolicitudes.Include(t => t.Cargo).Include(t => t.Depto).Include(t => t.Empleado).Include(t => t.Estados).Include(t => t.Vacaciones).Where(x => x.DeptoId == usuario.Empleado.DeptoId).ToArray();
+                    return View("SolicitudesDepartamentoDirector", solicitudes.ToList());
+                }
+                return NotFound();
             }
 
             if (ModelState.IsValid)
@@ -398,10 +554,9 @@ namespace ControlPostgres.Controllers
                         throw;
                     }
                 }
-                //return RedirectToAction(nameof(Index));
-                return View("DetallesDepaJefe", tbSolicitude);
+                return View("DetallesDepaDirector", tbSolicitude);
             }
-            return View("DetallesDepaJefe", tbSolicitude);
+            return View("DetallesDepaDirector", tbSolicitude);
         }
         private bool TbSolicitudeExists(int id)
         {

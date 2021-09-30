@@ -37,12 +37,16 @@
                 <button value="RegistrarSolicitud" type="submit" class="btn btn-primary">Crear Solicitud</button>
             </div>
         </form>
-        <p>
-            @Html.ActionLink("Ver Solicitudes", "ListarSolicitudEmpleado", "Perfil", new { @class = "btn btn-primary", @style = "background-color:#17355f; color: #f8d964" })
-        </p>
-        <p>
-            @Html.ActionLink("Ver Solicitudes del Departamento", "SolicitudesDepartamento", "Perfil", new { @class = "btn btn-primary", @style = "background-color:#17355f; color: #f8d964" })
-        </p>
+        <form asp-action="ListarSolicitudEmpleado">
+            <div class="form-group">
+                <button value="ListarSolicitudEmpleado" type="submit" class="btn btn-primary">Ver mis solicitudes</button>
+            </div>
+        </form>
+        <form asp-action="SolicitudesDepartamentoJefe">
+            <div class="form-group">
+                <button value="SolicitudesDepartamentoJefe" type="submit" class="btn btn-primary">Solicitudes Departamentos</button>
+            </div>
+        </form>
     </div>
 </div>
 

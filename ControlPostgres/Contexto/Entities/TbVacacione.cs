@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 #nullable disable
 
@@ -14,6 +15,7 @@ namespace ControlPostgres.Contexto.Entities
         }
 
         public int VacacionesId { get; set; }
+        [Display(Name = "Cantidad de dias restantes")]
         public string VacacionesEstado { get; set; }
         public int VacacionesTiempo { get; set; }
 

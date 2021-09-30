@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 #nullable disable
 
@@ -16,7 +15,6 @@ namespace ControlPostgres.Contexto.Entities
 
         public int CargoId { get; set; }
         public int DeptoId { get; set; }
-        [Display(Name = "Cargo que desempeña")]
         public string CargoNombre { get; set; }
         public string CargoDescripcion { get; set; }
 

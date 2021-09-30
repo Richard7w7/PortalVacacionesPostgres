@@ -5,7 +5,17 @@
 
             document.getElementById('notifica').style.visibility = 'hidden';
             document.getElementById('notifica').style.display = "none";
-            if (@ViewBag.Estado == 2) {
+            if (@ViewBag.Estado == 1 || @ViewBag.Estado == 2) {
+                document.getElementById('Estado').style.visibility = 'hidden';
+                document.getElementById('Estado').style.display = 'none';
+                document.getElementById('notifica').style.visibility = 'visible';
+                document.getElementById('notifica').style.display = 'initial';
+                document.getElementById('Boton_Modifica').style.visibility = 'hidden';
+                document.getElementById('Boton_Modifica').style.display = 'none';
+                document.getElementById('txtComentario').style.visibility = 'hidden';
+                document.getElementById('txtComentario').style.display = 'none';
+            }
+            if (@ViewBag.Estado == 5) {
                 document.getElementById('Estado').style.visibility = 'hidden';
                 document.getElementById('Estado').style.display = 'none';
                 document.getElementById('notifica').style.visibility = 'visible';
@@ -22,11 +32,9 @@
 @{ ViewData["Title"] = "Detalles"; }
 
 
-
-
 <div>
-    <form asp-action="ModificarDetallesDepaEncargado">
-        <h4>Detalles de la Solicitud del colaborador @Model.Empleado.EmpleadoNombre1 @Model.Empleado.EmpleadoApellido1 Encargado es aqui</h4>
+    <form asp-action="ModificarDetallesDepaJefe">
+        <h4>DetallesDepaJefe Detalles de la Solicitud del colaborador @Html.DisplayFor(model => model.Empleado.EmpleadoNombre1) @Html.DisplayFor(model => model.Empleado.EmpleadoApellido1)</h4>
         <hr />
         <dl class="row">
             <dt class="col-sm-2">
@@ -63,7 +71,7 @@
                 <label>Agregar Comentario</label>
             </dt>
             <dd class="col-sm-10">
-                @Html.TextAreaFor(model => model.Comentario, new { @class="form-control", id="txtComentario"})
+                @Html.TextAreaFor(model => model.Comentario, new { @class = "form-control", id= "txtComentario" })
             </dd>
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Cargo.CargoNombre)
@@ -92,9 +100,11 @@
             <dt class="col-sm-2">
                 <label>Modificar Estado</label>
             </dt>
-            <dd class="col-sm-10">
+
+            <dd class="col-sm-10" id="vamos">
                 <label id="notifica">
-                    Ya no puedes <b>Modificar</b> la solicitud debido a que ya paso la primer revisión.
+                    Lo sentimos la opcion <b>Modificar Estado</b> no aparece disponible debido
+                    a que no se han realizado las respectivas revisiones.
                 </label>
                 @Html.DropDownListFor(m => m.EstadosId, new SelectList(ViewData["EstadoS"] as IEnumerable<SelectListItem>, "Value", "Text"), new { @class = "form-control", id = "Estado" })
             </dd>
@@ -105,8 +115,12 @@
                 @Html.DisplayFor(model => model.Empleado.EmpDiasvacaciones)
             </dd>
         </dl>
-        <input type="submit" id="Boton_Modifica" name="Modificar" asp-action="ModificarDetallesDepaEncargado" asp-route-id="@Model.SolicitudId" value="Modificar Solicitud" class="btn btn-primary" />
+        <input id="Boton_Modifica" type="submit" name="Modificar" asp-action="ModificarDetallesDepaDirector" asp-route-id="@Model.SolicitudId" value="Modificar Solicitud" class="btn btn-primary" />
     </form>
     <br />
-    <a asp-action="PerfilEncargado" type="submit" class="btn btn-primary">Regresar</a>
+    <a asp-action="PerfilDirector" type="submit" class="btn btn-primary">Regresar</a>
+
 </div>
+
+
+

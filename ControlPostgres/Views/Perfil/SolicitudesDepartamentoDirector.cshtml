@@ -57,10 +57,10 @@
                     @Html.DisplayFor(modelItem => item.Estados.EstadosNombre)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Vacaciones.VacacionesTiempo)
+                    @Html.DisplayFor(modelItem => item.Empleado.EmpDiasvacaciones)
                 </td>
                 <td>
-                    <a asp-action="DetallesDepa" asp-route-id="@item.SolicitudId" class="btn btn-primary glyphicon glyphicon-pencil">Detalles</a>
+                    <a asp-action="DetallesDepaDirector" asp-route-id="@item.SolicitudId" class="btn btn-primary glyphicon glyphicon-pencil">Detalles</a>
                 </td>
             </tr>
         }

@@ -85,7 +85,7 @@ namespace ControlPostgres.Controllers
                     user = bd.TbEmpleados.FirstOrDefault(u => u.EmpleadoCodigo == usuario.EmpleadoCodigo && u.EmpleadoContraseña == usuario.EmpleadoContraseña);
                     if (user != null)
                     {
-                        if (user.DeptoId == 1 && user.CargoId == 5)
+                        if (user.DeptoId == 1 && user.CargoId == 5||user.DeptoId == 1 && user.CargoId == 6)
                         {
                             var claims = new List<Claim>
                 {
@@ -101,6 +101,20 @@ namespace ControlPostgres.Controllers
 
                         }
                         else if (user.DeptoId == 1 && user.CargoId == 2)
+                        {
+                            var claims = new List<Claim>
+                            {
+                            new Claim(ClaimTypes.Name,user.EmpleadoCodigo)
+                            };
+                            var identity = new ClaimsIdentity(
+                                claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                            var principal = new ClaimsPrincipal(identity);
+                            var props = new AuthenticationProperties();
+                            HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, props).Wait();
+                            HttpContext.Session.SetString("SessionUser", JsonConvert.SerializeObject(user));
+                            return RedirectToAction("PerfilDirector", "Perfil");
+                        }
+                        else if (user.DeptoId == 1 && user.CargoId == 3)
                         {
                             var claims = new List<Claim>
                 {
@@ -128,6 +142,7 @@ namespace ControlPostgres.Controllers
                             HttpContext.Session.SetString("SessionUser", JsonConvert.SerializeObject(user));
                             return RedirectToAction("PerfilEncargado", "Perfil");
                         }
+                        
 
                     }
                     return RedirectToAction("Index", "Home");

@@ -20,7 +20,7 @@ namespace ControlPostgres.Contexto.Entities
         public int EstadosId { get; set; }
         [Display(Name = "Fecha de la Solicitud")]
         public DateTime SolicitudFecha { get; set; }
-        [Display(Name = "Detalles de la Solicitud")]
+        [Display(Name = "Detalles de la Solicitud ")]
         public string DetallesSolicitud { get; set; }
         [Display(Name = "Fechas Seleccionadas")]
         public string FechasSeleccionadas { get; set; }
