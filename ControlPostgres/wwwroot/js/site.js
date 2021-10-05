@@ -2,3 +2,8 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+
+cambiarstyle => {
+    document.getElementById('NavLogin').style.visibility = 'hidden';
+    document.getElementById('NavLogin').style.display = "none";
+}

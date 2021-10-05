@@ -15,6 +15,32 @@ namespace ControlPostgres.RepositorioClases
 {
     public class Repositorio : Controller
     {
+
+        //creacion de enumerables para no tener numeros magicos
+        enum EstadoTrabajador
+        {
+            Activo = 1
+        }
+
+        enum EstadoSolicitud
+        {
+            Enviada = 1
+        }
+
+        enum TiempoLaborando
+        {
+            UnanioaCincoanios=1,
+            CincoaniosyUndia = 2,
+            DiezaniosyUndia = 3,
+        }
+
+        enum DiasVacaciones
+        {
+            VeinteDias = 20,
+            VeintiCinco = 25,
+            TreintaDias = 30,
+        }
+
         BD_ControlVacacionesContext bd = new BD_ControlVacacionesContext();
         TbEmpleado emp = new TbEmpleado();
 
@@ -23,7 +49,7 @@ namespace ControlPostgres.RepositorioClases
             Boolean logico = false;
             try
             {
-                model.EmpleadoEstado = 1;
+                model.EmpleadoEstado = (int)EstadoTrabajador.Activo;
                 TbEmpleado obj = new TbEmpleado();
                 obj.EmpleadoCodigo = model.EmpleadoCodigo;
                 obj.EmpleadoContraseña = model.EmpleadoContraseña;
@@ -39,19 +65,19 @@ namespace ControlPostgres.RepositorioClases
                 obj.CargoId = model.CargoId;
                 obj.DeptoId = model.DeptoId;
                 obj.VacacionesId = model.VacacionesId;
-                if(model.VacacionesId == 1)
+                if(model.VacacionesId == (int)TiempoLaborando.UnanioaCincoanios)
                 {
-                    obj.EmpDiasvacaciones = 20;
-                }else if(model.VacacionesId == 2)
+                    obj.EmpDiasvacaciones = (int)DiasVacaciones.VeinteDias;
+                }else if(model.VacacionesId == (int)TiempoLaborando.CincoaniosyUndia)
                 {
-                    obj.EmpDiasvacaciones = 25;
+                    obj.EmpDiasvacaciones = (int)DiasVacaciones.VeintiCinco;
                 }
-                else if (model.VacacionesId == 3)
+                else if (model.VacacionesId == (int)TiempoLaborando.DiezaniosyUndia)
                 {
-                    obj.EmpDiasvacaciones = 30;
+                    obj.EmpDiasvacaciones = (int)DiasVacaciones.TreintaDias;
                 }
                 obj.RolId = model.RolId;
-                obj.EmpleadoEstado = 1;
+                obj.EmpleadoEstado = (int)EstadoTrabajador.Activo;
 
                 bd.TbEmpleados.Add(obj);
                 bd.SaveChanges();
@@ -152,9 +178,9 @@ namespace ControlPostgres.RepositorioClases
             try
             {
 
-                registro.SolicitudFecha = DateTime.Now;
+                registro.SolicitudFecha = DateTime.Now.Date;
                 string[] caracter = registro.FechasSeleccionadas.Split(',');
-                registro.EstadosId = 1;
+                registro.EstadosId = (int)EstadoSolicitud.Enviada;
                 TbSolicitude obj = new TbSolicitude();
                 obj.DetallesSolicitud = registro.DetallesSolicitud;
                 obj.SolicitudFecha = registro.SolicitudFecha;
@@ -180,6 +206,6 @@ namespace ControlPostgres.RepositorioClases
             return logico;
         }
 
-
+         
     }
 }

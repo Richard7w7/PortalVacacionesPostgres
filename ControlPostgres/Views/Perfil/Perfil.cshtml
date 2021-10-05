@@ -8,7 +8,10 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script>
         $(function () {
-            $('#multidate').multiDatesPicker();
+            $('#multidate').multiDatesPicker({
+                dateFormat: 'dd/mm/yy',
+                beforeShowDay: $.datepicker.noWeekends
+            });
         });
     </script>
 
@@ -22,6 +25,7 @@
     <div class="col-md-4">
         <label style="font-size:25px">Crear Solicitud de Vacaciones</label>
         <form asp-action="RegistrarSolicitud">
+            <div asp-validation-summary="ModelOnly"></div>
             <div class="form-group">
                 <label asp-for="DetallesSolicitud" class="control-label">Detalle la solicitud</label>
                 <input asp-for="DetallesSolicitud" class="form-control" />

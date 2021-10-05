@@ -33,35 +33,39 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SolicitudFecha)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DetallesSolicitud)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CantidadDias)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Comentario)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Depto.DeptoNombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Empleado.EmpleadoCodigo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Estados.EstadosNombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Empleado.EmpDiasvacaciones)
-                </td>
-                <td>
-                    <a asp-action="Detalles" asp-route-id="@item.SolicitudId" class="btn btn-primary glyphicon glyphicon-pencil">Detalles</a>
-                </td>
-            </tr>
-        }
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.SolicitudFecha)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.DetallesSolicitud)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.CantidadDias)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Comentario)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Depto.DeptoNombre)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Empleado.EmpleadoCodigo)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Estados.EstadosNombre)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Empleado.EmpDiasvacaciones)
+    </td>
+    <td>
+        <a asp-action="Detalles" asp-route-id="@item.SolicitudId" class="btn btn-primary glyphicon glyphicon-pencil">Detalles</a>
+    </td>
+</tr>}
     </tbody>
 </table>
+
+<form asp-action="RetornarPerfil">
+    <button value="RetornarPerfil" class="btn btn-primary">Regresar</button>
+</form>
+

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 #nullable disable
 
@@ -15,6 +16,7 @@ namespace ControlPostgres.Contexto.Entities
         }
 
         public int DeptoId { get; set; }
+        [Display(Name = "Departamento al que Pertenece")]
         public string DeptoNombre { get; set; }
         public string DeptoDescripcion { get; set; }
 

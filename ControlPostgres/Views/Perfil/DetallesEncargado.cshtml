@@ -38,19 +38,31 @@
             @Html.DisplayFor(model => model.Comentario)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Cargo)
+            @Html.DisplayNameFor(model => model.Cargo.CargoNombre)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Cargo.CargoDescripcion)
+            @Html.DisplayFor(model => model.Cargo.CargoNombre)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Depto)
+            @Html.DisplayNameFor(model => model.Depto.DeptoNombre)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Depto.DeptoDescripcion)
+            @Html.DisplayFor(model => model.Depto.DeptoNombre)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Empleado)
+            @Html.DisplayNameFor(model => model.Empleado.EmpleadoCodigo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Empleado.EmpleadoCodigo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Empleado.EmpleadoNombre1)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Empleado.EmpleadoNombre1)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Empleado.EmpleadoApellido1)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Empleado.EmpleadoApellido1)
@@ -62,7 +74,7 @@
             @Html.DisplayFor(model => model.Estados.EstadosNombre)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Vacaciones)
+            @Html.DisplayNameFor(model => model.Vacaciones.VacacionesEstado)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Empleado.EmpDiasvacaciones)

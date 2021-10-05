@@ -82,7 +82,7 @@
                 <label>Agregar Comentario</label>
             </dt>
             <dd class="col-sm-10">
-                @Html.TextAreaFor(model => model.Comentario, new { @class = "form-control", id= "txtComentario" })
+                @Html.TextAreaFor(model => model.Comentario, new { @class = "form-control", id = "txtComentario" })
             </dd>
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Cargo.CargoNombre)
@@ -101,6 +101,18 @@
             </dt>
             <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.Empleado.EmpleadoCodigo)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Empleado.EmpleadoNombre1)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Empleado.EmpleadoNombre1)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Empleado.EmpleadoApellido1)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Empleado.EmpleadoApellido1)
             </dd>
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Estados.EstadosNombre)

@@ -29,9 +29,11 @@ namespace ControlPostgres.Contexto.Entities
         [Required(ErrorMessage = "Ingrese su Contraseña")]
         public string EmpleadoContraseña { get; set; }
         [Required(ErrorMessage = "Campo bligatorio")]
+        [Display(Name = "Primer Nombre")]
         public string EmpleadoNombre1 { get; set; }
         public string EmpleadoNombre2 { get; set; }
         [Required(ErrorMessage = "Campo bligatorio")]
+        [Display(Name = "Primer Apellido")]
         public string EmpleadoApellido1 { get; set; }
         public string EmpleadoApellido2 { get; set; }
         public string ApellidoCasada { get; set; }

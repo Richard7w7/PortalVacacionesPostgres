@@ -15,6 +15,21 @@ using System.Threading.Tasks;
 
 namespace ControlPostgres.Controllers
 {
+    enum Departamento
+    {
+        Monitoreo =1
+    }
+
+    enum CargoDepaPM
+    {
+
+        DirectorPM = 2,
+        JefeInmediatoMonitoreo = 3,
+        PerfilEncargado = 4,
+        MonitordeCamaras = 5,
+        EncargadoTurno = 6
+
+    }
     public class RegistroController : Controller
     {
         BD_ControlVacacionesContext bd = new BD_ControlVacacionesContext();
@@ -80,12 +95,14 @@ namespace ControlPostgres.Controllers
 
             try
             {
-                if (!string.IsNullOrEmpty(usuario.EmpleadoCodigo) && !string.IsNullOrEmpty(usuario.EmpleadoContraseña))
-                {
+                
+                
+                    if (!string.IsNullOrEmpty(usuario.EmpleadoCodigo) && !string.IsNullOrEmpty(usuario.EmpleadoContraseña))
+                    {
                     user = bd.TbEmpleados.FirstOrDefault(u => u.EmpleadoCodigo == usuario.EmpleadoCodigo && u.EmpleadoContraseña == usuario.EmpleadoContraseña);
                     if (user != null)
                     {
-                        if (user.DeptoId == 1 && user.CargoId == 5||user.DeptoId == 1 && user.CargoId == 6)
+                        if (user.DeptoId == (int)Departamento.Monitoreo && user.CargoId == (int)CargoDepaPM.MonitordeCamaras||user.DeptoId == (int)Departamento.Monitoreo && user.CargoId == (int)CargoDepaPM.EncargadoTurno)
                         {
                             var claims = new List<Claim>
                 {
@@ -100,7 +117,7 @@ namespace ControlPostgres.Controllers
                             return RedirectToAction("PerfilColaborador", "Perfil");
 
                         }
-                        else if (user.DeptoId == 1 && user.CargoId == 2)
+                        else if (user.DeptoId == (int)Departamento.Monitoreo && user.CargoId == (int)CargoDepaPM.DirectorPM)
                         {
                             var claims = new List<Claim>
                             {
@@ -114,7 +131,7 @@ namespace ControlPostgres.Controllers
                             HttpContext.Session.SetString("SessionUser", JsonConvert.SerializeObject(user));
                             return RedirectToAction("PerfilDirector", "Perfil");
                         }
-                        else if (user.DeptoId == 1 && user.CargoId == 3)
+                        else if (user.DeptoId == (int)Departamento.Monitoreo && user.CargoId == (int)CargoDepaPM.JefeInmediatoMonitoreo)
                         {
                             var claims = new List<Claim>
                 {
@@ -128,7 +145,7 @@ namespace ControlPostgres.Controllers
                             HttpContext.Session.SetString("SessionUser", JsonConvert.SerializeObject(user));
                             return RedirectToAction("PerfilJefe", "Perfil");
                         }
-                        else if (user.DeptoId == 1 && user.CargoId == 4)
+                        else if (user.DeptoId == (int)Departamento.Monitoreo && user.CargoId == (int)CargoDepaPM.PerfilEncargado)
                         {
                             var claims = new List<Claim>
                             {
@@ -145,25 +162,25 @@ namespace ControlPostgres.Controllers
                         
 
                     }
-                    return RedirectToAction("Index", "Home");
-                }
+                        return View("Login");
+                    }
                 else
                 {
-                    return RedirectToAction("Index", "Home");
+                    return View("Login");
                 }
-
-            }
+                    
+                }
             catch (Exception)
             {
 
                 throw;
             }
         }
-        [HttpPost]
+        
         public async Task<IActionResult> Logout()
         {
-            await HttpContext.SignOutAsync();
-            return RedirectToAction("Index");
+            HttpContext.Session.Remove("SessionUser");
+            return RedirectToAction("Index","Home");
         }
     }
 }

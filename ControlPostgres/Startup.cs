@@ -41,7 +41,7 @@ namespace ControlPostgres
             services.AddDistributedMemoryCache();
             services.AddSession(); 
             services.AddMvc();
-
+            services.AddHttpContextAccessor();
             /*
              DE AQUI PARA AQUI PROBARE LO DE COOKIE AUTHENTICATION IN ASP.NET CORE
              */
