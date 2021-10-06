@@ -122,6 +122,7 @@ namespace ControlPostgres.Controllers
             Boolean respuesta;
             try
             {
+                if (registro.DetallesSolicitud!= null && registro.FechasSeleccionadas!=null) {
                 if (ModelState.IsValid)
                 {
                     respuesta = puente.CrearSolicitud(registro);
@@ -129,7 +130,7 @@ namespace ControlPostgres.Controllers
                     {
                         case true:
                             ModelState.Clear();
-                            return RedirectToAction("ListarSolicitudEmpleado");
+                            return RedirectToAction("ListarSolicitudEmpleadoRevisiones");
                         case false:
                             if (usuario.Empleado.DeptoId == 1 && usuario.Empleado.CargoId == 5 || usuario.Empleado.CargoId == 4)
                             {
@@ -167,6 +168,28 @@ namespace ControlPostgres.Controllers
                     else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.PerfilEncargado)
                     {
                         return View("PerfilEncargado",usuario);
+                    }
+
+                    return View(usuario);
+                }
+                }
+                else
+                {
+                    if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.MonitordeCamaras || usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.EncargadoTurno)
+                    {
+                        return View("PerfilColaborador", usuario);
+                    }
+                    else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.DirectorPM)
+                    {
+                        return View("PerfilDirector", usuario);
+                    }
+                    else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.JefeInmediatoMonitoreo)
+                    {
+                        return View("PerfilJefe", usuario);
+                    }
+                    else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.PerfilEncargado)
+                    {
+                        return View("PerfilEncargado", usuario);
                     }
 
                     return View(usuario);
@@ -647,6 +670,39 @@ namespace ControlPostgres.Controllers
         private bool TbSolicitudeExists(int id)
         {
             return bd.TbSolicitudes.Any(e => e.SolicitudId == id);
+        }
+
+        public async Task<IActionResult> ImprimirDocumento(int? id)
+        {
+            usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
+            var tbSolicitude = await bd.TbSolicitudes
+              .Include(t => t.Cargo)
+              .Include(t => t.Depto)
+              .Include(t => t.Empleado)
+              .Include(t => t.Estados)
+              .Include(t => t.Vacaciones)
+              .FirstOrDefaultAsync(m => m.SolicitudId == id);
+            string archivogenerado = generador.GenerateInvestorDocumentUser(tbSolicitude);
+
+            
+            if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.MonitordeCamaras || usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.EncargadoTurno)
+            {
+                return RedirectToAction("PerfilColaborador", "Perfil");
+            }
+            else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.DirectorPM)
+            {
+                return RedirectToAction("PerfilDirector", "Perfil");
+            }
+            else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.JefeInmediatoMonitoreo)
+            {
+                return RedirectToAction("PerfilJefe", "Perfil");
+            }
+            else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.PerfilEncargado)
+            {
+                return RedirectToAction("PerfilEncargado", "Perfil");
+            }
+            HttpContext.Session.Remove("SessionUser");
+            return RedirectToAction("Index", "Home");
         }
     }
 }

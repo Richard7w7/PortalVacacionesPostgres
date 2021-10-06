@@ -4,6 +4,12 @@ for details on configuring this project to bundle and minify static web assets. 
     --amarillo: #f8d964;
     --azul: #17355f;
 }
+
+html {
+    box-sizing: border-box;
+    font-size: 62.5%;
+}
+
 a.navbar-brand {
     white-space: normal;
     text-align: center;
@@ -101,4 +107,14 @@ body {
 
 #muni{
     color: var(--amarillo);
+}
+
+.botones {
+    display: grid; 
+    grid-template-columns: repeat(2, 7rem);
+    
+}
+
+.botones__boton2{
+    grid-column:2/3;
 }

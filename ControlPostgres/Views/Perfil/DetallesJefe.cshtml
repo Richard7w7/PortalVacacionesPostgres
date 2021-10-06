@@ -1,8 +1,6 @@
 ﻿@model ControlPostgres.Contexto.Entities.TbSolicitude
 
-@{
-    ViewData["Title"] = "Detalles";
-}
+@{ ViewData["Title"] = "Detalles"; }
 <div>
     <h4>Detalles de la Solicitud del colaborador @Model.Empleado.EmpleadoNombre1 @Model.Empleado.EmpleadoApellido1 Jefe</h4>
     <hr />
@@ -81,7 +79,12 @@
         </dd>
     </dl>
 </div>
-<div>
-    <!-- <a asp-action="Edit" asp-route-id="@Model.SolicitudId">Edit</a> |-->
-    <a asp-action="PerfilJefe" class="btn btn-primary">Regresar</a>
+
+<div class="botones">
+    <div class="botones__boton1">
+        <a asp-action="PerfilJefe" type="submit" class="btn btn-primary">Regresar</a>
+    </div>
+    <div class="botones__boton2">
+        <a asp-action="ImprimirDocumento" asp-route-id="@Model.SolicitudId" class="btn btn-primary">Imprimir</a>
+    </div>
 </div>
