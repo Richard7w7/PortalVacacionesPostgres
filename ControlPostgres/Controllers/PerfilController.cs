@@ -182,7 +182,18 @@ namespace ControlPostgres.Controllers
         public IActionResult ListarSolicitudEmpleado()
         {
             usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
-            var solicitudes = bd.TbSolicitudes.Include(t => t.Cargo).Include(t => t.Depto).Include(t => t.Empleado).Include(t => t.Estados).Include(t => t.Vacaciones).Where(x => x.EmpleadoId == usuario.Empleado.EmpleadoId).ToArray();
+            var solicitudes = bd.TbSolicitudes.Include(t => t.Cargo).Include(t => t.Depto).Include(t => t.Empleado).Include(t => t.Estados).Include(t => t.Vacaciones)
+                .Where(x => x.EmpleadoId == usuario.Empleado.EmpleadoId)
+                .Where(x => x.EstadosId == (int)EstadoSolicitud.Aprobada || x.EstadosId == (int)EstadoSolicitud.Denegado).ToArray();
+
+            return View(solicitudes.ToList());
+        }
+        public IActionResult ListarSolicitudEmpleadoRevisiones()
+        {
+            usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
+            var solicitudes = bd.TbSolicitudes.Include(t => t.Cargo).Include(t => t.Depto).Include(t => t.Empleado).Include(t => t.Estados).Include(t => t.Vacaciones)
+                .Where(x => x.EmpleadoId == usuario.Empleado.EmpleadoId)
+                .Where(x => x.EstadosId == (int)EstadoSolicitud.Enviada || x.EstadosId == (int)EstadoSolicitud.Revision_I || x.EstadosId == (int)EstadoSolicitud.Revision_II).ToArray();
 
             return View(solicitudes.ToList());
         }
@@ -519,30 +530,7 @@ namespace ControlPostgres.Controllers
                     return View("SolicitudesDepartamentoJefe", solicitudes.ToList());
                 }
                 return NotFound();
-            
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    bd.Update(tbSolicitude);
-                    await bd.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TbSolicitudeExists(tbSolicitude.SolicitudId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return View("DetallesDepaJefe", tbSolicitude);
             }
-            return View("DetallesDepaJefe", tbSolicitude);
-        }
         public async Task<IActionResult> ModificarDetallesDepaDirector(int? id, TbSolicitude tbSolicitudes)
         {
             usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
@@ -629,8 +617,7 @@ namespace ControlPostgres.Controllers
                             throw;
                         }
                     }
-                    var solicitudes = bd.TbSolicitudes.Include(t => t.Cargo).Include(t => t.Depto).Include(t => t.Empleado).Include(t => t.Estados).Include(t => t.Vacaciones).Where(x => x.DeptoId == usuario.Empleado.DeptoId).ToArray();
-                    return View("SolicitudesDepartamentoDirector", solicitudes.ToList());
+                    
                 }
                 return NotFound();
             }

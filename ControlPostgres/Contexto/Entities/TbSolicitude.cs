@@ -21,10 +21,9 @@ namespace ControlPostgres.Contexto.Entities
         [Display(Name = "Fecha de la Solicitud")]
         [DisplayFormat(DataFormatString = "{0:dd'/'MM'/'yyyy}", ApplyFormatInEditMode = true)]
         public DateTime SolicitudFecha { get; set; }
-        [Required(ErrorMessage = "Por favor detalle la solicitud")]
+        
         [Display(Name = "Detalles de la Solicitud ")]
         public string DetallesSolicitud { get; set; }
-        [Required(ErrorMessage = "Por favor Seleccione las fechas para vacacionar")]
         [Display(Name = "Fechas Seleccionadas")]
         public string FechasSeleccionadas { get; set; }
         [Display(Name = "Cantidad de Dias")]

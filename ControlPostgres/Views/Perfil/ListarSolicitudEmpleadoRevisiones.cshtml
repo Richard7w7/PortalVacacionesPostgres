@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<ControlPostgres.Contexto.Entities.TbSolicitude>
-    <h1>Solicitudes Aprobadas o Denegadas</h1>
+
+    <h1>Solicitudes pendientes de aprovacion o denegación</h1>
+
 <table class="table" id="Dame">
     <thead>
         <tr>
@@ -61,7 +63,8 @@
     <td>
         <a asp-action="Detalles" asp-route-id="@item.SolicitudId" class="btn btn-primary glyphicon glyphicon-pencil">Detalles</a>
     </td>
-</tr>}
+</tr>
+}
     </tbody>
 </table>
 
