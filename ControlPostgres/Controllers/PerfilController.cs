@@ -202,14 +202,20 @@ namespace ControlPostgres.Controllers
                 throw;
             }
         }
+        
         public IActionResult ListarSolicitudEmpleado()
         {
-            usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
-            var solicitudes = bd.TbSolicitudes.Include(t => t.Cargo).Include(t => t.Depto).Include(t => t.Empleado).Include(t => t.Estados).Include(t => t.Vacaciones)
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SessionUser").ToString())) {
+                string var = HttpContext.Session.GetString("SessionUser").ToString();
+                usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
+
+                var solicitudes = bd.TbSolicitudes.Include(t => t.Cargo).Include(t => t.Depto).Include(t => t.Empleado).Include(t => t.Estados).Include(t => t.Vacaciones)
                 .Where(x => x.EmpleadoId == usuario.Empleado.EmpleadoId)
                 .Where(x => x.EstadosId == (int)EstadoSolicitud.Aprobada || x.EstadosId == (int)EstadoSolicitud.Denegado).ToArray();
 
             return View(solicitudes.ToList());
+            }
+            return RedirectToAction("Index", "Home");
         }
         public IActionResult ListarSolicitudEmpleadoRevisiones()
         {
@@ -241,6 +247,7 @@ namespace ControlPostgres.Controllers
 
             return View(solicitudes.ToList());
         }
+        [HttpPost]
         public async Task<IActionResult> Detalles(int? id)
         {
             if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.MonitordeCamaras|| usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.EncargadoTurno)
@@ -330,6 +337,7 @@ namespace ControlPostgres.Controllers
 
             return NotFound();
         }
+        [HttpPost]
         public async Task<IActionResult> DetallesDepa(int? id)
         {
             if (usuario.Empleado.DeptoId == 1 && usuario.Empleado.CargoId == 2)
@@ -383,6 +391,7 @@ namespace ControlPostgres.Controllers
             }
             return NotFound();
         }
+        [HttpPost]
         public async Task <IActionResult> DetallesDepaEncargado(int? id)
         {
             if (id == null)
@@ -407,6 +416,7 @@ namespace ControlPostgres.Controllers
             return View("DetallesDepaEncargado", tbSolicitude);
 
         }
+        [HttpPost]
         public async Task<IActionResult> DetallesDepaJefe(int? id)
         {
             if (id == null)
@@ -431,6 +441,7 @@ namespace ControlPostgres.Controllers
                 .Where(x => x.EstadosId != 2).Where(x => x.EstadosId != 4), "EstadosId", "EstadosNombre");
             return View("DetallesDepaJefe", tbSolicitude);
         }
+        [HttpPost]
         public async Task<IActionResult> DetallesDepaDirector(int? id)
         {
             if (id == null)
@@ -455,6 +466,7 @@ namespace ControlPostgres.Controllers
                 .Where(x => x.EstadosId != 2).Where(x => x.EstadosId != 3), "EstadosId", "EstadosNombre");
             return View("DetallesDepaDirector", tbSolicitude);
         }
+        [HttpPost]
         public async Task<IActionResult> ModificarDetallesDepaEncargado(int? id, TbSolicitude tbSolicitudes)
         {
             usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
@@ -504,6 +516,7 @@ namespace ControlPostgres.Controllers
             }
             return NotFound();
         }
+        [HttpPost]
         public async Task<IActionResult> ModificarDetallesDepaJefe(int? id,TbSolicitude tbSolicitudes)
         {
             usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
@@ -554,6 +567,7 @@ namespace ControlPostgres.Controllers
                 }
                 return NotFound();
             }
+        [HttpPost]
         public async Task<IActionResult> ModificarDetallesDepaDirector(int? id, TbSolicitude tbSolicitudes)
         {
             usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
@@ -671,7 +685,7 @@ namespace ControlPostgres.Controllers
         {
             return bd.TbSolicitudes.Any(e => e.SolicitudId == id);
         }
-
+        [HttpPost]
         public async Task<IActionResult> ImprimirDocumento(int? id)
         {
             usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));

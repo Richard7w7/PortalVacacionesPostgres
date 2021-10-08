@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,10 +35,17 @@ namespace ControlPostgres
              DE AQUI PARA AQUI PROBARE LO DE COOKIE AUTHENTICATION IN ASP.NET CORE
              */
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options => {
+                .AddCookie(options =>
+                {
                     options.LoginPath = "/Registro/Login";
                     options.Cookie.Name = "AshProgHelpCookie";
-            });
+                    options.ExpireTimeSpan = TimeSpan.FromSeconds(10);
+                    
+
+                });
+
+
+
             services.AddDistributedMemoryCache();
             services.AddSession(); 
             services.AddMvc();
@@ -45,6 +53,21 @@ namespace ControlPostgres
             /*
              DE AQUI PARA AQUI PROBARE LO DE COOKIE AUTHENTICATION IN ASP.NET CORE
              */
+
+            /*esta es una prueba con otro tipo de autenticacion*/
+            //services.Configure<SecurityStampValidatorOptions>(Configuration.GetSection("SecurityStampValidatorOptions"));
+
+            //services.AddAuthentication().Services.ConfigureApplicationCookie(options =>
+            //{
+            //    var cookieAuthenticationOptions = Configuration
+            //       .GetSection(nameof(CookieAuthenticationOptions))
+            //       .Get<CookieAuthenticationOptions>();
+            //    if (cookieAuthenticationOptions == null)
+            //        return;
+
+            //    options.ExpireTimeSpan = cookieAuthenticationOptions.ExpireTimeSpan;
+            //    options.SlidingExpiration = cookieAuthenticationOptions.SlidingExpiration;
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,6 +83,7 @@ namespace ControlPostgres
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -76,5 +100,8 @@ namespace ControlPostgres
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+
+
+
     }
 }

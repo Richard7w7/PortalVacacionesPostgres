@@ -111,8 +111,11 @@ namespace ControlPostgres.Controllers
                             var identity = new ClaimsIdentity(
                                 claims, CookieAuthenticationDefaults.AuthenticationScheme);
                             var principal = new ClaimsPrincipal(identity);
-                            var props = new AuthenticationProperties();
-                            HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, props).Wait();
+                            var props = new AuthenticationProperties
+                            {
+                                IsPersistent = true
+                            };
+                           await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, props);
                             HttpContext.Session.SetString("SessionUser", JsonConvert.SerializeObject(user));
                             return RedirectToAction("PerfilColaborador", "Perfil");
 
