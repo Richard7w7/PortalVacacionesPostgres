@@ -31,6 +31,15 @@ namespace ControlPostgres
             services.AddDbContext<BD_ControlVacacionesContext>(options =>
                     options.UseNpgsql(Configuration.GetConnectionString("DbContext")));
 
+            /*configuracion encontrada en github*/
+            services.ConfigureApplicationCookie(o => o.Events = new CookieAuthenticationEvents());
+            services.Configure<SecurityStampValidatorOptions>(options => options.ValidationInterval = TimeSpan.FromSeconds(10));
+            services.AddAuthentication()
+                .Services.ConfigureApplicationCookie(options =>
+                {
+                    options.SlidingExpiration = true;
+                    options.ExpireTimeSpan = TimeSpan.FromSeconds(10);
+                });
             /*
              DE AQUI PARA AQUI PROBARE LO DE COOKIE AUTHENTICATION IN ASP.NET CORE
              */
@@ -39,35 +48,32 @@ namespace ControlPostgres
                 {
                     options.LoginPath = "/Registro/Login";
                     options.Cookie.Name = "AshProgHelpCookie";
-                    options.ExpireTimeSpan = TimeSpan.FromSeconds(10);
-                    
+                    options.SlidingExpiration = true;                    
 
                 });
 
 
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(15);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
 
             services.AddDistributedMemoryCache();
-            services.AddSession(); 
+            services.AddSession( options => { 
+            options.IdleTimeout = TimeSpan.FromMinutes(15);
+            options.Cookie.HttpOnly = true;
+            options.Cookie.IsEssential = true;
+             });
             services.AddMvc();
             services.AddHttpContextAccessor();
             /*
              DE AQUI PARA AQUI PROBARE LO DE COOKIE AUTHENTICATION IN ASP.NET CORE
              */
 
-            /*esta es una prueba con otro tipo de autenticacion*/
-            //services.Configure<SecurityStampValidatorOptions>(Configuration.GetSection("SecurityStampValidatorOptions"));
-
-            //services.AddAuthentication().Services.ConfigureApplicationCookie(options =>
-            //{
-            //    var cookieAuthenticationOptions = Configuration
-            //       .GetSection(nameof(CookieAuthenticationOptions))
-            //       .Get<CookieAuthenticationOptions>();
-            //    if (cookieAuthenticationOptions == null)
-            //        return;
-
-            //    options.ExpireTimeSpan = cookieAuthenticationOptions.ExpireTimeSpan;
-            //    options.SlidingExpiration = cookieAuthenticationOptions.SlidingExpiration;
-            //});
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -83,6 +89,8 @@ namespace ControlPostgres
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

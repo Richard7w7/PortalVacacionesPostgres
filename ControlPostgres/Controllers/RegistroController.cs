@@ -89,33 +89,30 @@ namespace ControlPostgres.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Login(TbEmpleado usuario)
+        public IActionResult Login(TbEmpleado usuario)
         {
             TbEmpleado user = new TbEmpleado();
 
             try
             {
-                
-                
-                    if (!string.IsNullOrEmpty(usuario.EmpleadoCodigo) && !string.IsNullOrEmpty(usuario.EmpleadoContraseña))
-                    {
+
+
+                if (!string.IsNullOrEmpty(usuario.EmpleadoCodigo) && !string.IsNullOrEmpty(usuario.EmpleadoContraseña))
+                {
                     user = bd.TbEmpleados.FirstOrDefault(u => u.EmpleadoCodigo == usuario.EmpleadoCodigo && u.EmpleadoContraseña == usuario.EmpleadoContraseña);
                     if (user != null)
                     {
-                        if (user.DeptoId == (int)Departamento.Monitoreo && user.CargoId == (int)CargoDepaPM.MonitordeCamaras||user.DeptoId == (int)Departamento.Monitoreo && user.CargoId == (int)CargoDepaPM.EncargadoTurno)
+                        if (user.DeptoId == (int)Departamento.Monitoreo && user.CargoId == (int)CargoDepaPM.MonitordeCamaras || user.DeptoId == (int)Departamento.Monitoreo && user.CargoId == (int)CargoDepaPM.EncargadoTurno)
                         {
                             var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name,user.EmpleadoCodigo)
-                };
+                            {
+                                new Claim(ClaimTypes.Name,user.EmpleadoCodigo)
+                            };
                             var identity = new ClaimsIdentity(
                                 claims, CookieAuthenticationDefaults.AuthenticationScheme);
                             var principal = new ClaimsPrincipal(identity);
-                            var props = new AuthenticationProperties
-                            {
-                                IsPersistent = true
-                            };
-                           await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, props);
+                            var props = new AuthenticationProperties();
+                            HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, props).Wait();
                             HttpContext.Session.SetString("SessionUser", JsonConvert.SerializeObject(user));
                             return RedirectToAction("PerfilColaborador", "Perfil");
 
@@ -162,28 +159,28 @@ namespace ControlPostgres.Controllers
                             HttpContext.Session.SetString("SessionUser", JsonConvert.SerializeObject(user));
                             return RedirectToAction("PerfilEncargado", "Perfil");
                         }
-                        
+
 
                     }
-                        return View("Login");
-                    }
+                    return View("Login");
+                }
                 else
                 {
                     return View("Login");
                 }
-                    
-                }
+
+            }
             catch (Exception)
             {
 
                 throw;
             }
         }
-        
-        public async Task<IActionResult> Logout()
+
+        public IActionResult Logout()
         {
             HttpContext.Session.Remove("SessionUser");
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
     }
 }
