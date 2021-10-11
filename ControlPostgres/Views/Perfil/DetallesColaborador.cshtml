@@ -1,8 +1,16 @@
 ﻿@model ControlPostgres.Contexto.Entities.TbSolicitude
+@section Scripts {
+    <script>
+        $(function () {
+            if (@ViewBag.Estado != 4 || @ViewBag.Estado != 5) {
+                document.getElementById('Imprimir').style.visibility = 'hidden';
+                document.getElementById('Imprimir').style.display = "none";
+            }
+        });
 
-@{
-    ViewData["Title"] = "Detalles";
+    </script>
 }
+@{ ViewData["Title"] = "Detalles"; }
 <div>
     <h4>Detalles de la Solicitud del colaborador @Model.Empleado.EmpleadoNombre1 @Model.Empleado.EmpleadoApellido1 </h4>
     <hr />
@@ -86,6 +94,6 @@
         <a asp-action="PerfilColaborador" type="submit" class="btn btn-primary">Regresar</a>
     </div>
     <div class="botones__boton2">
-        <a asp-action="ImprimirDocumento" asp-route-id="@Model.SolicitudId" class="btn btn-primary">Imprimir</a>
+        <a id="Imprimir" asp-action="ImprimirDocumento" asp-route-id="@Model.SolicitudId" class="btn btn-primary">Imprimir</a>
     </div>
 </div>

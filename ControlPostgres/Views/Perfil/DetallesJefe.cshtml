@@ -1,5 +1,15 @@
 ﻿@model ControlPostgres.Contexto.Entities.TbSolicitude
+@section Scripts {
+    <script>
+        $(function () {
+            if (@ViewBag.Estado != 4 || @ViewBag.Estado != 5) {
+                document.getElementById('Imprimir').style.visibility = 'hidden';
+                document.getElementById('Imprimir').style.display = "none";
+            }
+        });
 
+    </script>
+}
 @{ ViewData["Title"] = "Detalles"; }
 <div>
     <h4>Detalles de la Solicitud del colaborador @Model.Empleado.EmpleadoNombre1 @Model.Empleado.EmpleadoApellido1 Jefe</h4>

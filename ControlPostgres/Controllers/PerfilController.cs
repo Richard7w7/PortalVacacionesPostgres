@@ -21,7 +21,6 @@ namespace ControlPostgres.Controllers
         {
             Monitoreo = 1
         }
-
         enum CargoDepaPM
         {
             DirectorPM = 2,
@@ -30,7 +29,6 @@ namespace ControlPostgres.Controllers
             MonitordeCamaras = 5,
             EncargadoTurno = 6
         }
-
         enum EstadoSolicitud
         {
             Enviada = 1,
@@ -175,6 +173,8 @@ namespace ControlPostgres.Controllers
                 {
                     if (registro.DetallesSolicitud != null && registro.FechasSeleccionadas != null)
                     {
+
+
                         if (ModelState.IsValid)
                         {
                             respuesta = puente.CrearSolicitud(registro);
@@ -184,15 +184,19 @@ namespace ControlPostgres.Controllers
                                     ModelState.Clear();
                                     return RedirectToAction("ListarSolicitudEmpleadoRevisiones");
                                 case false:
-                                    if (usuario.Empleado.DeptoId == 1 && usuario.Empleado.CargoId == 5 || usuario.Empleado.CargoId == 4)
+                                    if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.MonitordeCamaras || usuario.Empleado.CargoId == (int)CargoDepaPM.EncargadoTurno)
                                     {
                                         return View("PerfilColaborador", usuario);
                                     }
-                                    else if (usuario.Empleado.DeptoId == 1 && usuario.Empleado.CargoId == 2)
+                                    else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.DirectorPM)
+                                    {
+                                        return View("PerfilDirector", usuario);
+                                    }
+                                    else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.JefeInmediatoMonitoreo)
                                     {
                                         return View("PerfilJefe", usuario);
                                     }
-                                    else if (usuario.Empleado.DeptoId == 1 && usuario.Empleado.CargoId == 3)
+                                    else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.PerfilEncargado)
                                     {
                                         return View("PerfilEncargado", usuario);
                                     }
@@ -224,6 +228,8 @@ namespace ControlPostgres.Controllers
 
                             return View(usuario);
                         }
+                        
+                    
                     }
                     else
                     {
@@ -336,7 +342,6 @@ namespace ControlPostgres.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
-        
         public async Task<IActionResult> Detalles(int? id)
         {
             session = HttpContext.Session.GetString("SessionUser");
@@ -361,7 +366,7 @@ namespace ControlPostgres.Controllers
                     {
                         return NotFound();
                     }
-
+                    ViewBag.Estado = (int)tbSolicitude.EstadosId;
                     return View("DetallesColaborador", tbSolicitude);
                 }
                 else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.DirectorPM)
@@ -834,7 +839,6 @@ namespace ControlPostgres.Controllers
         {
             return bd.TbSolicitudes.Any(e => e.SolicitudId == id);
         }
-        
         public async Task<IActionResult> ImprimirDocumento(int? id)
         {
             usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
