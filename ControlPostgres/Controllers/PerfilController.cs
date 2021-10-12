@@ -654,10 +654,36 @@ namespace ControlPostgres.Controllers
                 else if (tbSolicitudes.EstadosId == (int)EstadoSolicitud.Denegado)
                 {
                     tbSolicitude.EstadoSeleJefe = "Denegado" + " " + usuario.Empleado.EmpleadoNombre1 + " " + usuario.Empleado.EmpleadoApellido1;
+                    if (ModelState.IsValid)
+                    {
+                        try
+                        {
+                            bd.Update(tbSolicitude);
+                            await bd.SaveChangesAsync();
+                            string archivogenerado = generador.GenerateInvestorDocumentJefe(tbSolicitude);
+                            if (string.IsNullOrWhiteSpace(archivogenerado))
+                                return BadRequest("un error ha ocurrido al crear el archivo.");
+                            var solicitudes3 = bd.TbSolicitudes.Include(t => t.Cargo).Include(t => t.Depto).Include(t => t.Empleado).Include(t => t.Estados).Include(t => t.Vacaciones).Where(x => x.DeptoId == usuario.Empleado.DeptoId).ToArray();
+                            return View("SolicitudesDepartamentoJefe", solicitudes3.ToList());
+                        }
+                        catch (DbUpdateConcurrencyException)
+                        {
+                            if (!TbSolicitudeExists(tbSolicitude.SolicitudId))
+                            {
+                                return NotFound();
+                            }
+                            else
+                            {
+                                throw;
+                            }
+                        }
+
+                    }
+                    return NotFound();
                 }
+                
 
-
-            if (id != tbSolicitude.SolicitudId)
+                if (id != tbSolicitude.SolicitudId)
             {
                 return NotFound();
             }
@@ -686,7 +712,8 @@ namespace ControlPostgres.Controllers
                 return View("SolicitudesDepartamentoJefe", solicitudes.ToList());
             }
             return NotFound();
-        }else{
+        }
+            else{
                 return RedirectToAction("Index", "Home");
               }
         }
@@ -717,11 +744,11 @@ namespace ControlPostgres.Controllers
                 tbSolicitude.EstadosId = tbSolicitudes.EstadosId;
                 if (tbSolicitudes.EstadosId == (int)EstadoSolicitud.Aprobada)
                 {
-                    tbSolicitude.EstadoSeleDirector = "Aprovada" + " " + usuario.Empleado.EmpleadoNombre1 + " " + usuario.Empleado.EmpleadoApellido1;
+                    tbSolicitude.EstadoSeleDirector = "Aprobada" + " " + usuario.Empleado.EmpleadoNombre1 + " " + usuario.Empleado.EmpleadoApellido1;
                 }
                 else if (tbSolicitudes.EstadosId == (int)EstadoSolicitud.Denegado)
                 {
-                    tbSolicitude.EstadoSeleDirector = "Denegado" + " " + usuario.Empleado.EmpleadoNombre1 + " " + usuario.Empleado.EmpleadoApellido1;
+                    tbSolicitude.EstadoSeleDirector = "Denegada" + " " + usuario.Empleado.EmpleadoNombre1 + " " + usuario.Empleado.EmpleadoApellido1;
                 }
                 if (id != tbSolicitude.SolicitudId)
                 {
@@ -795,41 +822,7 @@ namespace ControlPostgres.Controllers
 
                 else if (tbSolicitudes.EstadosId == (int)EstadoSolicitud.Denegado)
                 {
-                    int diasantiguos = (int)tbSolicitude.Empleado.EmpDiasvacaciones;
-                    int diasresta = tbSolicitude.CantidadDias;
-                    int diasrestantes = (int)(tbSolicitude.Empleado.EmpDiasvacaciones - diasresta);
-                    tbSolicitude.Empleado.EmpDiasvacaciones = diasrestantes;
-                    if (tbSolicitude.Empleado.EmpDiasvacaciones < 0)
-                    {
-                        tbSolicitude.Empleado.EmpDiasvacaciones = diasantiguos;
-                        tbSolicitude.Comentario = "Lo sentimos la solicitud fue denegada automaticamente debido a que los dias seleccionados" +
-                            " son mayor a la cantidad de dias restantes para vacaciones del empleado";
-                        tbSolicitude.EstadosId = (int)EstadoSolicitud.Denegado;
-                        if (ModelState.IsValid)
-                        {
-                            try
-                            {
-                                bd.Update(tbSolicitude);
-                                await bd.SaveChangesAsync();
-
-                            }
-                            catch (DbUpdateConcurrencyException)
-                            {
-                                if (!TbSolicitudeExists(tbSolicitude.SolicitudId))
-                                {
-                                    return NotFound();
-                                }
-                                else
-                                {
-                                    throw;
-                                }
-                            }
-                            var solicitudes = bd.TbSolicitudes.Include(t => t.Cargo).Include(t => t.Depto).Include(t => t.Empleado).Include(t => t.Estados).Include(t => t.Vacaciones).Where(x => x.DeptoId == usuario.Empleado.DeptoId).ToArray();
-                            return View("SolicitudesDepartamentoDirector", solicitudes.ToList());
-                        }
-                        return NotFound();
-
-                    }
+                    
                     if (ModelState.IsValid)
                     {
                         try
@@ -858,26 +851,6 @@ namespace ControlPostgres.Controllers
                     return NotFound();
                 }
 
-                if (ModelState.IsValid)
-                {
-                    try
-                    {
-                        bd.Update(tbSolicitude);
-                        await bd.SaveChangesAsync();
-                    }
-                    catch (DbUpdateConcurrencyException)
-                    {
-                        if (!TbSolicitudeExists(tbSolicitude.SolicitudId))
-                        {
-                            return NotFound();
-                        }
-                        else
-                        {
-                            throw;
-                        }
-                    }
-                    return View("DetallesDepaDirector", tbSolicitude);
-                }
                 return View("DetallesDepaDirector", tbSolicitude);
             }
             else { return RedirectToAction("Index", "Home");
