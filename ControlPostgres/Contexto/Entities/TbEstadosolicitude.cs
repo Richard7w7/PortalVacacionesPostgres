@@ -14,7 +14,7 @@ namespace ControlPostgres.Contexto.Entities
         }
 
         public int EstadosId { get; set; }
-        [Display(Name = "Estado de la Solicitud")]
+        [Display(Name = "Estado de la solicitud")]
         public string EstadosNombre { get; set; }
 
         public virtual ICollection<TbSolicitude> TbSolicitudes { get; set; }

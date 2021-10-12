@@ -25,7 +25,6 @@ namespace ControlPostgres.Controllers
 
         DirectorPM = 2,
         JefeInmediatoMonitoreo = 3,
-        PerfilEncargado = 4,
         MonitordeCamaras = 5,
         EncargadoTurno = 6
 
@@ -41,7 +40,7 @@ namespace ControlPostgres.Controllers
             ViewData["Depto"] = new SelectList(bd.TbDepartamentos, "DeptoId", "DeptoNombre");
             ViewData["Cargos"] = new SelectList(bd.TbCargos, "CargoId", "CargoNombre");
             ViewData["Vacaciones"] = new SelectList(bd.TbVacaciones, "VacacionesId", "VacacionesEstado");
-            ViewData["Rol"] = new SelectList(bd.TbRoles, "RolId", "RolNombre");
+            
             return View();
         }
 
@@ -51,7 +50,7 @@ namespace ControlPostgres.Controllers
             ViewData["Depto"] = new SelectList(bd.TbDepartamentos, "DeptoId", "DeptoNombre");
             ViewData["Cargos"] = new SelectList(bd.TbCargos, "CargoId", "CargoNombre");
             ViewData["Vacaciones"] = new SelectList(bd.TbVacaciones, "VacacionesId", "VacacionesEstado");
-            ViewData["Rol"] = new SelectList(bd.TbRoles, "RolId", "RolNombre");
+            
             Boolean logico;
             try
             {
@@ -144,20 +143,6 @@ namespace ControlPostgres.Controllers
                             HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, props).Wait();
                             HttpContext.Session.SetString("SessionUser", JsonConvert.SerializeObject(user));
                             return RedirectToAction("PerfilJefe", "Perfil");
-                        }
-                        else if (user.DeptoId == (int)Departamento.Monitoreo && user.CargoId == (int)CargoDepaPM.PerfilEncargado)
-                        {
-                            var claims = new List<Claim>
-                            {
-                            new Claim(ClaimTypes.Name,user.EmpleadoCodigo)
-                            };
-                            var identity = new ClaimsIdentity(
-                                claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                            var principal = new ClaimsPrincipal(identity);
-                            var props = new AuthenticationProperties();
-                            HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, props).Wait();
-                            HttpContext.Session.SetString("SessionUser", JsonConvert.SerializeObject(user));
-                            return RedirectToAction("PerfilEncargado", "Perfil");
                         }
 
 

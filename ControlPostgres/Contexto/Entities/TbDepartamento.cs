@@ -16,7 +16,7 @@ namespace ControlPostgres.Contexto.Entities
         }
 
         public int DeptoId { get; set; }
-        [Display(Name = "Departamento al que Pertenece")]
+        [Display(Name = "Departamento al que pertenece")]
         public string DeptoNombre { get; set; }
         public string DeptoDescripcion { get; set; }
 

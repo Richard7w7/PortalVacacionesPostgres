@@ -21,7 +21,6 @@ namespace ControlPostgres.Contexto.Entities
         public virtual DbSet<TbDepartamento> TbDepartamentos { get; set; }
         public virtual DbSet<TbEmpleado> TbEmpleados { get; set; }
         public virtual DbSet<TbEstadosolicitude> TbEstadosolicitudes { get; set; }
-        public virtual DbSet<TbRole> TbRoles { get; set; }
         public virtual DbSet<TbSolicitude> TbSolicitudes { get; set; }
         public virtual DbSet<TbVacacione> TbVacaciones { get; set; }
 
@@ -102,8 +101,6 @@ namespace ControlPostgres.Contexto.Entities
 
                 entity.HasIndex(e => e.DeptoId, "IX_tb_empleados_depto_id");
 
-                entity.HasIndex(e => e.RolId, "IX_tb_empleados_rol_id");
-
                 entity.HasIndex(e => e.VacacionesId, "IX_tb_empleados_vacaciones_id");
 
                 entity.HasIndex(e => e.EmpleadoCodigo, "tb_empleados_empleado_codigo_key")
@@ -182,8 +179,6 @@ namespace ControlPostgres.Contexto.Entities
                     .HasColumnType("date")
                     .HasColumnName("fecha_nacimiento");
 
-                entity.Property(e => e.RolId).HasColumnName("rol_id");
-
                 entity.Property(e => e.VacacionesId).HasColumnName("vacaciones_id");
 
                 entity.HasOne(d => d.Cargo)
@@ -197,12 +192,6 @@ namespace ControlPostgres.Contexto.Entities
                     .HasForeignKey(d => d.DeptoId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_depto_id_tb_empleados_tb_departamentos");
-
-                entity.HasOne(d => d.Rol)
-                    .WithMany(p => p.TbEmpleados)
-                    .HasForeignKey(d => d.RolId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_rol_id_tb_empleados_tb_roles");
 
                 entity.HasOne(d => d.Vacaciones)
                     .WithMany(p => p.TbEmpleados)
@@ -227,29 +216,6 @@ namespace ControlPostgres.Contexto.Entities
                     .IsRequired()
                     .HasMaxLength(25)
                     .HasColumnName("estados_nombre");
-            });
-
-            modelBuilder.Entity<TbRole>(entity =>
-            {
-                entity.HasKey(e => e.RolId)
-                    .HasName("tb_roles_pkey");
-
-                entity.ToTable("tb_roles", "muni_villanueva");
-
-                entity.HasIndex(e => e.RolNombre, "tb_roles_rol_nombre_key")
-                    .IsUnique();
-
-                entity.Property(e => e.RolId).HasColumnName("rol_id");
-
-                entity.Property(e => e.RolDescripcion)
-                    .IsRequired()
-                    .HasMaxLength(100)
-                    .HasColumnName("rol_descripcion");
-
-                entity.Property(e => e.RolNombre)
-                    .IsRequired()
-                    .HasMaxLength(25)
-                    .HasColumnName("rol_nombre");
             });
 
             modelBuilder.Entity<TbSolicitude>(entity =>
@@ -287,6 +253,14 @@ namespace ControlPostgres.Contexto.Entities
                     .HasColumnName("detalles_solicitud");
 
                 entity.Property(e => e.EmpleadoId).HasColumnName("empleado_id");
+
+                entity.Property(e => e.EstadoSeleDirector)
+                    .HasMaxLength(100)
+                    .HasColumnName("estado_sele_director");
+
+                entity.Property(e => e.EstadoSeleJefe)
+                    .HasMaxLength(100)
+                    .HasColumnName("estado_sele_jefe");
 
                 entity.Property(e => e.EstadosId).HasColumnName("estados_id");
 

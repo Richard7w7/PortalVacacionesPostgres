@@ -76,7 +76,6 @@ namespace ControlPostgres.RepositorioClases
                 {
                     obj.EmpDiasvacaciones = (int)DiasVacaciones.TreintaDias;
                 }
-                obj.RolId = model.RolId;
                 obj.EmpleadoEstado = (int)EstadoTrabajador.Activo;
 
                 bd.TbEmpleados.Add(obj);

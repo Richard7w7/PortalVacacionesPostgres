@@ -2,9 +2,12 @@
 @section Scripts {
     <script>
         $(function () {
-            if (@ViewBag.Estado != 4 || @ViewBag.Estado != 5) {
-                document.getElementById('Imprimir').style.visibility = 'hidden';
-                document.getElementById('Imprimir').style.display = "none";
+
+            document.getElementById('Imprimir').style.visibility = 'hidden';
+            document.getElementById('Imprimir').style.display = "none";
+            if (@ViewBag.Estado == 4 || @ViewBag.Estado == 5) {
+                document.getElementById('Imprimir').style.visibility = 'visible';
+                document.getElementById('Imprimir').style.display = "initial";
             }
         });
 

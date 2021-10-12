@@ -7,7 +7,7 @@
 
                 <div class="form-group">
                     <label asp-for="EmpleadoCodigo" class="control-label">Ingrese su codigo de empleado</label>
-                    <input asp-for="EmpleadoCodigo" class="form-control" />
+                    <input asp-for="EmpleadoCodigo" class="form-control" autocomplete="off" />
                     <span asp-validation-for="EmpleadoCodigo" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -17,47 +17,47 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="EmpleadoNombre1" class="control-label"> Ingrese su primer nombre</label>
-                    <input asp-for="EmpleadoNombre1" class="form-control" />
+                    <input asp-for="EmpleadoNombre1" class="form-control"  autocomplete="off"/>
                     <span asp-validation-for="EmpleadoNombre1" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="EmpleadoNombre2" class="control-label">Ingrese su segundo nombre</label>
-                    <input asp-for="EmpleadoNombre2" class="form-control" />
+                    <input asp-for="EmpleadoNombre2" class="form-control" autocomplete="off" />
                     <span asp-validation-for="EmpleadoNombre2" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="EmpleadoApellido1" class="control-label">Ingrese su primer apellido</label>
-                    <input asp-for="EmpleadoApellido1" class="form-control" />
+                    <input asp-for="EmpleadoApellido1" class="form-control" autocomplete="off"/>
                     <span asp-validation-for="EmpleadoApellido1" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="EmpleadoApellido2" class="control-label">Ingrese su segundo apellido</label>
-                    <input asp-for="EmpleadoApellido2" class="form-control" />
+                    <input asp-for="EmpleadoApellido2" class="form-control" autocomplete="off"/>
                     <span asp-validation-for="EmpleadoApellido2" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="ApellidoCasada" class="control-label">Ingrese su apellido de casada</label>
-                    <input asp-for="ApellidoCasada" class="form-control" />
+                    <input asp-for="ApellidoCasada" class="form-control" autocomplete="off"/>
                     <span asp-validation-for="ApellidoCasada" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="FechaNacimiento" class="control-label">seleccione su fecha de nacimiento</label>
-                    <input asp-for="FechaNacimiento" class="form-control" />
+                    <input asp-for="FechaNacimiento" class="form-control" autocomplete="off"/>
                     <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="FechaIngreso" class="control-label">seleccione su fecha de ingreso laboral</label>
-                    <input asp-for="FechaIngreso" class="form-control" />
+                    <input asp-for="FechaIngreso" class="form-control" autocomplete="off"/>
                     <span asp-validation-for="FechaIngreso" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="EmpleadoTelefono" class="control-label">Ingrese su numero de telefono</label>
-                    <input asp-for="EmpleadoTelefono" class="form-control" />
+                    <input asp-for="EmpleadoTelefono" class="form-control" autocomplete="off"/>
                     <span asp-validation-for="EmpleadoTelefono" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="EmpleadoDireccion" class="control-label">Ingrese su direccion de residencia</label>
-                    <input asp-for="EmpleadoDireccion" class="form-control" />
+                    <input asp-for="EmpleadoDireccion" class="form-control" autocomplete="off"/>
                     <span asp-validation-for="EmpleadoDireccion" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -75,12 +75,7 @@
                     <select asp-for="VacacionesId" asp-items="(SelectList)@ViewData["Vacaciones"]" class="form-control"></select>
                     <span asp-validation-for="VacacionesId" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="RolId">Seleccione su rol</label>
-                    <br />
-                    <select asp-for="RolId" asp-items="(SelectList)@ViewData["Rol"]" class="form-control"></select>
-                    <span asp-validation-for="RolId" class="text-danger"></span>
-                </div>
+                
                 <div class="form-group">
                     <button value="RegistrarEmp" type="submit" class="btn btn-primary"> Registrarme</button>
                 </div>

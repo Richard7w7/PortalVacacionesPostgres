@@ -12,7 +12,6 @@ namespace ControlPostgres.Contexto.Entities
         public virtual DbSet<TbDepartamento> TbDepartamentos { get; set; }
         public virtual DbSet<TbEmpleado> TbEmpleados { get; set; }
         public virtual DbSet<TbEstadosolicitude> TbEstadosolicitudes { get; set; }
-        public virtual DbSet<TbRole> TbRoles { get; set; }
         public virtual DbSet<TbSolicitude> TbSolicitudes { get; set; }
         public virtual DbSet<TbVacacione> TbVacaciones { get; set; }
     }

@@ -5,31 +5,34 @@
 
             document.getElementById('notifica').style.visibility = 'hidden';
             document.getElementById('notifica').style.display = "none";
-            if (@ViewBag.Estado == 1) {
+            if (@ViewBag.Estado == 4) {
                 document.getElementById('Estado').style.visibility = 'hidden';
                 document.getElementById('Estado').style.display = 'none';
                 document.getElementById('notifica').style.visibility = 'visible';
                 document.getElementById('notifica').style.display = 'initial';
+                document.getElementById('notifica').innerHTML = "La opcion no aparece disponible debido a que la solicitud ya fue <b>aprobada</b> ";
                 document.getElementById('Boton_Modifica').style.visibility = 'hidden';
                 document.getElementById('Boton_Modifica').style.display = 'none';
                 document.getElementById('txtComentario').style.visibility = 'hidden';
                 document.getElementById('txtComentario').style.display = 'none';
-            } else if (@ViewBag.Estado == 3) {
+            }
+            else if (@ViewBag.Estado == 5) {
                 document.getElementById('Estado').style.visibility = 'hidden';
                 document.getElementById('Estado').style.display = 'none';
                 document.getElementById('notifica').style.visibility = 'visible';
                 document.getElementById('notifica').style.display = 'initial';
-                document.getElementById('notifica').innerHTML = "<b>La opcion no aparece disponible debido a que ya tiene la revision correspondiente a tu cargo</b>";
+                document.getElementById('notifica').innerHTML = "La opcion no aparece disponible debido a que la solicitud ya fue <b>denegada</b> ";
                 document.getElementById('Boton_Modifica').style.visibility = 'hidden';
                 document.getElementById('Boton_Modifica').style.display = 'none';
                 document.getElementById('txtComentario').style.visibility = 'hidden';
                 document.getElementById('txtComentario').style.display = 'none';
-            }else if (@ViewBag.Estado == 4) {
+            }
+            else if (@ViewBag.Estado == 2) {
                 document.getElementById('Estado').style.visibility = 'hidden';
                 document.getElementById('Estado').style.display = 'none';
                 document.getElementById('notifica').style.visibility = 'visible';
                 document.getElementById('notifica').style.display = 'initial';
-                document.getElementById('notifica').innerHTML = "La opcion no aparece disponible debido a que solo directores pueden asignar el estado <b>aprobada</b> las vacaciones";
+                document.getElementById('notifica').innerHTML = "La opcion no aparece disponible debido a que la solicitud ya esta en <b>revisión</b> ";
                 document.getElementById('Boton_Modifica').style.visibility = 'hidden';
                 document.getElementById('Boton_Modifica').style.display = 'none';
                 document.getElementById('txtComentario').style.visibility = 'hidden';

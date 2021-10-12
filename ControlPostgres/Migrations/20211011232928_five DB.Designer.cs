@@ -3,15 +3,17 @@ using System;
 using ControlPostgres.Contexto.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace ControlPostgres.Migrations
 {
     [DbContext(typeof(BD_ControlVacacionesContext))]
-    partial class BD_ControlVacacionesContextModelSnapshot : ModelSnapshot
+    [Migration("20211011232928_five DB")]
+    partial class fiveDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -256,14 +258,12 @@ namespace ControlPostgres.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("empleado_id");
 
-                    b.Property<string>("EstadoSeleDirector")
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                    b.Property<int?>("EstadoSeleDirector")
+                        .HasColumnType("integer")
                         .HasColumnName("estado_sele_director");
 
-                    b.Property<string>("EstadoSeleJefe")
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                    b.Property<int?>("EstadoSeleJefe")
+                        .HasColumnType("integer")
                         .HasColumnName("estado_sele_jefe");
 
                     b.Property<int>("EstadosId")
@@ -286,6 +286,10 @@ namespace ControlPostgres.Migrations
 
                     b.HasKey("SolicitudId")
                         .HasName("tb_solicitudes_pkey");
+
+                    b.HasIndex("EstadoSeleDirector");
+
+                    b.HasIndex("EstadoSeleJefe");
 
                     b.HasIndex(new[] { "CargoId" }, "IX_tb_solicitudes_cargo_id");
 
@@ -385,8 +389,18 @@ namespace ControlPostgres.Migrations
                         .HasConstraintName("fk_empleado_id_tb_solicitudes_tb_empleados")
                         .IsRequired();
 
+                    b.HasOne("ControlPostgres.Contexto.Entities.TbEstadosolicitude", "EstadoSeleDirectorNavigation")
+                        .WithMany("TbSolicitudeEstadoSeleDirectorNavigations")
+                        .HasForeignKey("EstadoSeleDirector")
+                        .HasConstraintName("fk_estado_sele_director_tb_estadossolicitudes");
+
+                    b.HasOne("ControlPostgres.Contexto.Entities.TbEstadosolicitude", "EstadoSeleJefeNavigation")
+                        .WithMany("TbSolicitudeEstadoSeleJefeNavigations")
+                        .HasForeignKey("EstadoSeleJefe")
+                        .HasConstraintName("fk_estado_sele_jefe_tb_estadossolicitudes");
+
                     b.HasOne("ControlPostgres.Contexto.Entities.TbEstadosolicitude", "Estados")
-                        .WithMany("TbSolicitudes")
+                        .WithMany("TbSolicitudeEstados")
                         .HasForeignKey("EstadosId")
                         .HasConstraintName("fk_estados_id_tb_solicitudes_tb_estadosolicitudes")
                         .IsRequired();
@@ -404,6 +418,10 @@ namespace ControlPostgres.Migrations
                     b.Navigation("Empleado");
 
                     b.Navigation("Estados");
+
+                    b.Navigation("EstadoSeleDirectorNavigation");
+
+                    b.Navigation("EstadoSeleJefeNavigation");
 
                     b.Navigation("Vacaciones");
                 });
@@ -431,7 +449,11 @@ namespace ControlPostgres.Migrations
 
             modelBuilder.Entity("ControlPostgres.Contexto.Entities.TbEstadosolicitude", b =>
                 {
-                    b.Navigation("TbSolicitudes");
+                    b.Navigation("TbSolicitudeEstados");
+
+                    b.Navigation("TbSolicitudeEstadoSeleDirectorNavigations");
+
+                    b.Navigation("TbSolicitudeEstadoSeleJefeNavigations");
                 });
 
             modelBuilder.Entity("ControlPostgres.Contexto.Entities.TbVacacione", b =>
