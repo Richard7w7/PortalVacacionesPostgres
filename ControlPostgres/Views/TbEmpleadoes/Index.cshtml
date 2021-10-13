@@ -1,0 +1,143 @@
+﻿@model IEnumerable<ControlPostgres.Contexto.Entities.TbEmpleado>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EmpleadoCodigo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmpleadoContraseña)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmpleadoNombre1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmpleadoNombre2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmpleadoApellido1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmpleadoApellido2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApellidoCasada)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaNacimiento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmpleadoTelefono)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmpleadoDireccion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmpleadoEstado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaIngreso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmpleadoPermiso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmpladoUltimavacafin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmpleadoUltimavacainicio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmpDiasvacaciones)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cargo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Depto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vacaciones)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpleadoCodigo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpleadoContraseña)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpleadoNombre1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpleadoNombre2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpleadoApellido1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpleadoApellido2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApellidoCasada)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaNacimiento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpleadoTelefono)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpleadoDireccion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpleadoEstado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaIngreso)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpleadoPermiso)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpladoUltimavacafin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpleadoUltimavacainicio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpDiasvacaciones)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cargo.CargoDescripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Depto.DeptoDescripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vacaciones.VacacionesEstado)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.EmpleadoId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.EmpleadoId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.EmpleadoId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

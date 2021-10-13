@@ -1,0 +1,29 @@
+﻿@model ControlPostgres.Contexto.Entities.TbReContra
+
+
+<h1>Recuperacion de Contraseña</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <label style="font-size:25px">Ingrese su nueva contraseña</label>
+        <form asp-action="ConfirmaContraseña" method="post">
+            <div asp-validation-summary="ModelOnly"></div>
+            <div class="form-group">
+                <label asp-for="Contra" class="control-label">Ingrese su contraseña</label>
+                <input asp-for="Contra" class="form-control" autocomplete="off" />
+                <span asp-validation-for="Contra" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RepetirContra" class="control-label">repita su contraseña</label>
+                <input asp-for="RepetirContra" class="form-control" autocomplete="off" />
+                <span asp-validation-for="RepetirContra" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <button value="ConfirmaContraseña" type="submit" class="btn btn-primary"> Recuperar</button>
+            </div>
+           
+        </form>
+    </div>
+</div>

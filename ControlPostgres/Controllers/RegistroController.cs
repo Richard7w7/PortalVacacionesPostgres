@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,7 @@ namespace ControlPostgres.Controllers
     }
     public class RegistroController : Controller
     {
+        private readonly BD_ControlVacacionesContext _context;
         BD_ControlVacacionesContext bd = new BD_ControlVacacionesContext();
         Repositorio puente = new Repositorio();
         public static TbEmpleado empleado = new TbEmpleado();
@@ -162,10 +164,82 @@ namespace ControlPostgres.Controllers
             }
         }
 
+        public IActionResult RecuperarContra()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult RecuperarContra(TbContraseña contra)
+        {
+            if (!string.IsNullOrEmpty(contra.codigoempleado) && !string.IsNullOrEmpty(contra.fechanacimiento.ToString()) && !string.IsNullOrEmpty(contra.telefono))
+            {
+                TbEmpleado user = new TbEmpleado();
+
+                user = bd.TbEmpleados.FirstOrDefault(u => u.EmpleadoCodigo == contra.codigoempleado && u.FechaNacimiento == contra.fechanacimiento && u.EmpleadoTelefono == contra.telefono);
+                if (user != null)
+                {
+
+                    HttpContext.Session.SetString("SessionContra", JsonConvert.SerializeObject(user));
+                    return RedirectToAction("ConfirmaContraseña");
+                }
+                else
+                {
+                    ViewBag.NoExiste = "Lo sentimos las credenciales no coinciden con ningun usuario, intentalo nuevamente";
+                    return View();
+                }
+                            }
+            else {
+                ViewBag.LlenarCampos = "Por favor llena los campos";
+                return View();
+            }
+
+        }
+
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("SessionUser");
             return RedirectToAction("Index", "Home");
         }
+        private bool TbEmpleadoExists(int id)
+        {
+            return _context.TbEmpleados.Any(e => e.EmpleadoId == id);
+        }
+
+        public IActionResult ConfirmaContraseña()
+        {
+           
+            return View();
+        }
+        [HttpPost]
+        public IActionResult ConfirmaContraseña(TbReContra recontra)
+        {
+            TbEmpleado empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionContra"));
+            
+            if(recontra.Contra == recontra.RepetirContra)
+            {
+                if (ModelState.IsValid)
+                {
+                    
+                        var usuario = bd.TbEmpleados.Where(u => u.EmpleadoId == empleado.EmpleadoId).FirstOrDefault();
+                        usuario.EmpleadoContraseña = recontra.RepetirContra;
+                        bd.SaveChanges();
+                        HttpContext.Session.Remove("SessionContra");
+                        return View("Login") ;
+
+                }
+                else
+                {
+                    ViewBag.Problemacontra = "Lo sentimos ha ocurrido un problema, por favor hable con el administrador del portal";
+                    return View();
+                }
+            }
+            else
+            {
+                ViewBag.Noigual = "Las contraseñas no coinciden, por favor vuelva a ingresarlas";
+                return View();
+            }
+
+        }
     }
+
 }
