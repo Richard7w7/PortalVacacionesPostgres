@@ -18,7 +18,7 @@ namespace ControlPostgres.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> ListarSolicitudEmpleado()
+        public IActionResult ListarSolicitudEmpleado()
         {
             return View();
         }

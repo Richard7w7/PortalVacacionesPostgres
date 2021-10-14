@@ -1,0 +1,29 @@
+﻿@model ControlPostgres.Contexto.Entities.TbActualizaDatos
+
+
+<h1>Actualiza tus datos</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <label style="font-size:25px">Ingrese sus datos a actualizar</label>
+        <form asp-action="ActualizaDatosPerfil" method="post">
+            <div asp-validation-summary="ModelOnly"></div>
+            <div class="form-group">
+                <label asp-for="EmpleadoTelefono" class="control-label">Ingrese su numero de telefono</label>
+                <input asp-for="EmpleadoTelefono" class="form-control" autocomplete="off" />
+                <span asp-validation-for="EmpleadoTelefono" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EmpleadoDireccion" class="control-label">Ingrese su direccion</label>
+                <input asp-for="EmpleadoDireccion" class="form-control" autocomplete="off" />
+                <span asp-validation-for="EmpleadoDireccion" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <button value="ConfirmaContraseña" type="submit" class="btn btn-primary">Actualizar datos</button>
+            </div>
+
+        </form>
+    </div>
+</div>

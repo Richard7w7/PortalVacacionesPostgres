@@ -889,5 +889,107 @@ namespace ControlPostgres.Controllers
             HttpContext.Session.Remove("SessionUser");
             return RedirectToAction("Index", "Home");
         }
+        public async Task<IActionResult> DetailsPerfil(int? id)
+        {
+            usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
+            id = usuario.Empleado.EmpleadoId;
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var tbEmpleado = await bd.TbEmpleados
+                .Include(t => t.Cargo)
+                .Include(t => t.Depto)
+                .Include(t => t.Vacaciones)
+                .FirstOrDefaultAsync(m => m.EmpleadoId == id);
+            if (tbEmpleado == null)
+            {
+                return NotFound();
+            }
+
+            return View(tbEmpleado);
+        }
+        
+        public IActionResult ActualizaDatosPerfil()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult ActualizaDatosPerfil(TbActualizaDatos datos)
+        {
+            TbEmpleado empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
+            if (datos.EmpleadoTelefono != null && datos.EmpleadoDireccion == null)
+            {
+
+
+                    var caso = bd.TbEmpleados.Where(u => u.EmpleadoId == empleado.EmpleadoId).FirstOrDefault();
+                    caso.EmpleadoTelefono = datos.EmpleadoTelefono;
+                    bd.SaveChanges();
+                usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
+                if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.MonitordeCamaras || usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.EncargadoTurno)
+                {
+                    return RedirectToAction("PerfilColaborador", "Perfil");
+                }
+                else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.DirectorPM)
+                {
+                    return RedirectToAction("PerfilDirector", "Perfil");
+                }
+                else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.JefeInmediatoMonitoreo)
+                {
+                    return RedirectToAction("PerfilJefe", "Perfil");
+                }
+
+
+
+            }
+            else if (datos.EmpleadoDireccion != null && datos.EmpleadoTelefono == null)
+            {
+                
+                    var caso = bd.TbEmpleados.Where(u => u.EmpleadoId == empleado.EmpleadoId).FirstOrDefault();
+                    caso.EmpleadoDireccion = datos.EmpleadoDireccion;
+                    bd.SaveChanges();
+                usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
+                if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.MonitordeCamaras || usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.EncargadoTurno)
+                {
+                    return RedirectToAction("PerfilColaborador", "Perfil");
+                }
+                else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.DirectorPM)
+                {
+                    return RedirectToAction("PerfilDirector", "Perfil");
+                }
+                else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.JefeInmediatoMonitoreo)
+                {
+                    return RedirectToAction("PerfilJefe", "Perfil");
+                }
+            }
+            else if (datos.EmpleadoDireccion != null && datos.EmpleadoTelefono != null)
+            {
+
+                    var caso = bd.TbEmpleados.Where(u => u.EmpleadoId == empleado.EmpleadoId).FirstOrDefault();
+                    caso.EmpleadoDireccion = datos.EmpleadoDireccion;
+                    caso.EmpleadoTelefono = datos.EmpleadoTelefono;
+                    bd.SaveChanges();
+                usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
+                if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.MonitordeCamaras || usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.EncargadoTurno)
+                {
+                    return RedirectToAction("PerfilColaborador", "Perfil");
+                }
+                else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.DirectorPM)
+                {
+                    return RedirectToAction("PerfilDirector", "Perfil");
+                }
+                else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.JefeInmediatoMonitoreo)
+                {
+                    return RedirectToAction("PerfilJefe", "Perfil");
+                }
+            }
+            else
+            {
+                ViewBag.Noigual = "Por favor debe ingresar al menos un dato para actualizar";
+                return View();
+            }
+            return View();
+        }
     }
 }
