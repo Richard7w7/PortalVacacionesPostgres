@@ -3,7 +3,10 @@
 
 // Write your JavaScript code.
 
-cambiarstyle => {
-    document.getElementById('NavLogin').style.visibility = 'hidden';
-    document.getElementById('NavLogin').style.display = "none";
+const desabilitartecla = (key) => {
+
+    if (key == 13) {
+        return false;
+    }
+
 }

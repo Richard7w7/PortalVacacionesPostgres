@@ -81,7 +81,7 @@ namespace ControlPostgres.Controllers
             if (session != null)
             {
                 usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
-
+                ViewBag.CantidadDias = (int)usuario.Empleado.EmpDiasvacaciones;
                 return View(usuario);
             }
             else
@@ -168,8 +168,6 @@ namespace ControlPostgres.Controllers
                 {
                     if (registro.DetallesSolicitud != null && registro.FechasSeleccionadas != null)
                     {
-
-
                         if (ModelState.IsValid)
                         {
                             respuesta = puente.CrearSolicitud(registro);
@@ -217,8 +215,6 @@ namespace ControlPostgres.Controllers
 
                             return View(usuario);
                         }
-                        
-                    
                     }
                     else
                     {

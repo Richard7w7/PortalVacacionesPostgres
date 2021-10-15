@@ -32,7 +32,7 @@ namespace ControlPostgres.Controllers
     }
     public class RegistroController : Controller
     {
-        private readonly BD_ControlVacacionesContext _context;
+
         BD_ControlVacacionesContext bd = new BD_ControlVacacionesContext();
         Repositorio puente = new Repositorio();
         public static TbEmpleado empleado = new TbEmpleado();
@@ -202,7 +202,7 @@ namespace ControlPostgres.Controllers
         }
         private bool TbEmpleadoExists(int id)
         {
-            return _context.TbEmpleados.Any(e => e.EmpleadoId == id);
+            return bd.TbEmpleados.Any(e => e.EmpleadoId == id);
         }
 
         public IActionResult ConfirmaContraseña()
