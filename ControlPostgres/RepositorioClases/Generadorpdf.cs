@@ -79,7 +79,8 @@ namespace ControlPostgres.RepositorioClases
                 fields.SetField("txtPuestoDirector", "Director");
                 if(tbsolitude.EstadosId == (int)EstadoSolicitud.Aprobada) { 
                 fields.SetField("txtEstado", "Aprobada");
-                }else if(tbsolitude.EstadosId == (int)EstadoSolicitud.Denegado)
+                }
+                else if(tbsolitude.EstadosId == (int)EstadoSolicitud.Denegado)
                 {
                     fields.SetField("txtEstado", "Denegada");
                 }
@@ -131,14 +132,29 @@ namespace ControlPostgres.RepositorioClases
                 fields.SetField("txtNotificado2", tbsolitude.Empleado.EmpleadoCodigo);
                 
                 string[] arrayestadoseleJefe = tbsolitude.EstadoSeleJefe.Split(' ');
-                string[] arrayestadoseleDirector = tbsolitude.EstadoSeleDirector.Split(' ');
+                
                 fields.SetField("txtEstadoJefeInmediato", arrayestadoseleJefe[0]);
                 fields.SetField("txtNombreJefeInmediato", arrayestadoseleJefe[1] +" "+ arrayestadoseleJefe[2]);
                 fields.SetField("txtPuestoJefeInmediato","Jefe Inmediato");
-                fields.SetField("txtEstadoDirector", arrayestadoseleDirector[0]);
-                fields.SetField("txtNombreDirector", arrayestadoseleDirector[1] + " " + arrayestadoseleDirector[2]);
-                fields.SetField("txtPuestoDirector", "Director");
-                fields.SetField("txtEstado", tbsolitude.Estados.EstadosNombre);
+                if (tbsolitude.EstadoSeleDirector != null) {
+                    string[] arrayestadoseleDirector = tbsolitude.EstadoSeleDirector.Split(' ');
+                    fields.SetField("txtEstadoDirector", arrayestadoseleDirector[0]);
+                    fields.SetField("txtNombreDirector", arrayestadoseleDirector[1] + " " + arrayestadoseleDirector[2]);
+                    fields.SetField("txtPuestoDirector", "Director");
+                    fields.SetField("txtEstado", tbsolitude.Estados.EstadosNombre);
+                }
+                else
+                {
+                    if (tbsolitude.EstadosId == (int)EstadoSolicitud.Aprobada)
+                    {
+                        fields.SetField("txtEstado", "Aprobada");
+                    }
+                    else if (tbsolitude.EstadosId == (int)EstadoSolicitud.Denegado)
+                    {
+                        fields.SetField("txtEstado", "Denegada");
+                    }
+                }
+                
 
                 stamper.FormFlattening = true;
                 stamper.Close();
