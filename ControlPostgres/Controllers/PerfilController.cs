@@ -163,7 +163,11 @@ namespace ControlPostgres.Controllers
             if (session != null)
             {
                 registro.Empleado = usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
+                var solicitudes = bd.TbSolicitudes.Include(t => t.Cargo).Include(t => t.Depto).Include(t => t.Empleado).Include(t => t.Estados).Include(t => t.Vacaciones)
+                .Where(x => x.EmpleadoId == usuario.Empleado.EmpleadoId)
+                .Where(x => x.EstadosId == (int)EstadoSolicitud.Enviada).Count();
                 Boolean respuesta;
+                if (solicitudes <= 0) { 
                 try
                 {
                     if (registro.DetallesSolicitud != null && registro.FechasSeleccionadas != null)
@@ -220,15 +224,15 @@ namespace ControlPostgres.Controllers
                     {
                         if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.MonitordeCamaras || usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.EncargadoTurno)
                         {
-                            return View("PerfilColaborador", usuario);
+                            return RedirectToAction("PerfilColaborador", usuario);
                         }
                         else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.DirectorPM)
                         {
-                            return View("PerfilDirector", usuario);
+                            return RedirectToAction("PerfilDirector", usuario);
                         }
                         else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.JefeInmediatoMonitoreo)
                         {
-                            return View("PerfilJefe", usuario);
+                            return RedirectToAction("PerfilJefe", usuario);
                         }
                         
 
@@ -240,7 +244,23 @@ namespace ControlPostgres.Controllers
                 {
 
                     throw;
+                } 
                 }
+                else {
+                    if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.MonitordeCamaras || usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.EncargadoTurno)
+                    {
+                        return RedirectToAction("PerfilColaborador", usuario);
+                    }
+                    else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.DirectorPM)
+                    {
+                        return RedirectToAction("PerfilDirector", usuario);
+                    }
+                    else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.JefeInmediatoMonitoreo)
+                    {
+                        return RedirectToAction("PerfilJefe", usuario);
+                    }
+                }
+                return NotFound();
             }
             else
             {
