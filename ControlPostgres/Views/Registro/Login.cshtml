@@ -1,11 +1,37 @@
 ﻿@model ControlPostgres.Contexto.Entities.TbEmpleado
-@{
-    ViewBag.Title = "Login";
+@{ ViewBag.Title = "Login"; }
+
+@section scripts{
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+
+        $(function () {
+            var opcion = '@ViewBag.Opcion'
+            if (opcion == "Usuario Incorrecto") {
+                Swal.fire({
+
+                    title: "Credenciales incorrectas",
+                    text:"Por favor verifique e ingresa nuevamente tus credenciales",
+                    icon: "warning",
+                });
+                }else if (opcion == "Campos Vacios") {
+                Swal.fire({
+                    title: "Campos vacios",
+                    text:"Por favor ingresa tus credenciales",
+                    icon: "error",
+                });
+            }
+
+        });
+    </script>
+
 }
+
 
 <div class="row">
     <div class="col-md-4">
-        <label style="font-size:25px">BIENVENIDO INGRESE SUS CREDENCIALES</label>
+        <label style="font-size:25px">BIENVENIDO INGRESE SUS CREDENCIALES </label>
         <form asp-action="Login" method="post">
             <div asp-validation-summary="ModelOnly"></div>
             <div class="form-group">

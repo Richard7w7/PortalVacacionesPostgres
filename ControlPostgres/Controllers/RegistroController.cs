@@ -92,6 +92,8 @@ namespace ControlPostgres.Controllers
         [HttpPost]
         public IActionResult Login(TbEmpleado usuario)
         {
+            ViewBag.Opcion = "";
+            TempData["Logueo"] = "";
             TbEmpleado user = new TbEmpleado();
 
             try
@@ -115,6 +117,7 @@ namespace ControlPostgres.Controllers
                             var props = new AuthenticationProperties();
                             HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, props).Wait();
                             HttpContext.Session.SetString("SessionUser", JsonConvert.SerializeObject(user));
+                            TempData["Logueo"] = "Logueo Exitoso";
                             return RedirectToAction("PerfilColaborador", "Perfil");
 
                         }
@@ -130,32 +133,34 @@ namespace ControlPostgres.Controllers
                             var props = new AuthenticationProperties();
                             HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, props).Wait();
                             HttpContext.Session.SetString("SessionUser", JsonConvert.SerializeObject(user));
+                            TempData["Logueo"] = "Logueo Exitoso";
                             return RedirectToAction("PerfilDirector", "Perfil");
                         }
                         else if (user.DeptoId == (int)Departamento.Monitoreo && user.CargoId == (int)CargoDepaPM.JefeInmediatoMonitoreo)
                         {
                             var claims = new List<Claim>
-                {
+                            {
                     new Claim(ClaimTypes.Name,user.EmpleadoCodigo)
-                };
+                            };
                             var identity = new ClaimsIdentity(
                                 claims, CookieAuthenticationDefaults.AuthenticationScheme);
                             var principal = new ClaimsPrincipal(identity);
                             var props = new AuthenticationProperties();
                             HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, props).Wait();
                             HttpContext.Session.SetString("SessionUser", JsonConvert.SerializeObject(user));
+                            TempData["Logueo"] = "Logueo Exitoso";
                             return RedirectToAction("PerfilJefe", "Perfil");
                         }
-
-
+                        
                     }
-                    return View("Login");
-                }
-                else
-                {
-                    return View("Login");
-                }
 
+                    
+                }else{
+                    ViewBag.Opcion = "Campos Vacios";
+                    return View("Login");
+                     }
+                ViewBag.Opcion = "Usuario Incorrecto";
+                return View("Login");
             }
             catch (Exception)
             {

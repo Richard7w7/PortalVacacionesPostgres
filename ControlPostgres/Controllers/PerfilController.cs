@@ -80,6 +80,7 @@ namespace ControlPostgres.Controllers
             session = HttpContext.Session.GetString("SessionUser");
             if (session != null)
             {
+                ViewBag.Logueo=TempData["Logueo"];
                 usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
                 ViewBag.CantidadDias = (int)usuario.Empleado.EmpDiasvacaciones;
                 return View(usuario);
@@ -95,7 +96,7 @@ namespace ControlPostgres.Controllers
             if (session != null)
             {
                 usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
-
+                ViewBag.Logueo = TempData["Logueo"];
                 return View(usuario);
             }
             else {
@@ -108,7 +109,7 @@ namespace ControlPostgres.Controllers
             if (session != null)
             {
                 usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
-
+                ViewBag.Logueo = TempData["Logueo"];
                 return View(usuario);
             }
             else

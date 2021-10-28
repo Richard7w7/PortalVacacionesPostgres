@@ -2,11 +2,25 @@
 
 @section scripts{
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!--<link href="https://cdn.rawgit.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/master/jquery-ui.multidatespicker.css" rel="stylesheet" />-->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" />
     <script src="https://cdn.rawgit.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/master/jquery-ui.multidatespicker.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-    <script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>    
+<script>
+        $(function () {
+            var opcion = '@ViewBag.Logueo'
+            if (opcion == "Logueo Exitoso") {
+                Swal.fire({
+                    toast: true,
+                    title: "Bievenido a tu perfil",
+                    icon: "successs",
+                    showConfirmButton: false,
+                    timerProgressBar: true,
+                    position: 'top-end',
+                    timer:2000,
+                });
+            }
+        });
         $(function () {
             $('#multidate').multiDatesPicker({
                 dateFormat: 'dd/mm/yy',
@@ -20,7 +34,7 @@
 
 
 
-<h1>Bienvenido Colaborador @Model.Empleado.EmpleadoNombre1 @Model.Empleado.EmpleadoApellido1 Encargado</h1>
+<h1>Bienvenido Colaborador @Model.Empleado.EmpleadoNombre1 @Model.Empleado.EmpleadoApellido1 </h1>
 
 <div class="row" onkeydown="return desabilitartecla(event.keyCode)">
     <div class="col-md-4">
