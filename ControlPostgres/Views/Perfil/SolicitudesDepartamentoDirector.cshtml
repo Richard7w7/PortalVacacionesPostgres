@@ -1,6 +1,24 @@
 ﻿
 @model IEnumerable<ControlPostgres.Contexto.Entities.TbSolicitude>
+@section Scripts {
 
+    <script>
+        $(function () {
+            var opcion = '@ViewBag.ModificadoDirector'
+            if (opcion == "Solicitud Modificada") {
+            Swal.fire({
+                title: "Solicitud Modificada",
+                text: "La Solicitud ya fue modificada",
+                icon: "success",
+                showConfirmButton: false,
+                timerProgressBar: true,
+                timer: 2000,
+            });
+        }
+        });
+    </script>
+
+}
 <table class="table" id="Dame">
     <thead>
         <tr>
@@ -34,36 +52,35 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SolicitudFecha)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DetallesSolicitud)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CantidadDias)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Comentario)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Depto.DeptoNombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Empleado.EmpleadoCodigo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Estados.EstadosNombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Empleado.EmpDiasvacaciones)
-                </td>
-                <td>
-                    <a asp-action="DetallesDepaDirector" asp-route-id="@item.SolicitudId" class="btn btn-primary glyphicon glyphicon-pencil">Detalles</a>
-                </td>
-            </tr>
-        }
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.SolicitudFecha)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.DetallesSolicitud)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.CantidadDias)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Comentario)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Depto.DeptoNombre)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Empleado.EmpleadoCodigo)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Estados.EstadosNombre)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Empleado.EmpDiasvacaciones)
+    </td>
+    <td>
+        <a asp-action="DetallesDepaDirector" asp-route-id="@item.SolicitudId" class="btn btn-primary glyphicon glyphicon-pencil">Detalles</a>
+    </td>
+</tr>}
     </tbody>
 </table>
 

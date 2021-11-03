@@ -372,7 +372,7 @@ namespace ControlPostgres.Controllers
             {
                 usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));                                                         //.Where(x => x.Depto_ID == rama.Depto_ID)
                 var solicitudes = bd.TbSolicitudes.Include(t => t.Cargo).Include(t => t.Depto).Include(t => t.Empleado).Include(t => t.Estados).Include(t => t.Vacaciones).Where(x => x.DeptoId == usuario.Empleado.DeptoId).ToArray();
-
+                ViewBag.ModificadoDirector = TempData["ModificadoDirector"];
                 return View(solicitudes.ToList());
             }
             else
@@ -730,7 +730,7 @@ namespace ControlPostgres.Controllers
                             if (string.IsNullOrWhiteSpace(archivogenerado))
                                 return BadRequest("un error ha ocurrido al crear el archivo.");
                             var solicitudes3 = bd.TbSolicitudes.Include(t => t.Cargo).Include(t => t.Depto).Include(t => t.Empleado).Include(t => t.Estados).Include(t => t.Vacaciones).Where(x => x.DeptoId == usuario.Empleado.DeptoId).ToArray();
-                            TempData["ModificadoJefe"] = "Solicitud Modificada";
+                            
                             return RedirectToAction("SolicitudesDepartamentoJefe");
                         }
                         catch (DbUpdateConcurrencyException)
@@ -775,8 +775,8 @@ namespace ControlPostgres.Controllers
                         }
                     }
                     //return RedirectToAction(nameof(Index));
-                    var solicitudes = bd.TbSolicitudes.Include(t => t.Cargo).Include(t => t.Depto).Include(t => t.Empleado).Include(t => t.Estados).Include(t => t.Vacaciones).Where(x => x.DeptoId == usuario.Empleado.DeptoId).ToArray();
-                    return View("SolicitudesDepartamentoJefe", solicitudes.ToList());
+                    TempData["ModificadoJefe"] = "Solicitud Modificada";
+                    return RedirectToAction("SolicitudesDepartamentoJefe");
                 }
                 return NotFound();
             }
@@ -825,41 +825,7 @@ namespace ControlPostgres.Controllers
 
                 if (tbSolicitudes.EstadosId == (int)EstadoSolicitud.Aprobada)
                 {
-                    int diasantiguos = (int)tbSolicitude.Empleado.EmpDiasvacaciones;
-                    int diasresta = tbSolicitude.CantidadDias;
-                    int diasrestantes = (int)(tbSolicitude.Empleado.EmpDiasvacaciones - diasresta);
-                    tbSolicitude.Empleado.EmpDiasvacaciones = diasrestantes;
-                    if (tbSolicitude.Empleado.EmpDiasvacaciones < 0)
-                    {
-                        tbSolicitude.Empleado.EmpDiasvacaciones = diasantiguos;
-                        tbSolicitude.Comentario = "Lo sentimos la solicitud fue denegada automaticamente debido a que los dias seleccionados" +
-                            " son mayor a la cantidad de dias restantes para vacaciones del empleado";
-                        tbSolicitude.EstadosId = 5;
-                        if (ModelState.IsValid)
-                        {
-                            try
-                            {
-                                bd.Update(tbSolicitude);
-                                await bd.SaveChangesAsync();
-
-                            }
-                            catch (DbUpdateConcurrencyException)
-                            {
-                                if (!TbSolicitudeExists(tbSolicitude.SolicitudId))
-                                {
-                                    return NotFound();
-                                }
-                                else
-                                {
-                                    throw;
-                                }
-                            }
-                            var solicitudes = bd.TbSolicitudes.Include(t => t.Cargo).Include(t => t.Depto).Include(t => t.Empleado).Include(t => t.Estados).Include(t => t.Vacaciones).Where(x => x.DeptoId == usuario.Empleado.DeptoId).ToArray();
-                            return View("SolicitudesDepartamentoDirector", solicitudes.ToList());
-                        }
-                        return NotFound();
-
-                    }
+                    
                     if (ModelState.IsValid)
                     {
                         try
@@ -869,8 +835,8 @@ namespace ControlPostgres.Controllers
                             string archivogenerado = generador.GenerateInvestorDocument(tbSolicitude);
                             if (string.IsNullOrWhiteSpace(archivogenerado))
                                 return BadRequest("un error ha ocurrido al crear el archivo.");
-                            var solicitudes3 = bd.TbSolicitudes.Include(t => t.Cargo).Include(t => t.Depto).Include(t => t.Empleado).Include(t => t.Estados).Include(t => t.Vacaciones).Where(x => x.DeptoId == usuario.Empleado.DeptoId).ToArray();
-                            return View("SolicitudesDepartamentoDirector", solicitudes3.ToList());
+                            TempData["ModificadoDirector"] = "Solicitud Modificada";
+                            return RedirectToAction("SolicitudesDepartamentoDirector");
                         }
                         catch (DbUpdateConcurrencyException)
                         {
@@ -901,7 +867,8 @@ namespace ControlPostgres.Controllers
                             if (string.IsNullOrWhiteSpace(archivogenerado))
                                 return BadRequest("un error ha ocurrido al crear el archivo.");
                             var solicitudes3 = bd.TbSolicitudes.Include(t => t.Cargo).Include(t => t.Depto).Include(t => t.Empleado).Include(t => t.Estados).Include(t => t.Vacaciones).Where(x => x.DeptoId == usuario.Empleado.DeptoId).ToArray();
-                            return View("SolicitudesDepartamentoDirector", solicitudes3.ToList());
+                            TempData["ModificadoDirector"] = "Solicitud Modificada";
+                            return RedirectToAction("SolicitudesDepartamentoDirector");
                         }
                         catch (DbUpdateConcurrencyException)
                         {
