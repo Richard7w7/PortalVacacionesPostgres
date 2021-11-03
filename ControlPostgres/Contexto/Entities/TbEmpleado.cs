@@ -24,6 +24,7 @@ namespace ControlPostgres.Contexto.Entities
         [Required(ErrorMessage = "Ingrese su codigo de empleado")]
         public string EmpleadoCodigo { get; set; }
         [DataType(DataType.Password)]
+        [MinLength(6, ErrorMessage = "La contraseña debe tener al menos 6 caracteres")]
         [Required(ErrorMessage ="Ingrese su contraseña")]
         public string EmpleadoContraseña { get; set; }
         [Required(ErrorMessage = "Campo obligatorio")]

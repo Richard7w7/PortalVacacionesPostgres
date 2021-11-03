@@ -1,6 +1,27 @@
 ﻿@model IEnumerable<ControlPostgres.Contexto.Entities.TbSolicitude>
 
-    <h1>Solicitudes pendientes de aprovacion o denegación</h1>
+@section scripts{
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+               $(function () {
+            var opcion = '@ViewBag.SolicitudCreada'
+            
+            if (opcion == "Si") {
+                Swal.fire({
+                    title: "Tienes Solicitudes para aprovacion",
+                    showConfirmButton: false,
+                    timerProgressBar: true,
+                    icon:"success",
+                    timer:1500,
+                });
+            } 
+        });
+       
+    </script>
+
+}
+
+<h1>Solicitudes pendientes de aprovacion o denegación</h1>
 
 <table class="table" id="Dame">
     <thead>
@@ -63,8 +84,7 @@
     <td>
         <a asp-action="Detalles" asp-route-id="@item.SolicitudId" class="btn btn-primary glyphicon glyphicon-pencil">Detalles</a>
     </td>
-</tr>
-}
+</tr>}
     </tbody>
 </table>
 

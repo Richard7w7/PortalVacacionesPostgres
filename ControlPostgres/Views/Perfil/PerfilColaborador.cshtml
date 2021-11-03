@@ -1,33 +1,7 @@
 ﻿@model ControlPostgres.Contexto.Entities.TbSolicitude
 
 @section scripts{
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-    <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" />
-    <script src="https://cdn.rawgit.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/master/jquery-ui.multidatespicker.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        $(function () {
-            var opcion = '@ViewBag.Logueo'
-            if (opcion == "Logueo Exitoso") {
-                Swal.fire({
-                    toast: true,
-                    title: "Bievenido a tu perfil",
-                    icon: "successs",
-                    showConfirmButton: false,
-                    timerProgressBar: true,
-                    position: 'top-end',
-                    timer:1500,
-                });
-            }
-        });
-        $(function () {
-            $('#multidate').multiDatesPicker({
-                dateFormat: 'dd/mm/yy',
-                beforeShowDay: $.datepicker.noWeekends,
-                minDate: '+11d'
-            });
-        });
         $(function () {
             document.getElementById('Notificador').style.visibility = 'hidden';
             document.getElementById('Notificador').style.display = 'none';
@@ -40,19 +14,74 @@
                 debido a que su cantidad de dias disponibles son <b>${@ViewBag.CantidadDias}</b>`;
                 }
         });
+               $(function () {
+            var opcion = '@ViewBag.Logueo'
+            var opcion2 = '@ViewBag.Logueo2'
+            if (opcion == "Logueo Exitoso") {
+                Swal.fire({
+                    toast: true,
+                    title: "Bievenido a tu perfil",
+                    showConfirmButton: false,
+                    timerProgressBar: true,
+                    position: 'top-end',
+                    timer:1500,
+                });
+            } else if (opcion2 == "Ya hay") {
+                Swal.fire({
+                    title: "Solicitudes Pendientes",
+                    text: "tienes 1 solicitud pendiente, espera a que sea aprobada o denegada para poder generar más",
+                    icon: "warning",
+                    showConfirmButton: false,
+                    timerProgressBar: true,
+                    timer: 2000,
+                });
+            } else if (opcion2 == "Campos Vacios") {
+                Swal.fire({
+                    title: "Campos Vacios",
+                    text: "por favor llena los campos para crear tu solicitud",
+                    icon: "error",
+                    showConfirmButton: false,
+                    timerProgressBar: true,
+                    timer: 1500,
+                });
+            } else if (opcion2 == "La cantidad de dias solicitados es mayor a la cantidad de dias restantes de vacaciones") {
+                Swal.fire({
+                    title: "Verifica la cantidad de dias seleccionados",
+                    text: "La cantidad de dias solicitados es mayor a la cantidad de dias restantes de vacaciones",
+                    icon: "error",
+                    showConfirmButton: true,
+
+                });
+                   }
+            else if (opcion2 == "Impreso") {
+                Swal.fire({
+                    title: "Solicitud Impresa",
+                    text: "Verifica tu escritorio, la solicitud se ha impreso y se guardado como 'Solicitud#-Codigo-Empleado-####' ",
+                    icon: "success",
+                    showConfirmButton: true,
+
+                });
+            }
+        });
+        $(function () {
+            $('#multidate').multiDatesPicker({
+                dateFormat: 'dd/mm/yy',
+                beforeShowDay: $.datepicker.noWeekends,
+                minDate: '+11d'
+            });
+        });
+
     </script>
 
 }
-
-
 
 <h1>Bienvenido Colaborador @Model.Empleado.EmpleadoNombre1 @Model.Empleado.EmpleadoApellido1</h1>
 
 <div class="row" onkeydown="return desabilitartecla(event.keyCode)">
     <div class="col-md-4">
-
+        <label style="font-size:25px">Crear Solicitud de Vacaciones.</label>
+        <label style="font-size:25px">Cantidad de dias disponibles: @Model.Empleado.EmpDiasvacaciones</label>
         <form asp-action="RegistrarSolicitud" id="FormularioRegistro" onkeydown="return desabilitartecla(event.keyCode)">
-            <label style="font-size:25px">Crear Solicitud de Vacaciones</label>
             <div asp-validation-summary="ModelOnly"></div>
             <div class="form-group">
                 <label asp-for="DetallesSolicitud" class="control-label">Detalle la solicitud</label>

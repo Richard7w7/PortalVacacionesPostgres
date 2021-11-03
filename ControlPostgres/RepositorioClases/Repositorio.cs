@@ -205,6 +205,21 @@ namespace ControlPostgres.RepositorioClases
             return logico;
         }
 
-         
+       public bool DiasRestantes(TbSolicitude registro, TbEmpleado usuario)
+        {
+
+            string[] caracter = registro.FechasSeleccionadas.Split(',');
+            int diasantiguos = (int)usuario.EmpDiasvacaciones;
+            int diasresta = registro.CantidadDias;
+            int diasrestantes = (int)(usuario.EmpDiasvacaciones - caracter.Length);
+
+            if (diasrestantes >= 0) { 
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }  
     }
 }

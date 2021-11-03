@@ -16,7 +16,7 @@ namespace ControlPostgres.Controllers
     public class PerfilController : Controller
     {
 
-    //seccion de enumerables para no tener numeros magicos
+        //seccion de enumerables para no tener numeros magicos
         enum Departamento
         {
             Monitoreo = 1
@@ -31,11 +31,11 @@ namespace ControlPostgres.Controllers
         enum EstadoSolicitud
         {
             Enviada = 1,
-            Revision_I=2,
-            Aprobada=4,
-            Denegado=5
+            Revision_I = 2,
+            Aprobada = 4,
+            Denegado = 5
         }
-        
+
         //aqui finaliza la seccion de enumerables
 
         /*aqui tenemos variables que utilizare en la clase*/
@@ -45,8 +45,7 @@ namespace ControlPostgres.Controllers
         Repositorio puente = new Repositorio();
         Generadorpdf generador = new Generadorpdf();
         string? session = null;
-
-
+        /*aqui finalizan las variables que utilizare en la clase*/
         public IActionResult Perfil()
         {
             /*aca recibo lo que son los datos del empleado para mostrarlos en la vista de perfil*/
@@ -56,31 +55,34 @@ namespace ControlPostgres.Controllers
             if (session != null)
             {
                 usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
-            if (usuario.Empleado.DeptoId == 1 && usuario.Empleado.CargoId == 5 || usuario.Empleado.CargoId == 4)
-            {
-                return View("PerfilColaborador", usuario);
-            }
-            else if (usuario.Empleado.DeptoId == 1 && usuario.Empleado.CargoId == 2)
-            {
-                return View("PerfilJefe", usuario);
-            }
-            else if (usuario.Empleado.DeptoId == 1 && usuario.Empleado.CargoId == 3)
-            {
-                return View("PerfilEncargado", usuario);
-            }
+                if (usuario.Empleado.DeptoId == 1 && usuario.Empleado.CargoId == 5 || usuario.Empleado.CargoId == 4)
+                {
+                    return View("PerfilColaborador", usuario);
+                }
+                else if (usuario.Empleado.DeptoId == 1 && usuario.Empleado.CargoId == 2)
+                {
+                    return View("PerfilJefe", usuario);
+                }
+                else if (usuario.Empleado.DeptoId == 1 && usuario.Empleado.CargoId == 3)
+                {
+                    return View("PerfilEncargado", usuario);
+                }
 
-            return View();
-        }else{
+                return View();
+            }
+            else
+            {
                 return RedirectToAction("Index", "Home");
             }
-                
+
         }
         public IActionResult PerfilColaborador()
         {
             session = HttpContext.Session.GetString("SessionUser");
             if (session != null)
             {
-                ViewBag.Logueo=TempData["Logueo"];
+                ViewBag.Logueo = TempData["Logueo"];
+                ViewBag.Logueo2 = TempData["Verificacion"];
                 usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
                 ViewBag.CantidadDias = (int)usuario.Empleado.EmpDiasvacaciones;
                 return View(usuario);
@@ -95,11 +97,14 @@ namespace ControlPostgres.Controllers
             session = HttpContext.Session.GetString("SessionUser");
             if (session != null)
             {
-                usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
                 ViewBag.Logueo = TempData["Logueo"];
+                ViewBag.Logueo2 = TempData["Verificacion"];
+                usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
+                ViewBag.CantidadDias = (int)usuario.Empleado.EmpDiasvacaciones;
                 return View(usuario);
             }
-            else {
+            else
+            {
                 return RedirectToAction("Index", "Home");
             }
         }
@@ -108,8 +113,10 @@ namespace ControlPostgres.Controllers
             session = HttpContext.Session.GetString("SessionUser");
             if (session != null)
             {
-                usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
                 ViewBag.Logueo = TempData["Logueo"];
+                ViewBag.Logueo2 = TempData["Verificacion"];
+                usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
+                ViewBag.CantidadDias = (int)usuario.Empleado.EmpDiasvacaciones;
                 return View(usuario);
             }
             else
@@ -160,6 +167,7 @@ namespace ControlPostgres.Controllers
         [HttpPost]
         public IActionResult RegistrarSolicitud(TbSolicitude registro)
         {
+
             session = HttpContext.Session.GetString("SessionUser");
             if (session != null)
             {
@@ -168,21 +176,55 @@ namespace ControlPostgres.Controllers
                 .Where(x => x.EmpleadoId == usuario.Empleado.EmpleadoId)
                 .Where(x => x.EstadosId == (int)EstadoSolicitud.Enviada).Count();
                 Boolean respuesta;
-                if (solicitudes <= 0) { 
-                try
+                if (solicitudes <= 0)
                 {
-                    if (registro.DetallesSolicitud != null && registro.FechasSeleccionadas != null)
+
+
+                    try
                     {
-                        if (ModelState.IsValid)
+
+
+                        if (registro.DetallesSolicitud != null && registro.FechasSeleccionadas != null)
                         {
-                            respuesta = puente.CrearSolicitud(registro);
-                            switch (respuesta)
+                            bool DiasHabilies = puente.DiasRestantes(registro, usuario.Empleado);
+                            if (DiasHabilies == true)
                             {
-                                case true:
-                                    ModelState.Clear();
-                                    return RedirectToAction("ListarSolicitudEmpleadoRevisiones");
-                                case false:
-                                    if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.MonitordeCamaras || usuario.Empleado.CargoId == (int)CargoDepaPM.EncargadoTurno)
+                                if (ModelState.IsValid)
+                                {
+                                    respuesta = puente.CrearSolicitud(registro);
+                                    switch (respuesta)
+                                    {
+                                        case true:
+                                            ModelState.Clear();
+                                            TempData["SolicitudCreada"] = "Si";
+                                            return RedirectToAction("ListarSolicitudEmpleadoRevisiones");
+                                        case false:
+                                            if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.MonitordeCamaras || usuario.Empleado.CargoId == (int)CargoDepaPM.EncargadoTurno)
+                                            {
+
+                                                return View("PerfilColaborador", usuario);
+                                            }
+                                            else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.DirectorPM)
+                                            {
+
+                                                return View("PerfilDirector", usuario);
+                                            }
+                                            else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.JefeInmediatoMonitoreo)
+                                            {
+
+                                                return View("PerfilJefe", usuario);
+                                            }
+
+
+                                            break;
+
+
+                                    }
+                                    return NotFound();
+                                }
+                                else if (!ModelState.IsValid)
+                                {
+                                    if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.MonitordeCamaras || usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.EncargadoTurno)
                                     {
                                         return View("PerfilColaborador", usuario);
                                     }
@@ -194,72 +236,79 @@ namespace ControlPostgres.Controllers
                                     {
                                         return View("PerfilJefe", usuario);
                                     }
-                                    
 
-                                    break;
+
+                                    return View(usuario);
+                                }
 
 
                             }
-                            return NotFound();
+                            else
+                            {
+
+                                if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.MonitordeCamaras || usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.EncargadoTurno)
+                                {
+                                    TempData["Verificacion"] = "La cantidad de dias solicitados es mayor a la cantidad de dias restantes de vacaciones";
+                                    return RedirectToAction("PerfilColaborador", usuario);
+                                }
+                                else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.DirectorPM)
+                                {
+                                    TempData["Verificacion"] = "La cantidad de dias solicitados es mayor a la cantidad de dias restantes de vacaciones";
+                                    return RedirectToAction("PerfilDirector", usuario);
+                                }
+                                else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.JefeInmediatoMonitoreo)
+                                {
+                                    TempData["Verificacion"] = "La cantidad de dias solicitados es mayor a la cantidad de dias restantes de vacaciones";
+                                    return RedirectToAction("PerfilJefe", usuario);
+                                }
+
+                            } 
                         }
                         else
                         {
                             if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.MonitordeCamaras || usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.EncargadoTurno)
                             {
-                                return View("PerfilColaborador", usuario);
+                                TempData["Verificacion"] = "Campos Vacios";
+                                return RedirectToAction("PerfilColaborador", usuario);
                             }
                             else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.DirectorPM)
                             {
-                                return View("PerfilDirector", usuario);
+                                TempData["Verificacion"] = "Campos Vacios";
+                                return RedirectToAction("PerfilDirector", usuario);
                             }
                             else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.JefeInmediatoMonitoreo)
                             {
-                                return View("PerfilJefe", usuario);
+                                TempData["Verificacion"] = "Campos Vacios";
+                                return RedirectToAction("PerfilJefe", usuario);
                             }
-                            
 
-                            return View(usuario);
                         }
-                    }
-                    else
+
+                        }
+                    catch (Exception)
                     {
-                        if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.MonitordeCamaras || usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.EncargadoTurno)
-                        {
-                            return RedirectToAction("PerfilColaborador", usuario);
-                        }
-                        else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.DirectorPM)
-                        {
-                            return RedirectToAction("PerfilDirector", usuario);
-                        }
-                        else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.JefeInmediatoMonitoreo)
-                        {
-                            return RedirectToAction("PerfilJefe", usuario);
-                        }
-                        
 
-                        return View(usuario);
+                        throw;
                     }
-
                 }
-                catch (Exception)
+                else
                 {
-
-                    throw;
-                } 
-                }
-                else {
                     if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.MonitordeCamaras || usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.EncargadoTurno)
                     {
+                        TempData["Verificacion"] = "Ya hay";
                         return RedirectToAction("PerfilColaborador", usuario);
                     }
                     else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.DirectorPM)
                     {
+                        TempData["Verificacion"] = "Ya hay";
                         return RedirectToAction("PerfilDirector", usuario);
                     }
                     else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.JefeInmediatoMonitoreo)
                     {
+                        TempData["Verificacion"] = "Ya hay";
                         return RedirectToAction("PerfilJefe", usuario);
                     }
+                    TempData["Verificacion"] = "Ya hay";
                 }
                 return NotFound();
             }
@@ -272,14 +321,15 @@ namespace ControlPostgres.Controllers
         {
 
             session = HttpContext.Session.GetString("SessionUser");
-            if (session != null) {
+            if (session != null)
+            {
                 usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
 
                 var solicitudes = bd.TbSolicitudes.Include(t => t.Cargo).Include(t => t.Depto).Include(t => t.Empleado).Include(t => t.Estados).Include(t => t.Vacaciones)
                 .Where(x => x.EmpleadoId == usuario.Empleado.EmpleadoId)
                 .Where(x => x.EstadosId == (int)EstadoSolicitud.Aprobada || x.EstadosId == (int)EstadoSolicitud.Denegado).ToArray();
 
-            return View(solicitudes.ToList());
+                return View(solicitudes.ToList());
             }
             return RedirectToAction("Index", "Home");
         }
@@ -292,12 +342,12 @@ namespace ControlPostgres.Controllers
                 var solicitudes = bd.TbSolicitudes.Include(t => t.Cargo).Include(t => t.Depto).Include(t => t.Empleado).Include(t => t.Estados).Include(t => t.Vacaciones)
                     .Where(x => x.EmpleadoId == usuario.Empleado.EmpleadoId)
                     .Where(x => x.EstadosId == (int)EstadoSolicitud.Enviada || x.EstadosId == (int)EstadoSolicitud.Revision_I).ToArray();
-
+                ViewBag.SolicitudCreada = TempData["SolicitudCreada"];
                 return View(solicitudes.ToList());
             }
             else
             {
-                return RedirectToAction("Index","Home");
+                return RedirectToAction("Index", "Home");
             }
         }
         public IActionResult SolicitudesDepartamentoJefe()
@@ -307,7 +357,7 @@ namespace ControlPostgres.Controllers
             {
                 usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));                                                         //.Where(x => x.Depto_ID == rama.Depto_ID)
                 var solicitudes = bd.TbSolicitudes.Include(t => t.Cargo).Include(t => t.Depto).Include(t => t.Empleado).Include(t => t.Estados).Include(t => t.Vacaciones).Where(x => x.DeptoId == usuario.Empleado.DeptoId).ToArray();
-
+                ViewBag.ModificadoJefe=TempData["ModificadoJefe"];
                 return View(solicitudes.ToList());
             }
             else
@@ -416,8 +466,9 @@ namespace ControlPostgres.Controllers
                 }
 
                 return NotFound();
-            }else
-            { 
+            }
+            else
+            {
                 return RedirectToAction("Index", "Home");
             }
         }
@@ -485,7 +536,7 @@ namespace ControlPostgres.Controllers
             }
         }
         [HttpPost]
-        public async Task <IActionResult> DetallesDepaEncargado(int? id)
+        public async Task<IActionResult> DetallesDepaEncargado(int? id)
         {
             session = HttpContext.Session.GetString("SessionUser");
             if (session != null)
@@ -516,7 +567,6 @@ namespace ControlPostgres.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
-        
         public async Task<IActionResult> DetallesDepaJefe(int? id)
         {
             session = HttpContext.Session.GetString("SessionUser");
@@ -548,7 +598,6 @@ namespace ControlPostgres.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
-        
         public async Task<IActionResult> DetallesDepaDirector(int? id)
         {
             session = HttpContext.Session.GetString("SessionUser");
@@ -648,25 +697,25 @@ namespace ControlPostgres.Controllers
                 usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
 
 
-            if (id == null)
-            {
-                return NotFound();
-            }
-            ViewData["EstadoS"] = new SelectList(bd.TbEstadosolicitudes, "EstadosId", "EstadosNombre");
-            var tbSolicitude = await bd.TbSolicitudes
-               .Include(t => t.Cargo)
-               .Include(t => t.Depto)
-               .Include(t => t.Empleado)
-               .Include(t => t.Estados)
-               .Include(t => t.Vacaciones)
-               .FirstOrDefaultAsync(m => m.SolicitudId == id);
+                if (id == null)
+                {
+                    return NotFound();
+                }
+                ViewData["EstadoS"] = new SelectList(bd.TbEstadosolicitudes, "EstadosId", "EstadosNombre");
+                var tbSolicitude = await bd.TbSolicitudes
+                   .Include(t => t.Cargo)
+                   .Include(t => t.Depto)
+                   .Include(t => t.Empleado)
+                   .Include(t => t.Estados)
+                   .Include(t => t.Vacaciones)
+                   .FirstOrDefaultAsync(m => m.SolicitudId == id);
 
-            tbSolicitude.Comentario = tbSolicitudes.Comentario;
-            tbSolicitude.EstadosId = tbSolicitudes.EstadosId;
+                tbSolicitude.Comentario = tbSolicitudes.Comentario;
+                tbSolicitude.EstadosId = tbSolicitudes.EstadosId;
 
                 if (tbSolicitudes.EstadosId == (int)EstadoSolicitud.Revision_I)
                 {
-                    tbSolicitude.EstadoSeleJefe = "Revision" + " "+usuario.Empleado.EmpleadoNombre1+" "+ usuario.Empleado.EmpleadoApellido1; 
+                    tbSolicitude.EstadoSeleJefe = "Revision" + " " + usuario.Empleado.EmpleadoNombre1 + " " + usuario.Empleado.EmpleadoApellido1;
                 }
                 else if (tbSolicitudes.EstadosId == (int)EstadoSolicitud.Denegado)
                 {
@@ -681,7 +730,8 @@ namespace ControlPostgres.Controllers
                             if (string.IsNullOrWhiteSpace(archivogenerado))
                                 return BadRequest("un error ha ocurrido al crear el archivo.");
                             var solicitudes3 = bd.TbSolicitudes.Include(t => t.Cargo).Include(t => t.Depto).Include(t => t.Empleado).Include(t => t.Estados).Include(t => t.Vacaciones).Where(x => x.DeptoId == usuario.Empleado.DeptoId).ToArray();
-                            return View("SolicitudesDepartamentoJefe", solicitudes3.ToList());
+                            TempData["ModificadoJefe"] = "Solicitud Modificada";
+                            return RedirectToAction("SolicitudesDepartamentoJefe");
                         }
                         catch (DbUpdateConcurrencyException)
                         {
@@ -698,41 +748,42 @@ namespace ControlPostgres.Controllers
                     }
                     return NotFound();
                 }
-                
+
 
                 if (id != tbSolicitude.SolicitudId)
-            {
+                {
+                    return NotFound();
+                }
+
+
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        bd.Update(tbSolicitude);
+                        await bd.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!TbSolicitudeExists(tbSolicitude.SolicitudId))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                    //return RedirectToAction(nameof(Index));
+                    var solicitudes = bd.TbSolicitudes.Include(t => t.Cargo).Include(t => t.Depto).Include(t => t.Empleado).Include(t => t.Estados).Include(t => t.Vacaciones).Where(x => x.DeptoId == usuario.Empleado.DeptoId).ToArray();
+                    return View("SolicitudesDepartamentoJefe", solicitudes.ToList());
+                }
                 return NotFound();
             }
-
-
-            if (ModelState.IsValid)
+            else
             {
-                try
-                {
-                    bd.Update(tbSolicitude);
-                    await bd.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TbSolicitudeExists(tbSolicitude.SolicitudId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                //return RedirectToAction(nameof(Index));
-                var solicitudes = bd.TbSolicitudes.Include(t => t.Cargo).Include(t => t.Depto).Include(t => t.Empleado).Include(t => t.Estados).Include(t => t.Vacaciones).Where(x => x.DeptoId == usuario.Empleado.DeptoId).ToArray();
-                return View("SolicitudesDepartamentoJefe", solicitudes.ToList());
-            }
-            return NotFound();
-        }
-            else{
                 return RedirectToAction("Index", "Home");
-              }
+            }
         }
         [HttpPost]
         public async Task<IActionResult> ModificarDetallesDepaDirector(int? id, TbSolicitude tbSolicitudes)
@@ -839,7 +890,7 @@ namespace ControlPostgres.Controllers
 
                 else if (tbSolicitudes.EstadosId == (int)EstadoSolicitud.Denegado)
                 {
-                    
+
                     if (ModelState.IsValid)
                     {
                         try
@@ -870,7 +921,9 @@ namespace ControlPostgres.Controllers
 
                 return View("DetallesDepaDirector", tbSolicitude);
             }
-            else { return RedirectToAction("Index", "Home");
+            else
+            {
+                return RedirectToAction("Index", "Home");
             }
         }
         private bool TbSolicitudeExists(int id)
@@ -889,22 +942,24 @@ namespace ControlPostgres.Controllers
               .FirstOrDefaultAsync(m => m.SolicitudId == id);
             string archivogenerado = generador.GenerateInvestorDocumentUser(tbSolicitude);
 
-            
+
             if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.MonitordeCamaras || usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.EncargadoTurno)
             {
+                TempData["Verificacion"] = "Impreso";
                 return RedirectToAction("PerfilColaborador", "Perfil");
             }
             else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.DirectorPM)
             {
+                TempData["Verificacion"] = "Impreso";
                 return RedirectToAction("PerfilDirector", "Perfil");
             }
             else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.JefeInmediatoMonitoreo)
             {
+                TempData["Verificacion"] = "Impreso";
                 return RedirectToAction("PerfilJefe", "Perfil");
             }
-            
-            HttpContext.Session.Remove("SessionUser");
-            return RedirectToAction("Index", "Home");
+
+            return View();
         }
         public async Task<IActionResult> DetailsPerfil(int? id)
         {
@@ -927,7 +982,6 @@ namespace ControlPostgres.Controllers
 
             return View(tbEmpleado);
         }
-        
         public IActionResult ActualizaDatosPerfil()
         {
             return View();
@@ -940,9 +994,9 @@ namespace ControlPostgres.Controllers
             {
 
 
-                    var caso = bd.TbEmpleados.Where(u => u.EmpleadoId == empleado.EmpleadoId).FirstOrDefault();
-                    caso.EmpleadoTelefono = datos.EmpleadoTelefono;
-                    bd.SaveChanges();
+                var caso = bd.TbEmpleados.Where(u => u.EmpleadoId == empleado.EmpleadoId).FirstOrDefault();
+                caso.EmpleadoTelefono = datos.EmpleadoTelefono;
+                bd.SaveChanges();
                 usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
                 if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.MonitordeCamaras || usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.EncargadoTurno)
                 {
@@ -962,10 +1016,10 @@ namespace ControlPostgres.Controllers
             }
             else if (datos.EmpleadoDireccion != null && datos.EmpleadoTelefono == null)
             {
-                
-                    var caso = bd.TbEmpleados.Where(u => u.EmpleadoId == empleado.EmpleadoId).FirstOrDefault();
-                    caso.EmpleadoDireccion = datos.EmpleadoDireccion;
-                    bd.SaveChanges();
+
+                var caso = bd.TbEmpleados.Where(u => u.EmpleadoId == empleado.EmpleadoId).FirstOrDefault();
+                caso.EmpleadoDireccion = datos.EmpleadoDireccion;
+                bd.SaveChanges();
                 usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
                 if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.MonitordeCamaras || usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.EncargadoTurno)
                 {
@@ -983,10 +1037,10 @@ namespace ControlPostgres.Controllers
             else if (datos.EmpleadoDireccion != null && datos.EmpleadoTelefono != null)
             {
 
-                    var caso = bd.TbEmpleados.Where(u => u.EmpleadoId == empleado.EmpleadoId).FirstOrDefault();
-                    caso.EmpleadoDireccion = datos.EmpleadoDireccion;
-                    caso.EmpleadoTelefono = datos.EmpleadoTelefono;
-                    bd.SaveChanges();
+                var caso = bd.TbEmpleados.Where(u => u.EmpleadoId == empleado.EmpleadoId).FirstOrDefault();
+                caso.EmpleadoDireccion = datos.EmpleadoDireccion;
+                caso.EmpleadoTelefono = datos.EmpleadoTelefono;
+                bd.SaveChanges();
                 usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
                 if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.MonitordeCamaras || usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.EncargadoTurno)
                 {

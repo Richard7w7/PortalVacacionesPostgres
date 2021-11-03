@@ -212,7 +212,6 @@ namespace ControlPostgres.Controllers
 
         public IActionResult ConfirmaContraseña()
         {
-           
             return View();
         }
         [HttpPost]
