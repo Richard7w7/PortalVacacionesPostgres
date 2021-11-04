@@ -21,6 +21,8 @@ namespace ControlPostgres.Contexto.Entities
         [Required(ErrorMessage = "Seleccione un tiempo laborando")]
         public int VacacionesId { get; set; }
         [Display(Name ="Codigo del Empleado")]
+        [MaxLength(4, ErrorMessage = "el codigo de empleado solo debe contener 4 digitos")]
+        [RegularExpression("([1-9][0-9]*)", ErrorMessage = "el codigo solo debe contener numeros del 0 al 9")]
         [Required(ErrorMessage = "Ingrese su codigo de empleado")]
         public string EmpleadoCodigo { get; set; }
         [DataType(DataType.Password)]

@@ -68,6 +68,7 @@ namespace ControlPostgres.Controllers
                             ModelState.Clear();
                             return View("Login");
                         case false:
+                            ViewBag.Registro = "No registro";
                             return View("RegistrarEmp");
 
 
