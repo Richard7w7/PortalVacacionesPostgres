@@ -1,6 +1,6 @@
 ﻿@model ControlPostgres.Contexto.Entities.TbSolicitude
-
-@section scripts{    
+@{ ViewData["Title"] = "Perfil"; }
+@section scripts{
     <script>
         $(function () {
             document.getElementById('Notificador').style.visibility = 'hidden';
@@ -88,9 +88,10 @@
 
 <div class="row" onkeydown="return desabilitartecla(event.keyCode)">
     <div class="col-md-4">
+        <label style="font-size:25px">Crear Solicitud de Vacaciones</label>
+        <label style="font-size:25px">Cantidad de dias disponibles: @Model.Empleado.EmpDiasvacaciones</label>
 
         <form asp-action="RegistrarSolicitud" id="FormularioRegistro" onkeydown="return desabilitartecla(event.keyCode)">
-            <label style="font-size:25px">Crear Solicitud de Vacaciones</label>
             <div asp-validation-summary="ModelOnly"></div>
             <div class="form-group">
                 <label asp-for="DetallesSolicitud" class="control-label">Detalle la solicitud</label>

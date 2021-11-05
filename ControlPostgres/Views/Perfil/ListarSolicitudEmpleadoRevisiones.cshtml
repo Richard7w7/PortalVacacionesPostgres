@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<ControlPostgres.Contexto.Entities.TbSolicitude>
-
+@{ ViewData["Title"] = "Solicitudes en espera"; }
 @section scripts{
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
                $(function () {
             var opcion = '@ViewBag.SolicitudCreada'
-            
+
             if (opcion == "Si") {
                 Swal.fire({
                     title: "Tienes Solicitudes para aprovacion",
@@ -14,9 +14,9 @@
                     icon:"success",
                     timer:1500,
                 });
-            } 
+            }
         });
-       
+
     </script>
 
 }

@@ -1,4 +1,4 @@
-﻿
+﻿@{ ViewData["Title"] = "Solicitudes del departamento"; }
 @model IEnumerable<ControlPostgres.Contexto.Entities.TbSolicitude>
 
 <table class="table" id="Dame">
@@ -34,36 +34,35 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SolicitudFecha)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DetallesSolicitud)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CantidadDias)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Comentario)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Depto.DeptoNombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Empleado.EmpleadoCodigo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Estados.EstadosNombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Empleado.EmpDiasvacaciones)
-                </td>
-                <td>
-                    <a asp-action="DetallesDepaEncargado" asp-route-id="@item.SolicitudId" class="btn btn-primary glyphicon glyphicon-pencil">Detalles</a>
-                </td>
-            </tr>
-        }
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.SolicitudFecha)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.DetallesSolicitud)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.CantidadDias)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Comentario)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Depto.DeptoNombre)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Empleado.EmpleadoCodigo)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Estados.EstadosNombre)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Empleado.EmpDiasvacaciones)
+    </td>
+    <td>
+        <a asp-action="DetallesDepaEncargado" asp-route-id="@item.SolicitudId" class="btn btn-primary glyphicon glyphicon-pencil">Detalles</a>
+    </td>
+</tr>}
     </tbody>
 </table>
 <a asp-action="PerfilEncargado" type="submit" class="btn btn-primary">Regresar</a>

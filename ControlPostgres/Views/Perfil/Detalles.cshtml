@@ -1,8 +1,6 @@
 ﻿@model ControlPostgres.Contexto.Entities.TbSolicitude
 
-@{
-    ViewData["Title"] = "Detalles";
-}
+@{ ViewData["Title"] = "Detalles"; }
 <div>
     <h4>Detalles de la Solicitud del colaborador @Model.Empleado.EmpleadoNombre1 @Model.Empleado.EmpleadoApellido1 </h4>
     <hr />
@@ -53,7 +51,7 @@
             @Html.DisplayNameFor(model => model.Empleado.EmpleadoNombre1)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Empleado.EmpleadoNombre1+" "+ model.Empleado.EmpleadoApellido1)
+            @Html.DisplayFor(model => model.Empleado.EmpleadoNombre1 + " " + model.Empleado.EmpleadoApellido1)
         </dd>
         <dt class="col-sm-4">
             @Html.DisplayNameFor(model => model.Estados.EstadosNombre)
