@@ -20,6 +20,7 @@ namespace ControlPostgres.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.Opcion = TempData["Salir"];
             return View();
         }
 

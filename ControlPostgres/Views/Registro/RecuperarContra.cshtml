@@ -1,5 +1,33 @@
 ﻿@model ControlPostgres.Contexto.Entities.TbContraseña
+@section scripts{
 
+    <script>
+
+        $(function () {
+            var opcion = '@ViewBag.Opcion'
+            if (opcion == "Campos vacios") {
+                Swal.fire({
+
+                    title: "Campos vacios",
+                    text: "Por favor ingrese los datos solicitados",
+                    icon: "warning",
+                    showConfirmButton: false,
+                    timerProgressBar: true,
+                    timer: 2000,
+                });
+            } else if (opcion == "Credenciales no coinciden") {
+                Swal.fire({
+
+                    title: "Datos no coinciden",
+                    text: "verifique sus datos e intentelo nuevamente, sino solicite cambio de contraseña con el administrador de la base de datos",
+                    icon: "error",
+                    showConfirmButton: true,
+                });
+            }
+        });
+    </script>
+
+}
 
 <h1>Recuperacion de Contraseña</h1>
 
@@ -29,7 +57,7 @@
             <div class="form-group">
                 <button value="RecuperarContra" type="submit" class="btn btn-primary"> Recuperar</button>
             </div>
-            
+
 
         </form>
     </div>

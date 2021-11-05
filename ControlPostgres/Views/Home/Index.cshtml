@@ -1,7 +1,25 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@{ ViewData["Title"] = "Home Page"; }
+@section scripts{
 
+    <script>
+
+        $(function () {
+            var opcion = '@ViewBag.Opcion'
+            if (opcion == "Salio") {
+                Swal.fire({
+
+                    title: "¡Sesión Cerrada!",
+                    text: "Espero tengas un lindo dia.",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timerProgressBar: true,
+                    timer: 3000,
+                });
+            } 
+        });
+    </script>
+
+}
 <div class="jumbotron">
     <h1>Bienvenido</h1>
     <p class="lead">

@@ -18,7 +18,7 @@ namespace ControlPostgres.Controllers
 {
     enum Departamento
     {
-        Monitoreo =1
+        Monitoreo = 1
     }
 
     enum CargoDepaPM
@@ -42,7 +42,7 @@ namespace ControlPostgres.Controllers
             ViewData["Depto"] = new SelectList(bd.TbDepartamentos, "DeptoId", "DeptoNombre");
             ViewData["Cargos"] = new SelectList(bd.TbCargos, "CargoId", "CargoNombre");
             ViewData["Vacaciones"] = new SelectList(bd.TbVacaciones, "VacacionesId", "VacacionesEstado");
-            
+
             return View();
         }
 
@@ -52,7 +52,7 @@ namespace ControlPostgres.Controllers
             ViewData["Depto"] = new SelectList(bd.TbDepartamentos, "DeptoId", "DeptoNombre");
             ViewData["Cargos"] = new SelectList(bd.TbCargos, "CargoId", "CargoNombre");
             ViewData["Vacaciones"] = new SelectList(bd.TbVacaciones, "VacacionesId", "VacacionesEstado");
-            
+
             Boolean logico;
             try
             {
@@ -88,6 +88,7 @@ namespace ControlPostgres.Controllers
 
         public ActionResult Login()
         {
+            ViewBag.Opcion = TempData["CambioContra"];
             return View();
         }
         [HttpPost]
@@ -152,14 +153,16 @@ namespace ControlPostgres.Controllers
                             TempData["Logueo"] = "Logueo Exitoso";
                             return RedirectToAction("PerfilJefe", "Perfil");
                         }
-                        
+
                     }
 
-                    
-                }else{
+
+                }
+                else
+                {
                     ViewBag.Opcion = "Campos Vacios";
                     return View("Login");
-                     }
+                }
                 ViewBag.Opcion = "Usuario Incorrecto";
                 return View("Login");
             }
@@ -186,16 +189,18 @@ namespace ControlPostgres.Controllers
                 {
 
                     HttpContext.Session.SetString("SessionContra", JsonConvert.SerializeObject(user));
+                    TempData["DatosCorrectos"] = "datos correctos";
                     return RedirectToAction("ConfirmaContraseña");
                 }
                 else
                 {
-                    ViewBag.NoExiste = "Lo sentimos las credenciales no coinciden con ningun usuario, intentalo nuevamente";
+                    ViewBag.Opcion = "Credenciales no coinciden";
                     return View();
                 }
-                            }
-            else {
-                ViewBag.LlenarCampos = "Por favor llena los campos";
+            }
+            else
+            {
+                ViewBag.Opcion = "Campos vacios";
                 return View();
             }
 
@@ -204,6 +209,7 @@ namespace ControlPostgres.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("SessionUser");
+            TempData["Salir"] = "Salio";
             return RedirectToAction("Index", "Home");
         }
         private bool TbEmpleadoExists(int id)
@@ -213,23 +219,26 @@ namespace ControlPostgres.Controllers
 
         public IActionResult ConfirmaContraseña()
         {
+            ViewBag.Opcion = TempData["DatosCorrectos"];
+            
             return View();
         }
         [HttpPost]
         public IActionResult ConfirmaContraseña(TbReContra recontra)
         {
             TbEmpleado empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionContra"));
-            
-            if(recontra.Contra == recontra.RepetirContra)
+            if(!string.IsNullOrEmpty(recontra.Contra) && !string.IsNullOrEmpty(recontra.RepetirContra)) { 
+            if (recontra.Contra == recontra.RepetirContra)
             {
                 if (ModelState.IsValid)
                 {
-                    
-                        var usuario = bd.TbEmpleados.Where(u => u.EmpleadoId == empleado.EmpleadoId).FirstOrDefault();
-                        usuario.EmpleadoContraseña = recontra.RepetirContra;
-                        bd.SaveChanges();
-                        HttpContext.Session.Remove("SessionContra");
-                        return View("Login") ;
+
+                    var usuario = bd.TbEmpleados.Where(u => u.EmpleadoId == empleado.EmpleadoId).FirstOrDefault();
+                    usuario.EmpleadoContraseña = recontra.RepetirContra;
+                    bd.SaveChanges();
+                    HttpContext.Session.Remove("SessionContra");
+                        TempData["CambioContra"] = "cambio correcto";
+                    return RedirectToAction("Login");
 
                 }
                 else
@@ -238,12 +247,18 @@ namespace ControlPostgres.Controllers
                     return View();
                 }
             }
+            else 
+            {
+                   
+                    ViewBag.Opcion = "no iguales";
+                    return View();
+                }
+            }
             else
             {
-                ViewBag.Noigual = "Las contraseñas no coinciden, por favor vuelva a ingresarlas";
+                ViewBag.Opcion = "Campos vacios";
                 return View();
             }
-
         }
     }
 

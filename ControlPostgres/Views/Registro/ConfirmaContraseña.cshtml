@@ -1,5 +1,46 @@
 ﻿@model ControlPostgres.Contexto.Entities.TbReContra
+@section scripts{
 
+    <script>
+
+        $(function () {
+            var opcion = '@ViewBag.Opcion'
+            if (opcion == "no iguales") {
+                Swal.fire({
+
+                    title: "Contraseñas no coinciden",
+                    text: "Por favor ingresa correctamente la contraseña y luego vuelve a confirmarla",
+                    icon: "warning",
+                    showConfirmButton: false,
+                    timerProgressBar: true,
+                    timer: 3000,
+                });
+            } else if (opcion == "datos correctos") {
+                Swal.fire({
+
+                    title: "Listo",
+                    text: "Por favor ingresa tu nueva contraseña",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timerProgressBar: true,
+                    timer: 2000,
+                });
+            } else if (opcion == "Campos vacios") {
+                Swal.fire({
+
+                    title: "Campos vacios",
+                    text: "Por favor ingresa tu nueva contraseña",
+                    icon: "error",
+                    showConfirmButton: false,
+                    timerProgressBar: true,
+                    timer: 2000,
+                });
+            }
+            
+        });
+    </script>
+
+}
 
 <h1>Recuperacion de Contraseña</h1>
 
@@ -23,7 +64,7 @@
             <div class="form-group">
                 <button value="ConfirmaContraseña" type="submit" class="btn btn-primary"> Recuperar</button>
             </div>
-           
+
         </form>
     </div>
 </div>
