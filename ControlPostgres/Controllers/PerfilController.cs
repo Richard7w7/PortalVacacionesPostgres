@@ -83,6 +83,7 @@ namespace ControlPostgres.Controllers
             {
                 ViewBag.Logueo = TempData["Logueo"];
                 ViewBag.Logueo2 = TempData["Verificacion"];
+                ViewBag.Logueo3 = TempData["Actualizo"];
                 usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
                 ViewBag.CantidadDias = (int)usuario.Empleado.EmpDiasvacaciones;
                 return View(usuario);
@@ -99,6 +100,7 @@ namespace ControlPostgres.Controllers
             {
                 ViewBag.Logueo = TempData["Logueo"];
                 ViewBag.Logueo2 = TempData["Verificacion"];
+                ViewBag.Logueo3 = TempData["Actualizo"];
                 usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
                 ViewBag.CantidadDias = (int)usuario.Empleado.EmpDiasvacaciones;
                 return View(usuario);
@@ -115,6 +117,7 @@ namespace ControlPostgres.Controllers
             {
                 ViewBag.Logueo = TempData["Logueo"];
                 ViewBag.Logueo2 = TempData["Verificacion"];
+                ViewBag.Logueo3 = TempData["Actualizo"];
                 usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
                 ViewBag.CantidadDias = (int)usuario.Empleado.EmpDiasvacaciones;
                 return View(usuario);
@@ -967,14 +970,17 @@ namespace ControlPostgres.Controllers
                 usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
                 if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.MonitordeCamaras || usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.EncargadoTurno)
                 {
+                    TempData["Actualizo"] = "Si actualizo";
                     return RedirectToAction("PerfilColaborador", "Perfil");
                 }
                 else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.DirectorPM)
                 {
+                    TempData["Actualizo"] = "Si actualizo";
                     return RedirectToAction("PerfilDirector", "Perfil");
                 }
                 else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.JefeInmediatoMonitoreo)
                 {
+                    TempData["Actualizo"] = "Si actualizo";
                     return RedirectToAction("PerfilJefe", "Perfil");
                 }
 
@@ -990,14 +996,17 @@ namespace ControlPostgres.Controllers
                 usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
                 if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.MonitordeCamaras || usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.EncargadoTurno)
                 {
+                    TempData["Actualizo"] = "Si actualizo";
                     return RedirectToAction("PerfilColaborador", "Perfil");
                 }
                 else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.DirectorPM)
                 {
+                    TempData["Actualizo"] = "Si actualizo";
                     return RedirectToAction("PerfilDirector", "Perfil");
                 }
                 else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.JefeInmediatoMonitoreo)
                 {
+                    TempData["Actualizo"] = "Si actualizo";
                     return RedirectToAction("PerfilJefe", "Perfil");
                 }
             }
@@ -1011,20 +1020,23 @@ namespace ControlPostgres.Controllers
                 usuario.Empleado = JsonConvert.DeserializeObject<TbEmpleado>(HttpContext.Session.GetString("SessionUser"));
                 if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.MonitordeCamaras || usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.EncargadoTurno)
                 {
+                    TempData["Actualizo"] = "Si actualizo";
                     return RedirectToAction("PerfilColaborador", "Perfil");
                 }
                 else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.DirectorPM)
                 {
+                    TempData["Actualizo"] = "Si actualizo";
                     return RedirectToAction("PerfilDirector", "Perfil");
                 }
                 else if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.JefeInmediatoMonitoreo)
                 {
+                    TempData["Actualizo"] = "Si actualizo";
                     return RedirectToAction("PerfilJefe", "Perfil");
                 }
             }
             else
             {
-                ViewBag.Noigual = "Por favor debe ingresar al menos un dato para actualizar";
+                ViewBag.Opcion = "Campos vacios";
                 return View();
             }
             return View();

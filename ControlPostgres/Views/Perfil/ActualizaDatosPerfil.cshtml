@@ -1,6 +1,23 @@
 ﻿@model ControlPostgres.Contexto.Entities.TbActualizaDatos
 
+@section scripts{
+    <script>
+        $(function () {
+            var opcion = '@ViewBag.Opcion'
+            if (opcion == "Campos vacios") {
+                Swal.fire({
 
+                    title: "Campos Vacions",
+                    text: "Por favor ingresa al menos 1 dato para modificar",
+                    icon: "warning",
+                    showConfirmButton: false,
+                    timerProgressBar: true,
+                    timer: 2500,
+                });
+            }
+        });
+    </script>
+}
 <h1>Actualiza tus datos</h1>
 
 <div class="row">

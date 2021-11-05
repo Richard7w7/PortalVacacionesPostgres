@@ -16,7 +16,8 @@
         });
                $(function () {
             var opcion = '@ViewBag.Logueo'
-            var opcion2 = '@ViewBag.Logueo2'
+                   var opcion2 = '@ViewBag.Logueo2'
+                   var opcion3 = '@ViewBag.Logueo3'
             if (opcion == "Logueo Exitoso") {
                 Swal.fire({
                     toast: true,
@@ -60,6 +61,13 @@
                     icon: "success",
                     showConfirmButton: true,
 
+                });
+            } else if (opcion3 == "Si actualizo") {
+                Swal.fire({
+                    title: "Datos Actualizados",
+                    text: "Tus datos han sido actualizados",
+                    icon: "success",
+                    showConfirmButton: true,
                 });
             }
         });

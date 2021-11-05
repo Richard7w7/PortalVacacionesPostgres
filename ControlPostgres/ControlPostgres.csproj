@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\ListarSolicitudes\**" />
+    <Content Remove="Views\ListarSolicitudes\**" />
+    <EmbeddedResource Remove="Views\ListarSolicitudes\**" />
+    <None Remove="Views\ListarSolicitudes\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="iTextSharp" Version="5.5.13.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
@@ -20,7 +27,6 @@
 
   <ItemGroup>
     <Folder Include="RepositorioFunciones\" />
-    <Folder Include="Views\ListarSolicitudes\" />
   </ItemGroup>
 
 </Project>
