@@ -120,4 +120,8 @@ CREATE TABLE muni_villanueva.tb_vacaciones
     CONSTRAINT tb_vacaciones_pkey PRIMARY KEY (vacaciones_id)
 )
 
-
+/////////////////////////////////////////////////////////////////////
+1 - 1 a 5 años - 20
+2 - 5 años y 1 dia - 25
+3 - 10 años y 1 dia -30
+*********************************************************************
