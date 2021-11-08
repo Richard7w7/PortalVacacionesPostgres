@@ -28,6 +28,7 @@ namespace ControlPostgres.Contexto.Entities
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseNpgsql("Server=localhost;Database=BD_ControlVacaciones;Username=postgres;Password=Arg4815;");
             }
         }
@@ -267,6 +268,11 @@ namespace ControlPostgres.Contexto.Entities
                     .IsRequired()
                     .HasMaxLength(500)
                     .HasColumnName("fechas_seleccionadas");
+
+                entity.Property(e => e.PeriodoVacas)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("periodo_vacas");
 
                 entity.Property(e => e.SolicitudFecha)
                     .HasColumnType("date")

@@ -3,15 +3,17 @@ using System;
 using ControlPostgres.Contexto.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace ControlPostgres.Migrations
 {
     [DbContext(typeof(BD_ControlVacacionesContext))]
-    partial class BD_ControlVacacionesContextModelSnapshot : ModelSnapshot
+    [Migration("20211108145509_Seven DB")]
+    partial class SevenDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

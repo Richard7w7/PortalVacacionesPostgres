@@ -20,6 +20,7 @@ namespace ControlPostgres.Contexto.Entities
         public string DeptoNombre { get; set; }
         public string DeptoDescripcion { get; set; }
 
+
         public virtual ICollection<TbCargo> TbCargos { get; set; }
         public virtual ICollection<TbEmpleado> TbEmpleados { get; set; }
         public virtual ICollection<TbSolicitude> TbSolicitudes { get; set; }

@@ -10,7 +10,7 @@ namespace ControlPostgres.Contexto.Entities
     {
         public int SolicitudId { get; set; }
         public int EmpleadoId { get; set; }
-        [Display(Name="Cargo que desempeña")]
+        [Display(Name = "Cargo que desempeña")]
         public int CargoId { get; set; }
         [Display(Name = "Departamento al que Pertenece")]
         public int DeptoId { get; set; }

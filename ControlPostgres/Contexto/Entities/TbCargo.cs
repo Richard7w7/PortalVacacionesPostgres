@@ -16,9 +16,10 @@ namespace ControlPostgres.Contexto.Entities
 
         public int CargoId { get; set; }
         public int DeptoId { get; set; }
-        [Display (Name ="Cargo que ocupa")]
+        [Display(Name = "Cargo que ocupa")]
         public string CargoNombre { get; set; }
         public string CargoDescripcion { get; set; }
+
 
         public virtual TbDepartamento Depto { get; set; }
         public virtual ICollection<TbEmpleado> TbEmpleados { get; set; }

@@ -19,6 +19,7 @@ namespace ControlPostgres.Contexto.Entities
         public string VacacionesEstado { get; set; }
         public int VacacionesTiempo { get; set; }
 
+
         public virtual ICollection<TbEmpleado> TbEmpleados { get; set; }
         public virtual ICollection<TbSolicitude> TbSolicitudes { get; set; }
     }

@@ -17,6 +17,8 @@ namespace ControlPostgres.Contexto.Entities
         [Display(Name = "Estado de la solicitud")]
         public string EstadosNombre { get; set; }
 
+
+
         public virtual ICollection<TbSolicitude> TbSolicitudes { get; set; }
     }
 }

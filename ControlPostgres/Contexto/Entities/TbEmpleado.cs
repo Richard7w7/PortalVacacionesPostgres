@@ -14,20 +14,20 @@ namespace ControlPostgres.Contexto.Entities
         }
 
         public int EmpleadoId { get; set; }
-        [Required(ErrorMessage ="Seleccione un cargo")]
+        [Required(ErrorMessage = "Seleccione un cargo")]
         public int CargoId { get; set; }
         [Required(ErrorMessage = "Seleccione un departamento")]
         public int DeptoId { get; set; }
         [Required(ErrorMessage = "Seleccione un tiempo laborando")]
         public int VacacionesId { get; set; }
-        [Display(Name ="Codigo del Empleado")]
+        [Display(Name = "Codigo del Empleado")]
         [MaxLength(4, ErrorMessage = "el codigo de empleado solo debe contener 4 digitos")]
         [RegularExpression("([1-9][0-9]*)", ErrorMessage = "el codigo solo debe contener numeros del 0 al 9")]
         [Required(ErrorMessage = "Ingrese su codigo de empleado")]
         public string EmpleadoCodigo { get; set; }
         [DataType(DataType.Password)]
         [MinLength(6, ErrorMessage = "La contraseña debe tener al menos 6 caracteres")]
-        [Required(ErrorMessage ="Ingrese su contraseña")]
+        [Required(ErrorMessage = "Ingrese su contraseña")]
         public string EmpleadoContraseña { get; set; }
         [Required(ErrorMessage = "Campo obligatorio")]
         [Display(Name = "Primer Nombre")]
@@ -43,16 +43,16 @@ namespace ControlPostgres.Contexto.Entities
         public string ApellidoCasada { get; set; }
         [DataType(DataType.Date)]
         [Required(ErrorMessage = "Seleccione su fecha de nacimiento")]
-        [DisplayFormat(DataFormatString = "{0:dd'/'MM'/'yyyy}",ApplyFormatInEditMode =true)]
+        [DisplayFormat(DataFormatString = "{0:dd'/'MM'/'yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Fecha de Nacimiento")]
         public DateTime FechaNacimiento { get; set; }
-        [Required(ErrorMessage ="Ingrese su numero de telefono")]
-        [MinLength(8,ErrorMessage ="El numero debe contener 8 digitos")]
+        [Required(ErrorMessage = "Ingrese su numero de telefono")]
+        [MinLength(8, ErrorMessage = "El numero debe contener 8 digitos")]
         [DataType(DataType.PhoneNumber)]
         [Display(Name = "Numero de Telefono")]
         public string EmpleadoTelefono { get; set; }
         [Display(Name = "Direccion de Residencia")]
-        [Required(ErrorMessage ="Campo obligatorio")]
+        [Required(ErrorMessage = "Campo obligatorio")]
         public string EmpleadoDireccion { get; set; }
         public int EmpleadoEstado { get; set; }
         [DataType(DataType.Date)]
@@ -65,6 +65,7 @@ namespace ControlPostgres.Contexto.Entities
         public DateTime? EmpleadoUltimavacainicio { get; set; }
         [Display(Name = "Cantidad de dias")]
         public int? EmpDiasvacaciones { get; set; }
+
 
         public virtual TbCargo Cargo { get; set; }
         public virtual TbDepartamento Depto { get; set; }

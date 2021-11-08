@@ -16,6 +16,7 @@ namespace ControlPostgres.Contexto.Entities
         public string RolNombre { get; set; }
         public string RolDescripcion { get; set; }
 
+
         public virtual ICollection<TbEmpleado> TbEmpleados { get; set; }
     }
 }
