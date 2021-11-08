@@ -57,6 +57,7 @@ namespace ControlPostgres.RepositorioClases
                 fields.SetField("txtPuesto", tbsolitude.Cargo.CargoNombre);
                 fields.SetField("txtInicioLaboral", tbsolitude.Empleado.FechaIngreso.ToShortDateString());
                 fields.SetField("txtCantiDias", Convert.ToString(tbsolitude.CantidadDias));
+                fields.SetField("txtCorrespondePeriodo",tbsolitude.PeriodoVacas);
                 string[] arrayfechas = tbsolitude.FechasSeleccionadas.Split(',');
                 fields.SetField("txtInicioVacas", arrayfechas[0]);
                 fields.SetField("txtFinVacas", arrayfechas.Last());
@@ -120,6 +121,7 @@ namespace ControlPostgres.RepositorioClases
                 fields.SetField("txtDireccion", tbsolitude.Empleado.EmpleadoDireccion);
                 fields.SetField("txtPuesto", tbsolitude.Cargo.CargoNombre);
                 fields.SetField("txtInicioLaboral", tbsolitude.Empleado.FechaIngreso.ToShortDateString());
+                fields.SetField("txtCorrespondePeriodo", tbsolitude.PeriodoVacas);
                 fields.SetField("txtCantiDias", Convert.ToString(tbsolitude.CantidadDias));
                 string[] arrayfechas = tbsolitude.FechasSeleccionadas.Split(',');
                 fields.SetField("txtInicioVacas", arrayfechas[0]);
@@ -193,6 +195,7 @@ namespace ControlPostgres.RepositorioClases
                 fields.SetField("txtPuesto", tbsolitude.Cargo.CargoNombre);
                 fields.SetField("txtInicioLaboral", tbsolitude.Empleado.FechaIngreso.ToShortDateString());
                 fields.SetField("txtCantiDias", Convert.ToString(tbsolitude.CantidadDias));
+                fields.SetField("txtCorrespondePeriodo", tbsolitude.PeriodoVacas);
                 string[] arrayfechas = tbsolitude.FechasSeleccionadas.Split(',');
                 fields.SetField("txtInicioVacas", arrayfechas[0]);
                 fields.SetField("txtFinVacas", arrayfechas.Last());

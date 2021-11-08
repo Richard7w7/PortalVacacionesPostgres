@@ -104,6 +104,11 @@
                 <span asp-validation-for="FechasSeleccionadas" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="PeriodoVacas" class="control-label">ingrese su periodo de vacaciones</label>
+                <input asp-for="PeriodoVacas" type="text" autocomplete="off" class="form-control" />
+                <span asp-validation-for="PeriodoVacas" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <button id="Btncrear" value="RegistrarSolicitud" type="submit" class="btn btn-primary">Crear Solicitud</button>
             </div>
         </form>

@@ -187,7 +187,7 @@ namespace ControlPostgres.Controllers
                     {
 
 
-                        if (registro.DetallesSolicitud != null && registro.FechasSeleccionadas != null)
+                        if (registro.DetallesSolicitud != null && registro.FechasSeleccionadas != null && registro.PeriodoVacas != null)
                         {
                             bool DiasHabilies = puente.DiasRestantes(registro, usuario.Empleado);
                             if (DiasHabilies == true)
@@ -828,7 +828,10 @@ namespace ControlPostgres.Controllers
 
                 if (tbSolicitudes.EstadosId == (int)EstadoSolicitud.Aprobada)
                 {
-                    
+                    int diasantiguos = (int)tbSolicitude.Empleado.EmpDiasvacaciones;
+                    int diasresta = tbSolicitude.CantidadDias;
+                    int diasrestantes = (int)(tbSolicitude.Empleado.EmpDiasvacaciones - diasresta);
+                    tbSolicitude.Empleado.EmpDiasvacaciones = diasrestantes;
                     if (ModelState.IsValid)
                     {
                         try

@@ -32,6 +32,8 @@ namespace ControlPostgres.Contexto.Entities
         public string Comentario { get; set; }
         public string EstadoSeleDirector { get; set; }
         public string EstadoSeleJefe { get; set; }
+        [Display(Name = "Periodo de Vacaciones")]
+        public string PeriodoVacas { get; set; }
 
         public virtual TbCargo Cargo { get; set; }
         public virtual TbDepartamento Depto { get; set; }

@@ -183,6 +183,7 @@ namespace ControlPostgres.RepositorioClases
                 TbSolicitude obj = new TbSolicitude();
                 obj.DetallesSolicitud = registro.DetallesSolicitud;
                 obj.SolicitudFecha = registro.SolicitudFecha;
+                obj.PeriodoVacas = registro.PeriodoVacas;
                 obj.FechasSeleccionadas = registro.FechasSeleccionadas;
                 obj.CantidadDias = caracter.Length;
                 obj.EmpleadoId = registro.Empleado.EmpleadoId;
