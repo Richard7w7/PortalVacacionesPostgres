@@ -7,7 +7,11 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 
@@ -841,8 +845,29 @@ namespace ControlPostgres.Controllers
                             string archivogenerado = generador.GenerateInvestorDocument(tbSolicitude);
                             if (string.IsNullOrWhiteSpace(archivogenerado))
                                 return BadRequest("un error ha ocurrido al crear el archivo.");
+
+                            /**************************************************************/
+                            /*tratando de leer el archivo en memoria*/
+                            /**************************************************************/
+                            var stream = new MemoryStream();
+                            // processing the stream.
+
+                            var result = new HttpResponseMessage(HttpStatusCode.OK)
+                            {
+                                Content = new ByteArrayContent(stream.ToArray())
+                            };
+                            result.Content.Headers.ContentDisposition =
+                                new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment")
+                                {
+                                    FileName = archivogenerado
+                                };
+                            result.Content.Headers.ContentType =
+                                new MediaTypeHeaderValue("application/octet-stream");
+
+                            
+                            /**************************************************************/
                             TempData["ModificadoDirector"] = "Solicitud Modificada";
-                            return RedirectToAction("SolicitudesDepartamentoDirector");
+                            return RedirectToAction("SolicitudesDepartamentoDirector", result);
                         }
                         catch (DbUpdateConcurrencyException)
                         {
@@ -913,8 +938,21 @@ namespace ControlPostgres.Controllers
               .Include(t => t.Estados)
               .Include(t => t.Vacaciones)
               .FirstOrDefaultAsync(m => m.SolicitudId == id);
-            string archivogenerado = generador.GenerateInvestorDocumentUser(tbSolicitude);
+            var archivogenerado = generador.GenerateInvestorDocumentUser(tbSolicitude);
+            /**************************************************************/
+            /*tratando de leer el archivo en memoria*/
+            /**************************************************************/
+            var path = @""+Convert.ToString(archivogenerado)+"";
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(path, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+            var ext = Path.GetExtension(path).ToLowerInvariant();
+            return File(memory, GetMimeTypes()[ext], Path.GetFileName(path));
 
+            /**************************************************************/
 
             if (usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.MonitordeCamaras || usuario.Empleado.DeptoId == (int)Departamento.Monitoreo && usuario.Empleado.CargoId == (int)CargoDepaPM.EncargadoTurno)
             {
@@ -1043,6 +1081,18 @@ namespace ControlPostgres.Controllers
                 return View();
             }
             return View();
+        }
+        private Dictionary<string, string> GetMimeTypes()
+        {
+            return new Dictionary<string, string>
+        {
+            {".txt", "text/plain"},
+            {".pdf", "application/pdf"},
+            {".doc", "application/vnd.ms-word"},
+            {".docx", "application/vnd.ms-word"},
+            {".png", "image/png"},
+            {".jpg", "image/jpeg"},
+            };
         }
     }
 }

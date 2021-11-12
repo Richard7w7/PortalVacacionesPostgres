@@ -90,14 +90,15 @@ namespace ControlPostgres.RepositorioClases
 
                 pdfReader.Close();
 
-                return fileNameNew;
+                //return fileNameNew;
+                return fullNewPath;
 
             }
         }
         
         public string GenerateInvestorDocumentUser(TbSolicitude tbsolitude)
         {
-            string fullName = string.Concat(tbsolitude.SolicitudId, " ", "-Codigo-Empleado-", tbsolitude.Empleado.EmpleadoCodigo);
+            string fullName = string.Concat(tbsolitude.SolicitudId, "", "_Codigo_Empleado_", tbsolitude.Empleado.EmpleadoCodigo);
 
             string filepath = @"Template\";
             string newfilepath = @"C:\Users\richa\Desktop\";
@@ -163,7 +164,8 @@ namespace ControlPostgres.RepositorioClases
 
                 pdfReader.Close();
 
-                return fileNameNew;
+                //return fileNameNew;
+                return fullNewPath;
 
             }
         }
@@ -225,7 +227,9 @@ namespace ControlPostgres.RepositorioClases
 
                 pdfReader.Close();
 
-                return fileNameNew;
+                //return fileNameNew;
+                return fullNewPath;
+                
 
             }
         }
