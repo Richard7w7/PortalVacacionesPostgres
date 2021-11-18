@@ -940,7 +940,7 @@ namespace ControlPostgres.Controllers
               .FirstOrDefaultAsync(m => m.SolicitudId == id);
             var archivogenerado = generador.GenerateInvestorDocumentUser(tbSolicitude);
             /**************************************************************/
-            /*tratando de leer el archivo en memoria*/
+            /*leectura el archivo en memoria*/
             /**************************************************************/
             var path = @""+Convert.ToString(archivogenerado)+"";
             var memory = new MemoryStream();
