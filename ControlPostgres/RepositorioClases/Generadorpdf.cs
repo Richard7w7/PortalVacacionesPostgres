@@ -32,10 +32,12 @@ namespace ControlPostgres.RepositorioClases
         DateTime InicioLaboral;
         public string GenerateInvestorDocument(TbSolicitude tbsolitude)
         {
-            string fullName = string.Concat(tbsolitude.SolicitudId, " ","-Codigo-Empleado-", tbsolitude.Empleado.EmpleadoCodigo);
+            string fullName = string.Concat(tbsolitude.SolicitudId, " ","_Codigo_Empleado_", tbsolitude.Empleado.EmpleadoCodigo);
 
-            string filepath = @"Template\";
-            string newfilepath = @"C:\Users\richa\Documents\Solicitudes\";
+            //string filepath = @"Template\"; //rutas windows
+            string filepath = @"/home/richard/Documentos/";
+            //string newfilepath = @"C:\Users\richa\Documents\Solicitudes\"; //rutas windows
+            string newfilepath = @"/home/richard/Documentos/Solicitudes/";
             string filenameExisting = @"Template.pdf";
 
             string fileNameNew = @"Solicitud #" + fullName.Replace(" ", "").Trim() + ".pdf";
@@ -100,8 +102,10 @@ namespace ControlPostgres.RepositorioClases
         {
             string fullName = string.Concat(tbsolitude.SolicitudId, "", "_Codigo_Empleado_", tbsolitude.Empleado.EmpleadoCodigo);
 
-            string filepath = @"Template\";
-            string newfilepath = @"C:\Users\richa\Desktop\";
+            //string filepath = @"Template\"; //rutas windows
+            string filepath = @"/home/richard/Documentos/";
+            //string newfilepath = @"C:\Users\richa\Documents\Solicitudes\"; //rutas windows
+            string newfilepath = @"/home/richard/Documentos/Solicitudes/";
             string filenameExisting = @"Template.pdf";
 
             string fileNameNew = @"Solicitud #" + fullName.Replace(" ", "").Trim() + ".pdf";
@@ -172,10 +176,12 @@ namespace ControlPostgres.RepositorioClases
 
         public string GenerateInvestorDocumentJefe(TbSolicitude tbsolitude)
         {
-            string fullName = string.Concat(tbsolitude.SolicitudId, " ", "-Codigo-Empleado-", tbsolitude.Empleado.EmpleadoCodigo);
+            string fullName = string.Concat(tbsolitude.SolicitudId, " ", "_Codigo_Empleado_", tbsolitude.Empleado.EmpleadoCodigo);
 
-            string filepath = @"Template\";
-            string newfilepath = @"C:\Users\richa\Documents\Solicitudes\";
+            //string filepath = @"Template\"; //rutas windows
+            string filepath = @"/home/richard/Documentos/";
+            //string newfilepath = @"C:\Users\richa\Documents\Solicitudes\"; //rutas windows
+            string newfilepath = @"/home/richard/Documentos/Solicitudes/";
             string filenameExisting = @"Template.pdf";
 
             string fileNameNew = @"Solicitud #" + fullName.Replace(" ", "").Trim() + ".pdf";
