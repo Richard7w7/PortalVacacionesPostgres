@@ -842,32 +842,26 @@ namespace ControlPostgres.Controllers
                         {
                             bd.Update(tbSolicitude);
                             await bd.SaveChangesAsync();
-                            string archivogenerado = generador.GenerateInvestorDocument(tbSolicitude);
+                            var archivogenerado = generador.GenerateInvestorDocument(tbSolicitude);
                             if (string.IsNullOrWhiteSpace(archivogenerado))
                                 return BadRequest("un error ha ocurrido al crear el archivo.");
-
                             /**************************************************************/
-                            /*tratando de leer el archivo en memoria*/
+                            /*leectura el archivo en memoria*/
                             /**************************************************************/
-                            var stream = new MemoryStream();
-                            // processing the stream.
-
-                            var result = new HttpResponseMessage(HttpStatusCode.OK)
+                            var path = @"" + Convert.ToString(archivogenerado) + "";
+                            var memory = new MemoryStream();
+                            using (var stream = new FileStream(path, FileMode.Open))
                             {
-                                Content = new ByteArrayContent(stream.ToArray())
-                            };
-                            result.Content.Headers.ContentDisposition =
-                                new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment")
-                                {
-                                    FileName = archivogenerado
-                                };
-                            result.Content.Headers.ContentType =
-                                new MediaTypeHeaderValue("application/octet-stream");
+                                await stream.CopyToAsync(memory);
+                            }
+                            memory.Position = 0;
+                            var ext = Path.GetExtension(path).ToLowerInvariant();
+                            return File(memory, GetMimeTypes()[ext], Path.GetFileName(path));
 
-                            
                             /**************************************************************/
+                            var solicitudes3 = bd.TbSolicitudes.Include(t => t.Cargo).Include(t => t.Depto).Include(t => t.Empleado).Include(t => t.Estados).Include(t => t.Vacaciones).Where(x => x.DeptoId == usuario.Empleado.DeptoId).ToArray();
                             TempData["ModificadoDirector"] = "Solicitud Modificada";
-                            return RedirectToAction("SolicitudesDepartamentoDirector", result);
+                            return RedirectToAction("SolicitudesDepartamentoDirector");
                         }
                         catch (DbUpdateConcurrencyException)
                         {
@@ -894,9 +888,23 @@ namespace ControlPostgres.Controllers
                         {
                             bd.Update(tbSolicitude);
                             await bd.SaveChangesAsync();
-                            string archivogenerado = generador.GenerateInvestorDocument(tbSolicitude);
+                            var archivogenerado = generador.GenerateInvestorDocument(tbSolicitude);
                             if (string.IsNullOrWhiteSpace(archivogenerado))
                                 return BadRequest("un error ha ocurrido al crear el archivo.");
+                            /**************************************************************/
+                            /*leectura el archivo en memoria*/
+                            /**************************************************************/
+                            var path = @"" + Convert.ToString(archivogenerado) + "";
+                            var memory = new MemoryStream();
+                            using (var stream = new FileStream(path, FileMode.Open))
+                            {
+                                await stream.CopyToAsync(memory);
+                            }
+                            memory.Position = 0;
+                            var ext = Path.GetExtension(path).ToLowerInvariant();
+                            return File(memory, GetMimeTypes()[ext], Path.GetFileName(path));
+
+                            /**************************************************************/
                             var solicitudes3 = bd.TbSolicitudes.Include(t => t.Cargo).Include(t => t.Depto).Include(t => t.Empleado).Include(t => t.Estados).Include(t => t.Vacaciones).Where(x => x.DeptoId == usuario.Empleado.DeptoId).ToArray();
                             TempData["ModificadoDirector"] = "Solicitud Modificada";
                             return RedirectToAction("SolicitudesDepartamentoDirector");
