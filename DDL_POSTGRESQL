@@ -79,8 +79,8 @@ CREATE TABLE muni_villanueva.tb_estadosolicitudes
 ///////////////////////////////////////////////////////////////////
 1 - Enviada
 2 - Revision I
-3 - Abrobada
-4 - Denegada
+4 - Abrobada
+5 - Denegada
 *******************************************************************
 
 CREATE TABLE muni_villanueva.tb_solicitudes
