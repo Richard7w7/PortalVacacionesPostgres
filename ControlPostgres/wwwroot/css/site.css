@@ -1,23 +1,24 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
-:root {
+:root{
     --amarillo: #f8d964;
     --azul: #17355f;
+    --blanco: white;
 }
 
-html {
+html{
     box-sizing: border-box;
     font-size: 62.5%;
 }
 
-a.navbar-brand {
+a.navbar-brand{
     white-space: normal;
     text-align: center;
     word-break: break-all;
     color: var(--amarillo);
 }
 
-a.nav-link {
+a.nav-link{
     color: var(--amarillo);
 }
 /* Provide sufficient contrast against white background */
@@ -30,6 +31,28 @@ a {
     background-color: var(--azul);
     border-color: var(--azul);
 }
+
+    .btn-primary:hover {
+        color: var(--azul);
+        background-color: var(--blanco);
+        border-color: var(--azul);
+        transition: all .2s ease;
+    }
+
+#navbarinicio {
+    color: var(--amarillo);
+    background-color: var(--azul);
+    border: var(--azul) 1px solid;
+    border-radius: 2px;
+}
+
+    #navbarinicio:hover {
+        color: var(--azul);
+        background-color: var(--blanco);
+        transition: all .2s ease;
+        border: var(--azul) 1px solid;
+        border-radius: 5px;
+    }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
     color: var(--amarillo);
@@ -101,8 +124,9 @@ body {
     margin-left:75%;
 }
 
-#Dame{
-    width:100%;
+#Dame {
+    width: 100%;
+    text-align: center;
 }
 
 #muni{
@@ -118,3 +142,36 @@ body {
 .botones__boton2{
     grid-column:2/3;
 }
+
+#filascol {
+    background-color: white;
+    border: black 2px solid;
+}
+
+#Encabezado {
+    border: black 2px solid;
+    text-align: center;
+}
+
+th{
+    border-right: black 2px solid;
+    color: var(--blanco);
+    background-color: var(--azul);
+}
+
+td {
+    text-align: center;
+}
+
+#Titulo_tabla {
+    text-align: center;
+}
+
+#btntabla{
+    color:var(--blanco);
+}
+
+    #btntabla:hover {
+        color: var(--azul);
+        transition: all .2s ease;
+    }

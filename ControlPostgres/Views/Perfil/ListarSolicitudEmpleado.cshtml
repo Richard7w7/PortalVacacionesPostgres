@@ -1,8 +1,9 @@
 ﻿@model IEnumerable<ControlPostgres.Contexto.Entities.TbSolicitude>
 @{ ViewData["Title"] = "Solicitudes"; }
-<h1>Solicitudes Aprobadas o Denegadas</h1>
+<h1 id="Titulo_tabla">Solicitudes Aprobadas o Denegadas</h1>
+<br />
 <table class="table" id="Dame">
-    <thead>
+    <thead id="Encabezado">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.SolicitudFecha)
@@ -28,13 +29,13 @@
             <th>
                 @Html.DisplayNameFor(model => model.Vacaciones.VacacionesEstado)
             </th>
-            <th></th>
+            <th><label>Acciones</label></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-<tr>
+<tr id="filascol">
     <td>
         @Html.DisplayFor(modelItem => item.SolicitudFecha)
     </td>
@@ -60,7 +61,7 @@
         @Html.DisplayFor(modelItem => item.Empleado.EmpDiasvacaciones)
     </td>
     <td>
-        <a asp-action="Detalles" asp-route-id="@item.SolicitudId" class="btn btn-primary glyphicon glyphicon-pencil">Detalles</a>
+        <a asp-action="Detalles" asp-route-id="@item.SolicitudId" id="btntabla" class="btn btn-primary glyphicon glyphicon-pencil">Detalles</a>
     </td>
 </tr>}
     </tbody>

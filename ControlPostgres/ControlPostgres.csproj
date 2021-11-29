@@ -12,6 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\Templates\Template.pdf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="iTextSharp" Version="5.5.13.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
@@ -27,6 +31,10 @@
 
   <ItemGroup>
     <Folder Include="RepositorioFunciones\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Templates\Template.pdf" />
   </ItemGroup>
 
 </Project>

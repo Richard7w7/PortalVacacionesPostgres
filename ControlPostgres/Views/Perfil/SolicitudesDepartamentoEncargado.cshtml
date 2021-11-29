@@ -1,6 +1,8 @@
 ﻿@{ ViewData["Title"] = "Solicitudes del departamento"; }
 @model IEnumerable<ControlPostgres.Contexto.Entities.TbSolicitude>
 
+    <h1>Solicitudes pendientes de aprovacion o denegación</h1>
+
 <table class="table" id="Dame">
     <thead>
         <tr>
@@ -34,7 +36,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-<tr>
+<tr id="filascol">
     <td>
         @Html.DisplayFor(modelItem => item.SolicitudFecha)
     </td>
