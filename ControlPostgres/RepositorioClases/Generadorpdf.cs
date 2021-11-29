@@ -42,8 +42,9 @@ namespace ControlPostgres.RepositorioClases
             //string filepath = @"C:\Users\richa\Documents\";
 
             //RUTAS UBUNTU
-            //string filepath = @"/home/richard/Documentos/";
+            //string filepath = @"/var/www/PortalWebUbuntu/wwwroot/";
             //string newfilepath = @"/home/richard/Documentos/Solicitudes/";
+            //string filepath = @"/var/www/PortalWebUbuntu/wwwroot/Templates/";
             string filenameExisting = @"Template.pdf";
 
             string fileNameNew = @"Solicitud #" + fullName.Replace(" ", "").Trim() + ".pdf";
