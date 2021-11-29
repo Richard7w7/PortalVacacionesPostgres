@@ -36,12 +36,13 @@ namespace ControlPostgres.RepositorioClases
 
             //RUTAS RELATIVAS
             string filepath = @"wwwroot\Templates\"; //rutas windows
-            string newfilepath = @"wwwroot\Templates\";
+            string newfilepath = @"wwwroot\Templates\"; //rutas windows
+
             //RUTAS WINDOWS
             //string newfilepath = @"C:\Users\richa\Documents\Solicitudes\";
             //string filepath = @"C:\Users\richa\Documents\";
             //string filepath = @"wwwroot\Templates\";
-            
+
             //RUTAS UBUNTU
             //string filepath = @"/var/www/PortalWebUbuntu/wwwroot/";
             //string newfilepath = @"/home/richard/Documentos/Solicitudes/";
@@ -112,7 +113,8 @@ namespace ControlPostgres.RepositorioClases
 
             //RUTAS RELATIVAS
             string filepath = @"wwwroot\Templates\"; //rutas windows
-            string newfilepath = @"wwwroot\Templates\";
+            string newfilepath = @"wwwroot\Templates\"; //rutas windows
+
             //RUTAS WINDOWS
             //string newfilepath = @"C:\Users\richa\Documents\Solicitudes\";
             //string filepath = @"C:\Users\richa\Documents\";
@@ -196,7 +198,8 @@ namespace ControlPostgres.RepositorioClases
 
             //RUTAS RELATIVAS
             string filepath = @"wwwroot\Templates\"; //rutas windows
-            string newfilepath = @"wwwroot\Templates\";
+            string newfilepath = @"wwwroot\Templates\"; //rutas windows
+
             //RUTAS WINDOWS
             //string newfilepath = @"C:\Users\richa\Documents\Solicitudes\";
             //string filepath = @"C:\Users\richa\Documents\";
