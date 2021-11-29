@@ -116,10 +116,12 @@ namespace ControlPostgres.RepositorioClases
             //RUTAS WINDOWS
             //string newfilepath = @"C:\Users\richa\Documents\Solicitudes\";
             //string filepath = @"C:\Users\richa\Documents\";
+            //string filepath = @"wwwroot\Templates\";
 
             //RUTAS UBUNTU
-            //string filepath = @"/home/richard/Documentos/";
+            //string filepath = @"/var/www/PortalWebUbuntu/wwwroot/";
             //string newfilepath = @"/home/richard/Documentos/Solicitudes/";
+            //string filepath = @"/var/www/PortalWebUbuntu/wwwroot/Templates/";
             string filenameExisting = @"Template.pdf";
 
             string fileNameNew = @"Solicitud #" + fullName.Replace(" ", "").Trim() + ".pdf";
@@ -191,17 +193,19 @@ namespace ControlPostgres.RepositorioClases
         public string GenerateInvestorDocumentJefe(TbSolicitude tbsolitude)
         {
             string fullName = string.Concat(tbsolitude.SolicitudId, " ", "_Codigo_Empleado_", tbsolitude.Empleado.EmpleadoCodigo);
-            
+
             //RUTAS RELATIVAS
             string filepath = @"wwwroot\Templates\"; //rutas windows
             string newfilepath = @"wwwroot\Templates\";
             //RUTAS WINDOWS
             //string newfilepath = @"C:\Users\richa\Documents\Solicitudes\";
             //string filepath = @"C:\Users\richa\Documents\";
+            //string filepath = @"wwwroot\Templates\";
 
             //RUTAS UBUNTU
-            //string filepath = @"/home/richard/Documentos/";
+            //string filepath = @"/var/www/PortalWebUbuntu/wwwroot/";
             //string newfilepath = @"/home/richard/Documentos/Solicitudes/";
+            //string filepath = @"/var/www/PortalWebUbuntu/wwwroot/Templates/";
             string filenameExisting = @"Template.pdf";
 
             string fileNameNew = @"Solicitud #" + fullName.Replace(" ", "").Trim() + ".pdf";
