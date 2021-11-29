@@ -34,9 +34,15 @@ namespace ControlPostgres.RepositorioClases
         {
             string fullName = string.Concat(tbsolitude.SolicitudId, " ","_Codigo_Empleado_", tbsolitude.Empleado.EmpleadoCodigo);
 
+            //RUTAS RELATIVAS
             string filepath = @"wwwroot\Templates\"; //rutas windows
+            string newfilepath = @"wwwroot\Templates\";
+            //RUTAS WINDOWS
+            //string newfilepath = @"C:\Users\richa\Documents\Solicitudes\";
+            //string filepath = @"C:\Users\richa\Documents\";
+
+            //RUTAS UBUNTU
             //string filepath = @"/home/richard/Documentos/";
-            string newfilepath = @"C:\Users\richa\Documents\Solicitudes\"; //rutas windows
             //string newfilepath = @"/home/richard/Documentos/Solicitudes/";
             string filenameExisting = @"Template.pdf";
 
@@ -102,9 +108,15 @@ namespace ControlPostgres.RepositorioClases
         {
             string fullName = string.Concat(tbsolitude.SolicitudId, "", "_Codigo_Empleado_", tbsolitude.Empleado.EmpleadoCodigo);
 
+            //RUTAS RELATIVAS
             string filepath = @"wwwroot\Templates\"; //rutas windows
+            string newfilepath = @"wwwroot\Templates\";
+            //RUTAS WINDOWS
+            //string newfilepath = @"C:\Users\richa\Documents\Solicitudes\";
+            //string filepath = @"C:\Users\richa\Documents\";
+
+            //RUTAS UBUNTU
             //string filepath = @"/home/richard/Documentos/";
-            string newfilepath = @"C:\Users\richa\Documents\Solicitudes\"; //rutas windows
             //string newfilepath = @"/home/richard/Documentos/Solicitudes/";
             string filenameExisting = @"Template.pdf";
 
@@ -177,10 +189,16 @@ namespace ControlPostgres.RepositorioClases
         public string GenerateInvestorDocumentJefe(TbSolicitude tbsolitude)
         {
             string fullName = string.Concat(tbsolitude.SolicitudId, " ", "_Codigo_Empleado_", tbsolitude.Empleado.EmpleadoCodigo);
-
+            
+            //RUTAS RELATIVAS
             string filepath = @"wwwroot\Templates\"; //rutas windows
+            string newfilepath = @"wwwroot\Templates\";
+            //RUTAS WINDOWS
+            //string newfilepath = @"C:\Users\richa\Documents\Solicitudes\";
+            //string filepath = @"C:\Users\richa\Documents\";
+
+            //RUTAS UBUNTU
             //string filepath = @"/home/richard/Documentos/";
-            string newfilepath = @"C:\Users\richa\Documents\Solicitudes\"; //rutas windows
             //string newfilepath = @"/home/richard/Documentos/Solicitudes/";
             string filenameExisting = @"Template.pdf";
 
