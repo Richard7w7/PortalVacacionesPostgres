@@ -40,7 +40,8 @@ namespace ControlPostgres.RepositorioClases
             //RUTAS WINDOWS
             //string newfilepath = @"C:\Users\richa\Documents\Solicitudes\";
             //string filepath = @"C:\Users\richa\Documents\";
-
+            //string filepath = @"wwwroot\Templates\";
+            
             //RUTAS UBUNTU
             //string filepath = @"/var/www/PortalWebUbuntu/wwwroot/";
             //string newfilepath = @"/home/richard/Documentos/Solicitudes/";
