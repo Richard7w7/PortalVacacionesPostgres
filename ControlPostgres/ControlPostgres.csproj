@@ -5,9 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="RepositorioFunciones\**" />
     <Compile Remove="Views\ListarSolicitudes\**" />
+    <Content Remove="RepositorioFunciones\**" />
     <Content Remove="Views\ListarSolicitudes\**" />
+    <EmbeddedResource Remove="RepositorioFunciones\**" />
     <EmbeddedResource Remove="Views\ListarSolicitudes\**" />
+    <None Remove="RepositorioFunciones\**" />
     <None Remove="Views\ListarSolicitudes\**" />
   </ItemGroup>
 
@@ -27,10 +31,6 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.10" />
     <PackageReference Include="Owin" Version="1.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="RepositorioFunciones\" />
   </ItemGroup>
 
   <ItemGroup>

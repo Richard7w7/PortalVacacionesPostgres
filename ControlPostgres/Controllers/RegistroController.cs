@@ -43,6 +43,8 @@ namespace ControlPostgres.Controllers
             ViewData["Cargos"] = new SelectList(bd.TbCargos, "CargoId", "CargoNombre");
             ViewData["Vacaciones"] = new SelectList(bd.TbVacaciones, "VacacionesId", "VacacionesEstado");
 
+
+
             return View();
         }
 

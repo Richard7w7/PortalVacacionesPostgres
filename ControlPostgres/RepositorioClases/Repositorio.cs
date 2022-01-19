@@ -66,18 +66,12 @@ namespace ControlPostgres.RepositorioClases
                 obj.DeptoId = model.DeptoId;
                 obj.VacacionesId = model.VacacionesId;
                 if(model.VacacionesId == (int)TiempoLaborando.UnanioaCincoanios)
-                {
-                    obj.EmpDiasvacaciones = (int)DiasVacaciones.VeinteDias;
-                }else if(model.VacacionesId == (int)TiempoLaborando.CincoaniosyUndia)
-                {
-                    obj.EmpDiasvacaciones = (int)DiasVacaciones.VeintiCinco;
-                }
+                { obj.EmpDiasvacaciones = (int)DiasVacaciones.VeinteDias;}
+                else if(model.VacacionesId == (int)TiempoLaborando.CincoaniosyUndia)
+                {obj.EmpDiasvacaciones = (int)DiasVacaciones.VeintiCinco;}
                 else if (model.VacacionesId == (int)TiempoLaborando.DiezaniosyUndia)
-                {
-                    obj.EmpDiasvacaciones = (int)DiasVacaciones.TreintaDias;
-                }
+                {obj.EmpDiasvacaciones = (int)DiasVacaciones.TreintaDias;}
                 obj.EmpleadoEstado = (int)EstadoTrabajador.Activo;
-
                 bd.TbEmpleados.Add(obj);
                 bd.SaveChanges();
 
@@ -176,7 +170,6 @@ namespace ControlPostgres.RepositorioClases
 
             try
             {
-
                 registro.SolicitudFecha = DateTime.Now.Date;
                 string[] caracter = registro.FechasSeleccionadas.Split(',');
                 registro.EstadosId = (int)EstadoSolicitud.Enviada;
@@ -191,15 +184,12 @@ namespace ControlPostgres.RepositorioClases
                 obj.DeptoId = registro.Empleado.DeptoId;
                 obj.VacacionesId = registro.Empleado.VacacionesId;
                 obj.EstadosId = registro.EstadosId;
-
                 bd.TbSolicitudes.Add(obj);
                 bd.SaveChanges();
-
                 logico = true;
             }
             catch (Exception)
             {
-
                 throw;
             }
 
@@ -213,8 +203,8 @@ namespace ControlPostgres.RepositorioClases
             int diasantiguos = (int)usuario.EmpDiasvacaciones;
             int diasresta = registro.CantidadDias;
             int diasrestantes = (int)(usuario.EmpDiasvacaciones - caracter.Length);
-
-            if (diasrestantes >= 0) { 
+            if (diasrestantes >= 0) 
+            { 
                 return true;
             }
             else
