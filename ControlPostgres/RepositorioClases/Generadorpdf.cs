@@ -35,8 +35,8 @@ namespace ControlPostgres.RepositorioClases
             string fullName = string.Concat(tbsolitude.SolicitudId, " ","_Codigo_Empleado_", tbsolitude.Empleado.EmpleadoCodigo);
 
             //RUTAS RELATIVAS
-            string filepath = @"wwwroot\Templates\"; //rutas windows
-            string newfilepath = @"wwwroot\Templates\"; //rutas windows
+            string filepath = @"wwwroot\Template\"; //rutas windows
+            string newfilepath = @"wwwroot\Template\"; //rutas windows
 
             //RUTAS WINDOWS
             //string newfilepath = @"C:\Users\richa\Documents\Solicitudes\";
@@ -112,8 +112,8 @@ namespace ControlPostgres.RepositorioClases
             string fullName = string.Concat(tbsolitude.SolicitudId, "", "_Codigo_Empleado_", tbsolitude.Empleado.EmpleadoCodigo);
 
             //RUTAS RELATIVAS
-            string filepath = @"wwwroot\Templates\"; //rutas windows
-            string newfilepath = @"wwwroot\Templates\"; //rutas windows
+            string filepath = @"wwwroot\Template\"; //rutas windows
+            string newfilepath = @"wwwroot\Template\"; //rutas windows
 
             //RUTAS WINDOWS
             //string newfilepath = @"C:\Users\richa\Documents\Solicitudes\";
@@ -197,8 +197,8 @@ namespace ControlPostgres.RepositorioClases
             string fullName = string.Concat(tbsolitude.SolicitudId, " ", "_Codigo_Empleado_", tbsolitude.Empleado.EmpleadoCodigo);
 
             //RUTAS RELATIVAS
-            string filepath = @"wwwroot\Templates\"; //rutas windows
-            string newfilepath = @"wwwroot\Templates\"; //rutas windows
+            string filepath = @"wwwroot\Template\"; //rutas windows
+            string newfilepath = @"wwwroot\Template\"; //rutas windows
 
             //RUTAS WINDOWS
             //string newfilepath = @"C:\Users\richa\Documents\Solicitudes\";
