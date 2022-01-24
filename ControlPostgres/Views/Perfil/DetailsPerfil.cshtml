@@ -4,104 +4,186 @@
     ViewData["Title"] = "Detalles del Perfil";
 }
 
-<h1>Perfil</h1>
 
-<div>
 
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.EmpleadoCodigo)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.EmpleadoCodigo)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.EmpleadoNombre1)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.EmpleadoNombre1)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.EmpleadoNombre2)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.EmpleadoNombre2)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.EmpleadoApellido1)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.EmpleadoApellido1)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.EmpleadoApellido2)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.EmpleadoApellido2)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ApellidoCasada)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ApellidoCasada)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FechaNacimiento)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FechaNacimiento)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.EmpleadoTelefono)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.EmpleadoTelefono)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.EmpleadoDireccion)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.EmpleadoDireccion)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FechaIngreso)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FechaIngreso)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.EmpDiasvacaciones)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.EmpDiasvacaciones)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Cargo.CargoNombre)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Cargo.CargoNombre)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Depto.DeptoNombre)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Depto.DeptoNombre)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Vacaciones)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.EmpDiasvacaciones)
-        </dd>
-    </dl>
+<div id="container_detailsPerfil">
+
+    <h2>Informacion General del Colaborador</h2>
+    <div class="row">
+        <div class="col">
+            <div class="mb-3">
+                <label class="control-label">
+                    @Html.DisplayNameFor(model => model.EmpleadoCodigo)
+                </label>
+                <label class="form-control">
+                    @Html.DisplayFor(model => model.EmpleadoCodigo)
+                </label>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="mb-3">
+                <label class="control-label">
+                    @Html.DisplayNameFor(model => model.EmpleadoNombre1)
+                </label>
+                <label class="form-control">
+                    @Html.DisplayFor(model => model.EmpleadoNombre1)
+                </label>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="mb-3">
+                <label class="control-label">
+                    @Html.DisplayNameFor(model => model.EmpleadoNombre2)
+                </label>
+                <label class="form-control">
+                    @Html.DisplayFor(model => model.EmpleadoNombre2)
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="mb-3">
+                <label class="control-label">
+                    @Html.DisplayNameFor(model => model.EmpleadoApellido1)
+                </label>
+                <label class="form-control">
+                    @Html.DisplayFor(model => model.EmpleadoApellido1)
+                </label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="mb-3">
+                <label class="control-label">
+                    @Html.DisplayNameFor(model => model.EmpleadoApellido2)
+                </label>
+                <label class="form-control">
+                    @Html.DisplayFor(model => model.EmpleadoApellido2)
+                </label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="mb-3">
+                <label class="control-label">
+                    @Html.DisplayNameFor(model => model.ApellidoCasada)
+                </label>
+                <label class="form-control">
+                    @Html.DisplayFor(model => model.ApellidoCasada)
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="mb-3">
+                <label class="control-label">
+                    @Html.DisplayNameFor(model => model.FechaNacimiento)
+                </label>
+                <label class="form-control">
+                    @Html.DisplayFor(model => model.FechaNacimiento)
+                </label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="mb-3">
+                <label class="control-label">
+                    @Html.DisplayNameFor(model => model.EmpleadoTelefono)
+                </label>
+                <label class="form-control">
+                    @Html.DisplayFor(model => model.EmpleadoTelefono)
+                </label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="mb-3">
+                <label class="control-label">
+                    @Html.DisplayNameFor(model => model.EmpleadoDireccion)
+                </label>
+                <label class="form-control">
+                    @Html.DisplayFor(model => model.EmpleadoDireccion)
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="mb-3">
+                <label class="control-label">
+                    @Html.DisplayNameFor(model => model.FechaIngreso)
+                </label>
+                <label class="form-control">
+                    @Html.DisplayFor(model => model.FechaIngreso)
+                </label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="mb-3">
+                <label class="control-label">
+                    @Html.DisplayNameFor(model => model.EmpDiasvacaciones)
+                </label>
+                <label class="form-control">
+                    @Html.DisplayFor(model => model.EmpDiasvacaciones)
+                </label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="mb-3">
+                <label class="control-label">
+                    @Html.DisplayNameFor(model => model.Cargo.CargoNombre)
+                </label>
+                <label class="form-control">
+                    @Html.DisplayFor(model => model.Cargo.CargoNombre)
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="mb-3">
+                <label class="control-label">
+                    @Html.DisplayNameFor(model => model.Depto.DeptoNombre)
+                </label>
+                <label class="form-control">
+                    @Html.DisplayFor(model => model.Depto.DeptoNombre)
+                </label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="mb-3">
+                <label class="control-label">
+                    @Html.DisplayNameFor(model => model.Vacaciones)
+                </label>
+                <label class="form-control">
+                    @Html.DisplayFor(model => model.EmpDiasvacaciones)
+                </label>
+            </div>
+        </div>
+    </div>
+
 </div>
+
 <div>
-    <form asp-action="RetornarPerfil">
-        <button value="RetornarPerfil" class="btn btn-primary">Regresar</button>
-    </form>
-    <br />
-    <div class="botones__boton1">
-        <a asp-action="ActualizaDatosPerfil" type="submit" class="btn btn-primary">Actualizar</a>
+    <div class="row">
+        <div class="col-1">
+            <div class="mb-3">
+                <form asp-action="RetornarPerfil">
+                    <button value="RetornarPerfil" class="btn btn-primary">Regresar</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-1">
+            <div class="mb-3">
+                <div class="botones__boton1">
+                    <a asp-action="ActualizaDatosPerfil" type="submit" class="btn btn-primary">Actualizar</a>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>

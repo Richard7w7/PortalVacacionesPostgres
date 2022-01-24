@@ -43,112 +43,196 @@
 @{ ViewData["Title"] = "Detalles"; }
 
 
-<div>
+<div id="container_solicitud_mod">
     <form asp-action="ModificarDetallesDepaJefe">
         <h4>Detalles de la Solicitud del colaborador @Html.DisplayFor(model => model.Empleado.EmpleadoNombre1) @Html.DisplayFor(model => model.Empleado.EmpleadoApellido1)</h4>
         <hr />
-        <dl class="row">
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.SolicitudFecha)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.SolicitudFecha)
-            </dd>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.DetallesSolicitud)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.DetallesSolicitud)
-            </dd>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.FechasSeleccionadas)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.FechasSeleccionadas)
-            </dd>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.CantidadDias)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.CantidadDias)
-            </dd>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.PeriodoVacas)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.PeriodoVacas)
-            </dd>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.Comentario)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Comentario)
-            </dd>
-            <dt class="col-sm-4">
-                <label>Agregar Comentario</label>
-            </dt>
-            <dd class="col-sm-10">
-                @Html.TextAreaFor(model => model.Comentario, new { @class = "form-control", id = "txtComentario" })
-            </dd>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.Cargo.CargoNombre)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Cargo.CargoNombre)
-            </dd>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.Depto.DeptoNombre)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Depto.DeptoNombre)
-            </dd>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.Empleado.EmpleadoCodigo)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Empleado.EmpleadoCodigo)
-            </dd>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.Empleado.EmpleadoNombre1)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Empleado.EmpleadoNombre1)
-            </dd>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.Empleado.EmpleadoApellido1)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Empleado.EmpleadoApellido1)
-            </dd>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.Estados.EstadosNombre)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Estados.EstadosNombre)
-            </dd>
-            <dt class="col-sm-4">
-                <label>Modificar Estado</label>
-            </dt>
 
-            <dd class="col-sm-10" id="vamos">
-                <label id="notifica">
-                    Lo sentimos la opcion <b>Modificar Estado</b> no aparece disponible debido
-                    a que no se han realizado las respectivas revisiones.
-                </label>
-                @Html.DropDownListFor(m => m.EstadosId, new SelectList(ViewData["EstadoS"] as IEnumerable<SelectListItem>, "Value", "Text"), new { @class = "form-control", id = "Estado" })
-            </dd>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.Vacaciones.VacacionesEstado)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Empleado.EmpDiasvacaciones)
-            </dd>
-        </dl>
-        <input id="Boton_Modifica" type="submit" name="Modificar" asp-action="ModificarDetallesDepaDirector" asp-route-id="@Model.SolicitudId" value="Modificar Solicitud" class="btn btn-primary" />
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label class="form-label">
+                        @Html.DisplayNameFor(model => model.SolicitudFecha)
+                    </label>
+                    <label class="form-control">
+                        @Html.DisplayFor(model => model.SolicitudFecha)
+                    </label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label class="form-label">
+                        @Html.DisplayNameFor(model => model.DetallesSolicitud)
+                    </label>
+                    <label class="form-control">
+                        @Html.DisplayFor(model => model.DetallesSolicitud)
+                    </label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label class="form-label">
+                        @Html.DisplayNameFor(model => model.FechasSeleccionadas)
+                    </label>
+                    <div>
+                        @Html.TextAreaFor(model => model.FechasSeleccionadas, new { @class="form-control", @disabled=true })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label class="form-label">
+                        @Html.DisplayNameFor(model => model.CantidadDias)
+                    </label>
+                    <label class="form-control">
+                        @Html.DisplayFor(model => model.CantidadDias)
+                    </label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label class="form-label">
+                        @Html.DisplayNameFor(model => model.PeriodoVacas)
+                    </label>
+                    <label class="form-control">
+                        @Html.DisplayFor(model => model.PeriodoVacas)
+                    </label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label class="form-label">
+                        @Html.DisplayNameFor(model => model.Comentario)
+                    </label>
+                    <label class="form-control">
+                        @Html.DisplayFor(model => model.Comentario)
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label class="form-label">
+                        <label>Agregar Comentario</label>
+                    </label>
+                    <div>
+                        @Html.TextAreaFor(model => model.Comentario, new { @class = "form-control", id = "txtComentario" })
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label class="form-label">
+                        @Html.DisplayNameFor(model => model.Cargo.CargoNombre)
+                    </label>
+                    <label class="form-control">
+                        @Html.DisplayFor(model => model.Cargo.CargoNombre)
+                    </label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label class="form-label">
+                        @Html.DisplayNameFor(model => model.Depto.DeptoNombre)
+                    </label>
+                    <label class="form-control">
+                        @Html.DisplayFor(model => model.Depto.DeptoNombre)
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label class="form-label">
+                        @Html.DisplayNameFor(model => model.Empleado.EmpleadoCodigo)
+                    </label>
+                    <label class="form-control">
+                        @Html.DisplayFor(model => model.Empleado.EmpleadoCodigo)
+                    </label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label class="form-label">
+                        @Html.DisplayNameFor(model => model.Empleado.EmpleadoNombre1)
+                    </label>
+                    <label class="form-control">
+                        @Html.DisplayFor(model => model.Empleado.EmpleadoNombre1)
+                    </label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label class="form-label">
+                        @Html.DisplayNameFor(model => model.Empleado.EmpleadoApellido1)
+                    </label>
+                    <label class="form-control">
+                        @Html.DisplayFor(model => model.Empleado.EmpleadoApellido1)
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label class="form-label">
+                        @Html.DisplayNameFor(model => model.Estados.EstadosNombre)
+                    </label>
+                    <label class="form-control">
+                        @Html.DisplayFor(model => model.Estados.EstadosNombre)
+                    </label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label class="form-label">
+                        <label>Modificar Estado</label>
+                    </label>
+
+                    <div id="vamos">
+                        <label id="notifica">
+                            Lo sentimos la opcion <b>Modificar Estado</b> no aparece disponible debido
+                            a que no se han realizado las respectivas revisiones.
+                        </label>
+                        @Html.DropDownListFor(m => m.EstadosId, new SelectList(ViewData["EstadoS"] as IEnumerable<SelectListItem>, "Value", "Text"), new { @class = "form-control", id = "Estado" })
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label class="form-label">
+                        @Html.DisplayNameFor(model => model.Vacaciones.VacacionesEstado)
+                    </label>
+                    <label class="form-control">
+                        @Html.DisplayFor(model => model.Empleado.EmpDiasvacaciones)
+                    </label>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <input id="Boton_Modifica" type="submit" name="Modificar" asp-action="ModificarDetallesDepaDirector" asp-route-id="@Model.SolicitudId" value="Modificar Solicitud" class="btn btn-primary" />
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <a asp-action="PerfilDirector" type="submit" class="btn btn-primary">Regresar</a>
+                </div>
+            </div>
+        </div>
     </form>
-    <br />
-    <a asp-action="PerfilDirector" type="submit" class="btn btn-primary">Regresar</a>
-
+    
 </div>
 
 

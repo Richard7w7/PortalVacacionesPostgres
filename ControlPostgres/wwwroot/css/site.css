@@ -1,9 +1,11 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
-:root{
+:root {
     --amarillo: #f8d964;
     --azul: #17355f;
     --blanco: white;
+    --extra: #222831;
+    --extra2: #454D59;
 }
 
 html{
@@ -97,7 +99,7 @@ html {
 body {
     /* Margin bottom by footer height */
     margin-bottom: 60px;
-    background-color: var(--amarillo);
+    background-color: var(--blanco);
 }
 .footer {
   position: absolute;
@@ -108,12 +110,12 @@ body {
 }
 
 .jumbotron {
-    background-color: var(--amarillo);
+    background-color: var(--blanco);
 }
 
 .navbar {
     background-color: var(--azul);
-    
+ 
 }
 
 .navbar-brand {
@@ -133,15 +135,9 @@ body {
     color: var(--amarillo);
 }
 
-.botones {
-    display: grid; 
-    grid-template-columns: repeat(2, 7rem);
-    
-}
 
-.botones__boton2{
-    grid-column:2/3;
-}
+
+
 
 #filascol {
     background-color: white;
@@ -171,7 +167,177 @@ td {
     color:var(--blanco);
 }
 
-    #btntabla:hover {
+#btntabla:hover {
         color: var(--azul);
         transition: all .2s ease;
-    }
+}
+
+
+#pie {
+    background-color: var(--azul);
+    color:var(--amarillo);
+    
+}
+
+#container_registro {
+    margin-top:5rem;
+    background-color: var(--extra);
+    color: var(--amarillo);
+    padding:1rem;
+    border-radius:1rem;
+}
+
+#container_login {
+    
+    margin-top: 5rem;
+    background-color: var(--extra);
+    color: var(--amarillo);
+    padding: 1rem;
+    border-radius: 1rem;
+    text-align:center;
+}
+
+#container_login input{
+    width:25%;
+    position:relative;
+    left: 25rem;
+}
+
+#container_login_botones {
+    position:relative;
+    left:27.5rem;
+}
+
+#Ingresar{
+    position:relative;
+    left:3.5rem;
+}
+
+#recuperar{
+    margin-top:3rem;
+    text-align:center;
+}
+#container_recuperar {
+    text-align: center;
+    margin-top: 3rem;
+    background-color: var(--extra);
+    color: var(--amarillo);
+    padding: 2rem;
+    border-radius: 1rem;
+}
+
+#container_recuperar input {
+        width: 25%;
+        position: relative;
+        left: 25rem;
+}
+
+#recuperarbtn {
+    text-align: center;
+    position:relative;
+    left:30rem;
+}
+
+#container_solicitud {
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    background-color: var(--extra);
+    color: var(--amarillo);
+    padding: 2rem;
+    border-radius: 1rem;
+    transition: all .2s ease;
+}
+
+#container_solicitud:hover {
+    background-color: var(--extra2);
+    transition: all .2s ease;
+}
+
+#container_solicitud_mod {
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    background-color: var(--extra);
+    color: var(--amarillo);
+    padding: 2rem;
+    border-radius: 1rem;
+    transition: all .2s ease;
+}
+#container_solicitud_mod:hover {
+        background-color: var(--extra2);
+        transition: all .2s ease;
+}
+
+#diasDispo{
+    font-size:1rem;
+    font-weight:900;
+}
+
+#container_detailsPerfil {
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    background-color: var(--extra);
+    color: var(--amarillo);
+    padding: 2rem;
+    border-radius: 1rem;
+    transition: all .2s ease;
+}
+
+#container_detailsPerfil{
+    background-color:var(--extra2);
+        transition: all .2s ease;
+}
+
+#container_Detalles_Cola {
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    background-color: var(--extra);
+    color: var(--amarillo);
+    padding: 2rem;
+    border-radius: 1rem;
+    transition: all .2s ease;
+}
+
+#container_Detalles_Cola:hover {
+    background-color: var(--extra2);
+    transition: all .2s ease;
+}
+
+/*botones animados*/
+a.animated-button.thar-two {
+    color: var(--azul);
+    cursor: pointer;
+    position: relative;
+    border: 2px solid #F7CA18;
+    transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+}
+
+a.animated-button.thar-two:hover {
+        color: #000 !important;
+        background-color: transparent;
+        text-shadow: ntwo;
+}
+
+a.animated-button.thar-two:hover:before {
+            top: 0%;
+            bottom: auto;
+            height: 100%;
+}
+
+a.animated-button.thar-two:before {
+        display: block;
+        position: absolute;
+        left: 0px;
+        bottom: 0px;
+        height: 0px;
+        width: 100%;
+        z-index: -1;
+        content: '';
+        color: #000 !important;
+        background: #F7CA18;
+        transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+}
+

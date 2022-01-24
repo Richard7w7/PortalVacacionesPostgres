@@ -18,86 +18,130 @@
     </script>
 
 }
+<div id="container_registro">
+    <label style="font-size:25px">REGISTRO DE COLABORADOR MUNICIPAL</label>
+    <form asp-action="RegistrarEmp">
+        <div class="contenedor">
+            <div class="row">
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="EmpleadoCodigo" class="control-label">Ingrese su Código de Empleado</label>
+                        <input asp-for="EmpleadoCodigo" class="form-control" autocomplete="off" placeholder="0000" />
+                        <span asp-validation-for="EmpleadoCodigo" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="EmpleadoContraseña" class="control-label">Ingrese su Contraseña</label>
+                        <input asp-for="EmpleadoContraseña" class="form-control" />
+                        <span asp-validation-for="EmpleadoContraseña" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="EmpleadoNombre1" class="control-label"> Ingrese su Primer Nombre</label>
+                        <input asp-for="EmpleadoNombre1" class="form-control" autocomplete="off" placeholder="Primer Nombre" />
+                        <span asp-validation-for="EmpleadoNombre1" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="EmpleadoNombre2" class="control-label">Ingrese su Segundo Nombre</label>
+                        <input asp-for="EmpleadoNombre2" class="form-control" autocomplete="off" placeholder="Segundo Nombre" />
+                        <span asp-validation-for="EmpleadoNombre2" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <label style="font-size:25px">FORMULARIO REGISTRO DE COLABORADOR MUNICIPAL</label>
-        <form asp-action="RegistrarEmp">
+            <div class="row">
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="EmpleadoApellido1" class="control-label">Ingrese su Primer Apellido</label>
+                        <input asp-for="EmpleadoApellido1" class="form-control" autocomplete="off" placeholder="Primer Apellido" />
+                        <span asp-validation-for="EmpleadoApellido1" class="text-danger"></span>
+                    </div>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="EmpleadoCodigo" class="control-label">Ingrese su Código de Empleado</label>
-                <input asp-for="EmpleadoCodigo" class="form-control" autocomplete="off"  placeholder="0000"/>
-                <span asp-validation-for="EmpleadoCodigo" class="text-danger"></span>
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="EmpleadoApellido2" class="control-label">Ingrese su Segundo Apellido</label>
+                        <input asp-for="EmpleadoApellido2" class="form-control" autocomplete="off" placeholder="Segundo Apellido" />
+                        <span asp-validation-for="EmpleadoApellido2" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="ApellidoCasada" class="control-label">Ingrese su Apellido de Casada</label>
+                        <input asp-for="ApellidoCasada" class="form-control" autocomplete="off" placeholder="Apellido de Casada" />
+                        <span asp-validation-for="ApellidoCasada" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="FechaNacimiento" class="control-label">Fecha de Nacimiento</label>
+                        <input asp-for="FechaNacimiento" class="form-control" autocomplete="off" placeholder="dia/mes/año" />
+                        <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="EmpleadoContraseña" class="control-label">Ingrese su Contraseña</label>
-                <input asp-for="EmpleadoContraseña" class="form-control" />
-                <span asp-validation-for="EmpleadoContraseña" class="text-danger"></span>
+
+            <div class="row">
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="FechaIngreso" class="control-label">Fecha de Ingreso Laboral</label>
+                        <input asp-for="FechaIngreso" class="form-control" autocomplete="off" placeholder="dia/mes/año" />
+                        <span asp-validation-for="FechaIngreso" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="EmpleadoTelefono" class="control-label">Ingrese su Numero de Telefono</label>
+                        <input asp-for="EmpleadoTelefono" class="form-control" autocomplete="off" placeholder="12345678" />
+                        <span asp-validation-for="EmpleadoTelefono" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="EmpleadoDireccion" class="control-label">Ingrese su Direccion de Residencia</label>
+                        <input asp-for="EmpleadoDireccion" class="form-control" autocomplete="off" placeholder="0 calle 0 avenida 0-0 Zona 0 Municipio de Guatemala" />
+                        <span asp-validation-for="EmpleadoDireccion" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="DeptoId">Departamento al cual pertenece</label>
+                        <select asp-for="DeptoId" asp-items="(SelectList)@ViewData["Depto"]" class="form-control"></select>
+                        <span asp-validation-for="DeptoId" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="EmpleadoNombre1" class="control-label"> Ingrese su Primer Nombre</label>
-                <input asp-for="EmpleadoNombre1" class="form-control" autocomplete="off" placeholder="Primer Nombre"/>
-                <span asp-validation-for="EmpleadoNombre1" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EmpleadoNombre2" class="control-label">Ingrese su Segundo Nombre</label>
-                <input asp-for="EmpleadoNombre2" class="form-control" autocomplete="off" placeholder="Segundo Nombre"/>
-                <span asp-validation-for="EmpleadoNombre2" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EmpleadoApellido1" class="control-label">Ingrese su Primer Apellido</label>
-                <input asp-for="EmpleadoApellido1" class="form-control" autocomplete="off" placeholder="Primer Apellido"/>
-                <span asp-validation-for="EmpleadoApellido1" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EmpleadoApellido2" class="control-label">Ingrese su Segundo Apellido</label>
-                <input asp-for="EmpleadoApellido2" class="form-control" autocomplete="off" placeholder="Segundo Apellido"/>
-                <span asp-validation-for="EmpleadoApellido2" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ApellidoCasada" class="control-label">Ingrese su Apellido de Casada</label>
-                <input asp-for="ApellidoCasada" class="form-control" autocomplete="off" placeholder="Apellido de Casada"/>
-                <span asp-validation-for="ApellidoCasada" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FechaNacimiento" class="control-label">Seleccione su Fecha de Nacimiento</label>
-                <input asp-for="FechaNacimiento" class="form-control" autocomplete="off" placeholder="dia/mes/año" />
-                <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FechaIngreso" class="control-label">Seleccione su Fecha de Ingreso Laboral</label>
-                <input asp-for="FechaIngreso" class="form-control" autocomplete="off" placeholder="dia/mes/año" />
-                <span asp-validation-for="FechaIngreso" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EmpleadoTelefono" class="control-label">Ingrese su Numero de Telefono</label>
-                <input asp-for="EmpleadoTelefono" class="form-control" autocomplete="off" placeholder="12345678"/>
-                <span asp-validation-for="EmpleadoTelefono" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EmpleadoDireccion" class="control-label">Ingrese su Direccion de Residencia</label>
-                <input asp-for="EmpleadoDireccion" class="form-control" autocomplete="off" placeholder="0 calle 0 avenida 0-0 Zona 0 Municipio de Guatemala"/>
-                <span asp-validation-for="EmpleadoDireccion" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DeptoId">Seleccione el departamento al cual pertenece</label>
-                <select asp-for="DeptoId" asp-items="(SelectList)@ViewData["Depto"]" class="form-control"></select>
-                <span asp-validation-for="DeptoId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CargoId">Seleccione el cargo que ocupa</label>
-                <select asp-for="CargoId" asp-items="(SelectList)@ViewData["Cargos"]" class="form-control"></select>
-                <span asp-validation-for="CargoId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="VacacionesId">Seleccione su tiempo laborando</label>
-                <select asp-for="VacacionesId" asp-items="(SelectList)@ViewData["Vacaciones"]" class="form-control"></select>
-                <span asp-validation-for="VacacionesId" class="text-danger"></span>
+
+            <div class="row">
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="CargoId">Cargo que ocupa</label>
+                        <select asp-for="CargoId" asp-items="(SelectList)@ViewData["Cargos"]" class="form-control"></select>
+                        <span asp-validation-for="CargoId" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="mb-3">
+                        <label asp-for="VacacionesId">Seleccione su tiempo laborando</label>
+                        <select asp-for="VacacionesId" asp-items="(SelectList)@ViewData["Vacaciones"]" class="form-control"></select>
+                        <span asp-validation-for="VacacionesId" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
 
             <div class="form-group">
                 <button value="RegistrarEmp" type="submit" class="btn btn-primary"> Registrarme</button>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
 </div>

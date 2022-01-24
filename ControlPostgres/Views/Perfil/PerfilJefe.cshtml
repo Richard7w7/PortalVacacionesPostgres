@@ -83,54 +83,97 @@
 }
 
 
-
 <h1>Bienvenido Colaborador: @Model.Empleado.EmpleadoNombre1 @Model.Empleado.EmpleadoApellido1</h1>
 
-<div class="row" onkeydown="return desabilitartecla(event.keyCode)">
-    <div class="col-md-4">
-        <label style="font-size:25px">Crear Solicitud de Vacaciones</label>
-        <label style="font-size:25px">Cantidad de dias disponibles: @Model.Empleado.EmpDiasvacaciones</label>
 
-        <form asp-action="RegistrarSolicitud" id="FormularioRegistro" onkeydown="return desabilitartecla(event.keyCode)">
-            <div asp-validation-summary="ModelOnly"></div>
-            <div class="form-group">
-                <label asp-for="DetallesSolicitud" class="control-label">Detalle la solicitud</label>
-                <input asp-for="DetallesSolicitud" class="form-control" autocomplete="off" />
-                <span asp-validation-for="DetallesSolicitud" class="text-danger"></span>
-            </div>
+@*  *@
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingOne">
+            <h4 class="panel-title">
+                <a class="btn btn-sm animated-button thar-two" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Apartado de Vacaciones
+                </a>
+            </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-body">
+                <div class="row" onkeydown="return desabilitartecla(event.keyCode)">
+                    <div class="col-md-4">
+                        <label id="diasDispo">Cantidad de dias disponibles: @Model.Empleado.EmpDiasvacaciones</label>
+                        <label style="font-size:25px">Crear Solicitud de Vacaciones</label>
+                        <form asp-action="RegistrarSolicitud" id="FormularioRegistro" onkeydown="return desabilitartecla(event.keyCode)">
+                            <div asp-validation-summary="ModelOnly"></div>
+                            <div id="container_solicitud">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label asp-for="DetallesSolicitud" class="control-label">Detalle la solicitud</label>
+                                            <input asp-for="DetallesSolicitud" class="form-control" autocomplete="off" />
+                                            <span asp-validation-for="DetallesSolicitud" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label asp-for="FechasSeleccionadas" class="control-label">Seleccione las fechas que desea descansar</label>
+                                            <input asp-for="FechasSeleccionadas" type="text" class="form-control" id="multidate" autocomplete="off" />
+                                            <span asp-validation-for="FechasSeleccionadas" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label asp-for="PeriodoVacas" class="control-label">Ingrese su periodo de vacaciones</label>
+                                            <input asp-for="PeriodoVacas" type="text" autocomplete="off" class="form-control" />
+                                            <span asp-validation-for="PeriodoVacas" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <button id="Btncrear" value="RegistrarSolicitud" type="submit" class="btn btn-primary">Crear Solicitud</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
 
-            <div class="form-group">
-                <label asp-for="FechasSeleccionadas" class="control-label">Seleccione las fechas que desea descansar</label>
-                <input asp-for="FechasSeleccionadas" type="text" class="form-control" id="multidate" autocomplete="off" />
-                <span asp-validation-for="FechasSeleccionadas" class="text-danger"></span>
+                        <div class="row">
+                            <div class="col">
+                                <form asp-action="ListarSolicitudEmpleado" onkeydown="return desabilitartecla(event.keyCode)">
+                                    <div class="form-group">
+                                        <button value="ListarSolicitudEmpleado" type="submit" class="btn btn-primary">Ver mis solicitudes finalizadas</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col">
+                                <form asp-action="ListarSolicitudEmpleadoRevisiones" onkeydown="return desabilitartecla(event.keyCode)">
+                                    <div class="form-group">
+                                        <button value="ListarSolicitudEmpleadoRevisiones" type="submit" class="btn btn-primary">Ver mis solicitudes en revisión</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col">
+                                <form asp-action="SolicitudesDepartamentoJefe" onkeydown="return desabilitartecla(event.keyCode)">
+                                    <div class="form-group">
+                                        <button value="SolicitudesDepartamentoJefe" type="submit" class="btn btn-primary">Solicitudes Departamentos</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <form id="Notificador">
+                            <label id="NotificaBoton"></label>
+                        </form>
+
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="PeriodoVacas" class="control-label">Ingrese su periodo de vacaciones</label>
-                <input asp-for="PeriodoVacas" type="text" autocomplete="off" class="form-control" />
-                <span asp-validation-for="PeriodoVacas" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <button id="Btncrear" value="RegistrarSolicitud" type="submit" class="btn btn-primary">Crear Solicitud</button>
-            </div>
-        </form>
-        <form id="Notificador">
-            <label id="NotificaBoton"></label>
-        </form>
-        <form asp-action="ListarSolicitudEmpleado" onkeydown="return desabilitartecla(event.keyCode)">
-            <div class="form-group">
-                <button value="ListarSolicitudEmpleado" type="submit" class="btn btn-primary">Ver mis solicitudes finalizadas</button>
-            </div>
-        </form>
-        <form asp-action="ListarSolicitudEmpleadoRevisiones" onkeydown="return desabilitartecla(event.keyCode)">
-            <div class="form-group">
-                <button value="ListarSolicitudEmpleadoRevisiones" type="submit" class="btn btn-primary">Ver mis solicitudes en revisión</button>
-            </div>
-        </form>
-        <form asp-action="SolicitudesDepartamentoJefe" onkeydown="return desabilitartecla(event.keyCode)">
-            <div class="form-group">
-                <button value="SolicitudesDepartamentoJefe" type="submit" class="btn btn-primary">Solicitudes Departamentos</button>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
