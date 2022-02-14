@@ -28,8 +28,8 @@ namespace ControlPostgres.Contexto.Entities
         {
             if (!optionsBuilder.IsConfigured)
             {
-                //optionsBuilder.UseNpgsql("Server=localhost;Database=BD_ControlVacaciones;Username=postgres;Password=Arg4815;");
-                optionsBuilder.UseNpgsql("Server=postgresql448.postgres.database.azure.com;Database=BD_ControlVacaciones;Username=postgres@postgresql448;Password=Arg48151263;SslMode=Require;");
+                optionsBuilder.UseNpgsql("Server=localhost;Database=BD_ControlVacaciones;Username=postgres;Password=Arg4815;");
+                //optionsBuilder.UseNpgsql("Server=postgresql448.postgres.database.azure.com;Database=BD_ControlVacaciones;Username=postgres@postgresql448;Password=Arg48151263;SslMode=Require;");
             }
         }
 

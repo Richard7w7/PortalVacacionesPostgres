@@ -21,7 +21,7 @@
     },
     "resourceName": {
       "type": "string",
-      "defaultValue": "ControlPostgres20220124142817",
+      "defaultValue": "MVNPortalVacacional",
       "metadata": {
         "description": "Name of the main resource to be created by this template."
       }
